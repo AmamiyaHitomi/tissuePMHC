@@ -282,7 +282,7 @@ def benchmark_scope(data_dir: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
             "unseen_fraction": [1 - peptide_seen.mean(), 1 - protein_seen.mean()],
         }
     )
-    # These audited subset values are documented in PHASE_2_REPORT_zh.md, section 14.4.
+    # These audited subset values are documented in PHASE_2_REPORT_LEGACY.md, section 14.4.
     subset = pd.DataFrame(
         {
             "subset": ["Seen peptide", "Unseen peptide"],

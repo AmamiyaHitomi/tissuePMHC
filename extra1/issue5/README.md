@@ -1,44 +1,44 @@
-# Issue 5：通用 pMHC predictor 与 MHC-only 对照
+# Issue 5: Generic pMHC comparison with MHC-only
 
-本目录实现 `extra/remaining_issues_5_9.md` 的第 5 项。代码不会使用本文标签微调
-NetMHCpan 或 MHCflurry，并把所有外部分数统一为“越高越强”。
+This directory achieves item 5 of ZXQ0QZ. The code will not fine-tune the labels of this document
+NetMHCpan or MHz and unify all external parts to "higher and stronger".
 
-## 实验组成
+## Experimental Composition
 
-外部冻结基线：
+External freeze baseline:
 
-1. NetMHCpan-4.1 BA：主分数 `-%Rank_BA`；
-2. NetMHCpan-4.1 EL：主分数 `-%Rank_EL`；
-3. MHCflurry presentation：主分数 `presentation_score`，正式运行禁用 flank；
-4. MHCflurry affinity percentile 可作为额外 binding 敏感性结果。
+1. NetMHCpan-4.1 BA: main score ZXQ0QZ;
+2. NetMHCpan-4.1 EL: main score ZXQ0QZ;
+3. (a) MHCflurry preparation: main score `presentation_score`, which officially disables the flank;
+4. MHCflurry effect percentile can be an additional binding sensitive result.
 
-内部对照：
+Internal comparison:
 
-- human：E29-compatible position-preserving multi-kernel CNN encoder + HLA heads；
-- mouse：E15-compatible peptide MLP/expert structure + H2-only gate/heads；
-- 两者都不输入 tissue，不使用 tissue embedding、tissue auxiliary loss、tissue–MHC
-  task head或 task-balanced loss。
+- human:E29-compatible position-preserving multi-kernel CNN encoder + HLA heads;
+- mouse:E15-compatible peptide MLP/expert structure + H2-only gate/heads;
+- Neither type of textue, use of tissue embedding, tessue auxiliary loss, tessue-MHC
+  I'm not sure you're gonna be able to get a job.
 
-## 环境
+## Environment
 
-项目 Python：
+Project Python:
 
 ```powershell
 E:\ancd\envs\my_pytorch\python.exe
 ```
 
-NetMHCpan-4.1 需要用户按照 DTU 的许可取得 standalone UNIX 包。建议在 Linux/WSL
-中运行。MHCflurry 应固定正式稳定版和模型 bundle；不要在同一次正式实验中自动升级
-软件或模型文件。
+NetMHCpan-4.1 requires users to get standalone UNIX packages with DTU permission. Suggested in Linux/ WSL
+running. MHCflurry should fix the official stabilization version and model bindle; do not automatically upgrade during the same formal experiment
+Software or model file.
 
-## 1. 校验并建立唯一查询
+## 1. Verify and create a unique query
 
 ```powershell
 E:\ancd\envs\my_pytorch\python.exe extra\issue5\run_tests.py
 E:\ancd\envs\my_pytorch\python.exe extra\issue5\build_queries.py
 ```
 
-预期生成：
+Expected generation:
 
 ```text
 results/issue5_general_pmhc/queries/
@@ -51,11 +51,11 @@ results/issue5_general_pmhc/queries/
 └── netmhcpan/{human,mouse}/*.pep
 ```
 
-正式数据预期为 human `79,759`、mouse `6,663` 个唯一 peptide–MHC 查询。
+The official data are expected to be the only peptide-MHC query for human ZXQ0QZ, mouse ZXQ1QZ.
 
-## 2. 运行 MHCflurry
+## 2. Run MHzflurry
 
-先在独立环境安装并固定版本、下载 presentation bundle，例如：
+Installation and fixed version, downloading of the position bindle in a separate environment, for example:
 
 ```powershell
 python -m pip install mhcflurry==2.2.1
@@ -63,8 +63,8 @@ mhcflurry-downloads fetch models_class1_presentation
 mhcflurry-downloads path models_class1_presentation
 ```
 
-若使用 Python 3.13 且 `mhcflurry-downloads` 报
-`ModuleNotFoundError: No module named 'pipes'`，使用项目内兼容启动器：
+If Python 3.13 and ZXQ0QZ is used
+ZXQ0QZ, using project-in-compatible starters:
 
 ```powershell
 $env:PYTHONUTF8 = "1"
@@ -72,10 +72,10 @@ E:\ancd\envs\my_pytorch\python.exe extra\issue5\mhcflurry_downloads_py313.py fet
 E:\ancd\envs\my_pytorch\python.exe extra\issue5\mhcflurry_downloads_py313.py path models_class1_presentation
 ```
 
-该启动器只把已从 Python 3.13 删除的 `pipes.quote` 映射到等价的
-`shlex.quote`，不修改 MHCflurry 模型或预测代码。
+The starter only maps ZXQ0XZ from Python 3.13 to the equivalent price
+`shlex.quote` does not modify the MHzFlurry model or predictive code.
 
-把最后一条命令得到的 bundle 下的 `models` 目录显式传给 runner。稳定版兼容命令示例：
+Send the ZXQ0QZ directory display to Runner for the last command. Examples of stable-text compatibility command:
 
 ```powershell
 python extra\issue5\run_predictors.py mhcflurry --legacy-cli `
@@ -83,20 +83,20 @@ python extra\issue5\run_predictors.py mhcflurry --legacy-cli `
   --input results\issue5_general_pmhc\queries\human_mhcflurry_input.csv `
   --output results\issue5_general_pmhc\raw_outputs\human_mhcflurry.csv `
   --metadata results\issue5_general_pmhc\raw_outputs\human_mhcflurry.metadata.json `
-  --model-dir <models_class1_presentation模型目录>\models
+  --model-dir <models_class1_presentation model directory>ZXQ0QZ
 ```
 
-mouse 使用对应 input/output 重复一次。若所冻结版本明确提供新版统一 CLI，可省略
-`--legacy-cli` 并把 executable 改为 `mhcflurry`。runner 固定使用：
+Mouse uses the corresponding input/output repeat. If the frozen version explicitly provides a new version of the CLI, it can be omitted
+`--legacy-cli` and replace execable with `mhcflurry`. Runner fixed:
 
 ```text
 --no-throw --no-flanking
 ```
 
-MHCflurry 2.2.1 的 legacy predict CLI 不接受 `--num-jobs`，因此 runner 默认不传该
-参数。只有确认所用版本支持时才显式设置 `--num-jobs`。
+The policy predict CLI of MHz 2.2.1 does not accept `--num-jobs`, so runner defaults not to pass it
+argument. Only visible settings are available when the version is confirmed.
 
-正式运行前还应保存：
+Before being formally operational, it shall also be preserved:
 
 ```powershell
 mhcflurry-predict --version
@@ -104,9 +104,9 @@ mhcflurry-predict --list-supported-alleles
 mhcflurry-downloads info
 ```
 
-## 3. 运行 NetMHCpan-4.1
+## 3. Run NetMHCpan-4.1
 
-在能够执行 standalone NetMHCpan 的 Linux/WSL 环境中运行：
+Run in Linux/WSL environment that can execute standalone NetMHCpan:
 
 ```bash
 python extra/issue5/run_predictors.py netmhcpan \
@@ -115,9 +115,9 @@ python extra/issue5/run_predictors.py netmhcpan \
   --metadata results/issue5_general_pmhc/raw_outputs/human_netmhcpan.metadata.json
 ```
 
-mouse manifest 重复一次。每个 allele 独立运行，已存在的完整输出默认复用；只有明确
-需要覆盖时才传 `--force`。正式运行前必须用工具的 allele listing 核对全部
-35 个 HLA 与 4 个 H2 映射，特别是：
+Mouse manyefest repeats. Each allele runs independently, the complete output already exists is defaulted; only clear
+Only fax `--force` when it needs to be overwritten. AlleListing is required to check all before it is fully run.
+35 HLA and 4 H2 maps, in particular:
 
 ```text
 H2-Db -> H-2-Db
@@ -126,12 +126,12 @@ H2-Kd -> H-2-Kd
 H2-Kk -> H-2-Kk
 ```
 
-如果 WSL 无法读取 manifest 中的 Windows 路径，可在 WSL 内重新运行
-`build_queries.py --output-dir`，让 manifest 保存 WSL 可见的绝对路径。
+If WSL cannot read Windows paths in manifest, rerun within WSL
+ZXQ0QZ, lets the manifest save the absolute path visible for WSL.
 
-## 4. 导入统一 score cache
+## 4. Importing uniform score cache
 
-MHCflurry：
+MHCflurry:
 
 ```powershell
 E:\ancd\envs\my_pytorch\python.exe extra\issue5\import_scores.py mhcflurry `
@@ -141,7 +141,7 @@ E:\ancd\envs\my_pytorch\python.exe extra\issue5\import_scores.py mhcflurry `
   --output results\issue5_general_pmhc\score_cache\human_mhcflurry.csv.gz
 ```
 
-NetMHCpan：
+NetMHCpan:
 
 ```powershell
 E:\ancd\envs\my_pytorch\python.exe extra\issue5\import_scores.py netmhcpan `
@@ -151,10 +151,10 @@ E:\ancd\envs\my_pytorch\python.exe extra\issue5\import_scores.py netmhcpan `
   --output results\issue5_general_pmhc\score_cache\human_netmhcpan.csv.gz
 ```
 
-mouse 重复相同操作。导入器不会用极端值填补缺失预测；unsupported/missing 组合保留
-为 NaN 并进入覆盖率审计。
+Mouse repeats the same operation. Importers do not fill missing predictions with extremes; unsupported/missing combinations are kept
+It's NaN and has access to coverage audits.
 
-## 5. 外部 predictor 评估
+## 5. External predictor evaluation
 
 ```powershell
 E:\ancd\envs\my_pytorch\python.exe extra\issue5\evaluate_external.py `
@@ -164,7 +164,7 @@ E:\ancd\envs\my_pytorch\python.exe extra\issue5\evaluate_external.py `
   --score-cache results\issue5_general_pmhc\score_cache\mouse_mhcflurry.csv.gz
 ```
 
-输出：
+Output:
 
 ```text
 results/issue5_general_pmhc/external_evaluation/
@@ -177,49 +177,49 @@ results/issue5_general_pmhc/external_evaluation/
 └── metadata.json
 ```
 
-AUROC、AUPRC 和 PairAcc 只使用正负两行都成功评分的完整 pair。主模型指标会在相同
-完整 pair 集合上重新计算。覆盖率同时报告 row、complete-pair、task 和 full-task。
+AUROC, AUPRC and PairAcc only use the complete pair with both positive and negative lines. The main model indicator will be the same.
+Full pair pool recalculates. Coverage reports both row, complete-pair, task and full-task.
 
-matched-standard OOF 与 peptide-disjoint OOF 使用同一个 train row pool，因此冻结外部
-predictor 的独立指标应相同；两栏的区别是配对比较所用的完整模型预测不同。
+Matched-standard OOF uses the same train-row pool as peptide-disjoint OOF, so freezes the outside
+The stand-alone indicator for the predictor should be the same; the difference between the two columns is that the complete model predictions used for the matching comparison differ.
 
-## 6. 控制通用分数后的增量
+## 6. Increments to control generic scores
 
 ```powershell
 E:\ancd\envs\my_pytorch\python.exe extra\issue5\stack_increment.py `
   --row-predictions results\issue5_general_pmhc\external_evaluation\row_predictions.csv.gz
 ```
 
-该分析分别拟合：
+The analysis is combined with:
 
 ```text
 external score
 external score + TissuePMHC score
 ```
 
-standard/strict OOF 始终用另外两个 outer folds 拟合 logistic stacker，再预测 held fold。
-fixed test 的 stacker 只在 matched-standard OOF 行上拟合。stacker 不输入 tissue、task
-或 task intercept。这是控制通用分数后的次要增量分析，不替代原始外部分数基线。
+Standard/standard OOF always uses two other outer foundations to align logist staff, and predicts help hold.
+The match test staff only fits the match-standard OOF line.
+or task intercept. This is a secondary increment analysis after controlling the generic score and does not replace the baseline for the original outer fraction.
 
-## 7. MHC-only 内部对照
+## 7. MHC-only internal comparisons
 
-正式运行：
+Formally functioning:
 
 ```powershell
 E:\ancd\envs\my_pytorch\python.exe extra\issue5\run_mhc_only.py --species human --device cuda
 E:\ancd\envs\my_pytorch\python.exe extra\issue5\run_mhc_only.py --species mouse --device cuda
 ```
 
-runner 覆盖：
+Runner overwrite:
 
-- deterministic standard pair-grouped OOF，split seed `20260711`；
-- 冻结 connected-component peptide-disjoint folds；
-- full-train → fixed test；
-- human 三个预声明 seed；
-- mouse 五个预声明 seed；
-- 每个 protocol × seed × fold checkpoint，可安全续跑。
+- deterministic standard pair-grouped OOF,split seed `20260711`;
+- Freezing-component peptide-disjoint folds;
+- full-train → fixed test;
+- Three pre-declarations;
+- Five pre-declarations;
+- Each protocol x seed x old checkpoint, can be safely continued.
 
-分析：
+Analysis:
 
 ```powershell
 E:\ancd\envs\my_pytorch\python.exe extra\issue5\analyze_mhc_only.py `
@@ -227,28 +227,28 @@ E:\ancd\envs\my_pytorch\python.exe extra\issue5\analyze_mhc_only.py `
   --predictions results\issue5_general_pmhc\mouse_mhc_only\ensemble_predictions.csv.gz
 ```
 
-## 8. 统计口径
+## 8. Statistical calibre
 
-每个 species × protocol × metric 报告：
+Each species x protocol x metric report:
 
-- task-macro mean/median；
-- main minus baseline 的 mean/median difference；
-- Hodges–Lehmann difference；
-- win/tie/loss；
-- 10,000 次 task bootstrap mean-difference interval；
-- Wilcoxon signed-rank；
-- BH-FDR。
+- task-macro mean/median;
+- I'm not sure what you mean by the fact that you're a man of your mind.
+- Hodges–Lehmann difference;
+- win/tie/loss;
+- 10,000 times task trotstrap means-distant interval;
+- Wilcoxon signed-rank;
+- BH-FDR.
 
-这些检验是 nominal task-level inference。任务共享 tissue、MHC、peptide 和 parent
-protein，不能解释为独立外部队列证据。
+These tests are nominal task-level inference. Task sharing tisue, MHC, peptide and parent
+Protein cannot be interpreted as evidence of an independent foreign force.
 
-## 9. 正式完成前检查
+## 9. Pre-formal completion inspections
 
-- 记录工具精确版本、运行日期、完整命令；
-- 记录 MHCflurry 模型 bundle 路径及文件 SHA256；
-- 记录 NetMHCpan data package 版本，但不要违反许可重新分发；
-- 保存 supported-allele 原始输出；
-- 检查 `coverage_audit.csv` 中全部缺失 allele；
-- 不根据 fixed test 或 pooled strict OOF 结果挑选 score transform；
-- 在论文中把外部模型称为 frozen general-signal controls；
-- 明确外部模型可能与 IEDB/免疫肽组训练数据存在预训练重叠。
+- (a) A record tool with a precise version, running date, complete command;
+- Recording the MHCflurry model bindle path and file SHA256;
+- Record the NetMHCpan data version, but do not redistribute in violation of permissions;
+- Saves the original output of the supported-allele;
+- Check all missing allele in `coverage_audit.csv`;
+- Selects from the results of the match test or the poollist OOF;
+- The external model is called frozen general-signal controls in the paper;
+- Clearing out external models may overlap with pre-training data on IEDB/PIG training.

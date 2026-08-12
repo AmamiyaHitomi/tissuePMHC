@@ -1,0 +1,436 @@
+{
+  "result_label": "TissuePMHC (tuned; mouse-training-CV-selected)",
+  "result_label_en": "TissuePMHC (tuned; mouse-training-CV-selected)",
+  "created_at": "2026-08-03T21:03:39.001674+08:00",
+  "device": "cuda",
+  "cuda_device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "train": "D:\\my_python\\tissuePMHC\\data\\mousePMHC_occurence_equal_dataset\\mousePMHC_train.csv.gz",
+  "test": "D:\\my_python\\tissuePMHC\\data\\mousePMHC_occurence_equal_dataset\\mousePMHC_test.csv.gz",
+  "cv_folds": 3,
+  "cv_epochs": 15,
+  "final_epochs": 25,
+  "selection_metric": "0.5 * (task-macro AUROC + task-macro AUPRC)",
+  "test_selection_policy": "The fixed test set was not used to choose the locked configuration.",
+  "locked_config": {
+    "name": "c0_combined_top4",
+    "stage": "C",
+    "sampling": "task_balanced",
+    "embedding_dim": 16,
+    "conv_channels": 32,
+    "hidden_dim": 128,
+    "kernel_sizes": [
+      3,
+      5
+    ],
+    "dropout": 0.35,
+    "tissue_loss_weight": 0.05,
+    "hla_loss_weight": 0.1,
+    "fusion_global_weight": 0.5,
+    "learning_rate": 0.003,
+    "weight_decay": 0.0001,
+    "task_batch_size": 32
+  },
+  "all_configs": [
+    {
+      "name": "a0_original_row",
+      "stage": "A",
+      "sampling": "row",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "a1_balanced_default",
+      "stage": "A",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "a2_balanced_c16_h64",
+      "stage": "A",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 16,
+      "hidden_dim": 64,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "a3_balanced_c16_h128",
+      "stage": "A",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 16,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "a4_balanced_c32_h64",
+      "stage": "A",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 64,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "a5_balanced_c8_h64",
+      "stage": "A",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 8,
+      "hidden_dim": 64,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "b0_aux_zero",
+      "stage": "B",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.0,
+      "hla_loss_weight": 0.0,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "b1_aux_002",
+      "stage": "B",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.02,
+      "hla_loss_weight": 0.02,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "b2_aux_005",
+      "stage": "B",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.05,
+      "hla_loss_weight": 0.05,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "b3_aux_t005_h01",
+      "stage": "B",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.05,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "b4_fusion_g025",
+      "stage": "B",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.25,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "b5_fusion_g075",
+      "stage": "B",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.75,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "b6_dropout_01",
+      "stage": "B",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.1,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "b7_dropout_035",
+      "stage": "B",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.35,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "b8_lr_0003",
+      "stage": "B",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "b9_lr_003",
+      "stage": "B",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.003,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "b10_wd_001",
+      "stage": "B",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        2,
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "b11_kernel_3",
+      "stage": "B",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        3
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "b12_kernel_35",
+      "stage": "B",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        3,
+        5
+      ],
+      "dropout": 0.2,
+      "tissue_loss_weight": 0.1,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    },
+    {
+      "name": "c0_combined_top4",
+      "stage": "C",
+      "sampling": "task_balanced",
+      "embedding_dim": 16,
+      "conv_channels": 32,
+      "hidden_dim": 128,
+      "kernel_sizes": [
+        3,
+        5
+      ],
+      "dropout": 0.35,
+      "tissue_loss_weight": 0.05,
+      "hla_loss_weight": 0.1,
+      "fusion_global_weight": 0.5,
+      "learning_rate": 0.003,
+      "weight_decay": 0.0001,
+      "task_batch_size": 32
+    }
+  ],
+  "seeds": [
+    20260704,
+    20260705,
+    20260706
+  ]
+}

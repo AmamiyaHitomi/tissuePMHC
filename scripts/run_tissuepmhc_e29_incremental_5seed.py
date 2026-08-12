@@ -212,7 +212,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--train", type=Path, default=project_path("data/tissuePMHC/tissuePMHC_train.csv.gz"))
     parser.add_argument("--test", type=Path, default=project_path("data/tissuePMHC/tissuePMHC_test.csv.gz"))
     parser.add_argument("--device", choices=["auto", "cpu", "cuda"], default="auto")
-    parser.add_argument("--preregistration-document", type=Path, default=project_path("E29_5SEED_PREREGISTRATION_zh.md"))
+    parser.add_argument("--preregistration-document", type=Path, default=project_path("E29_5SEED_PREREGISTRATION.md"))
     parser.add_argument("--preregistration-output", type=Path, default=root / "preregistration.json")
     parser.add_argument("--existing-3seed-oof", type=Path, default=old_root / "oof_predictions.csv")
     parser.add_argument("--existing-3seed-test", type=Path, default=old_root / "test_predictions.csv")

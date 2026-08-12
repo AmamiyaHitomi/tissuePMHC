@@ -784,15 +784,15 @@ def write_report(
             effects.append((float(matrix[aa_index, position]), position + 1, aa))
     positive = [item for item in sorted(effects, reverse=True) if item[0] > 0][:10]
     negative = [item for item in sorted(effects) if item[0] < 0][:10]
-    validation_text = "未执行（smoke test 或参考文件缺失）"
+    validation_text = "Not implemented (smoke test or missing reference file)"
     if not validation.empty:
         validation_text = (
-            f"最大绝对预测差={validation['max_abs_prediction_difference'].max():.6g}；"
-            f"最小 Pearson r={validation['pearson_prediction_correlation'].min():.6f}。"
+            f"Max. absolute forecast difference ={validation['max_abs_prediction_difference'].max():.6g};"
+            f"Minimum Pearson r ={validation['pearson_prediction_correlation'].min():.6f}."
         )
-    stability_text = "仅一个 seed，未计算"
+    stability_text = "Only one seed, not calculated"
     if not stability.empty:
-        stability_text = f"seed 两两 Spearman r 中位数={stability['spearman_r'].median():.4f}。"
+        stability_text = f"Seed two two Spearman r median ={stability['spearman_r'].median():.4f}."
     seed_label = "three_seed_mean" if (pair_summary["seed"].astype(str) == "three_seed_mean").any() else "seed_mean"
     pair_overall = pair_summary[
         (pair_summary["seed"].astype(str) == seed_label)
@@ -800,54 +800,54 @@ def write_report(
         & (pair_summary["scope_type"] == "overall")
         & (pair_summary["scope_value"] == "ALL")
     ].sort_values("mean_positive_minus_negative_shap", ascending=False)
-    top_positions = "、".join(
+    top_positions = ", ".join(
         f"P{int(row.position)}={row.mean_positive_minus_negative_shap:.4f}"
         for row in pair_overall.head(3).itertuples()
     )
     lines = [
-        "# occurrence-equal tissuePMHC：E29 SHAP 生物学解释报告",
+        "#occurence-equal tissuePHC: E29 SHAP Biological Interpretation Report",
         "",
-        "## 分析对象",
+        "# Analyse object",
         "",
-        "- 数据：Human occurrence-equal 固定 train/test；正负样本保持 pair 结构。",
-        "- 模型：冻结调优 E29（global-auxiliary 与 HLA-specific 两分支）。",
-        f"- 方法：每个 tissue–HLA task 使用其自身训练样本作为 {cli.explainer} SHAP 背景，解释测试集肽序列。",
-        "- 尺度：SHAP 对应分支 logit；热图为阳性样本平均 SHAP减去阴性样本平均 SHAP。",
+        "- Data: Human occurrence-equival fixed train/test; positive and negative samples maintain pair structure.",
+        "- Model: Freezing E29 (global-auxiliary and HLA-special).",
+        f"- Method: Each tissue-HLA task uses its own training sample as a model{cli.explainer}SHAP background, explain test sequences of pyridium.",
+        "- Scale: the logit of the SHAP counterpart; the thermal map is the average of the positive samples, minus the average of the negative samples.",
         "",
-        "## 质量控制",
+        "# Quality control",
         "",
-        f"- 发布结果复现：{validation_text}",
-        f"- seed 稳定性：{stability_text}",
-        f"- task 最大误差的中位数：{additivity['max_abs_additivity_error'].median():.6g}；全局最大值：{additivity['max_abs_additivity_error'].max():.6g}。",
-        f"- 总运行时间：{elapsed:.3f} 秒。",
+        f"- The results are reproduced:{validation_text}",
+        f"- Seed stability:{stability_text}",
+        f"-Tek median for maximum error:{additivity['max_abs_additivity_error'].median():.6g};global maximum:{additivity['max_abs_additivity_error'].max():.6g}.",
+        f"- Total running time:{elapsed:.3f}Seconds.",
         "",
-        "## 配对位置结论",
+        "# Matching position conclusion",
         "",
-        f"- 在完整正负 pair 的 observed-residue attribution 对比中，最强三个位置为：{top_positions}。",
-        "- P2/P3 的突出贡献提示模型主要依赖 N 端局部 motif；P9 的次级峰与 MHC-I C 端锚定位点模式相容。",
-        "- HLA 分层热图比 tissue 汇总热图更适合做 motif 生物学解释；tissue 图仍会混合其 HLA 构成。",
+        f"- In the complete positive-fair comparison of observed-redue attachment, the top three positions are:{top_positions}.",
+        "- The P2/P3 prominent contribution hint model relies mainly on the N end local motif; the secondary peak of P9 is compatible with the MHz-IC end anchor position point mode.",
+        "- HLA stratum thermal maps are better suited to be motif biologically interpreted than Tissue summary heat maps; the tissue figure still mixes its HLA composition.",
         "",
-        "## 最强正向残基-位置信号",
+        "# The strongest signal to the base - position",
         "",
-        "|排名|位置|残基|阳性−阴性 mean SHAP|",
+        "The ranking of the -negative means SHAP-",
         "|---:|---:|:---:|---:|",
     ]
     lines.extend(f"|{i}|{position}|{aa}|{effect:.6f}|" for i, (effect, position, aa) in enumerate(positive, 1))
-    lines.extend(["", "## 最强负向残基-位置信号", "", "|排名|位置|残基|阳性−阴性 mean SHAP|", "|---:|---:|:---:|---:|"])
+    lines.extend(["", "# The most negative base - position signal", "", "The ranking of the -negative means SHAP-", "|---:|---:|:---:|---:|"])
     lines.extend(f"|{i}|{position}|{aa}|{effect:.6f}|" for i, (effect, position, aa) in enumerate(negative, 1))
     lines.extend(
         [
             "",
-            "## 解释边界",
+            "# Explain the boundary",
             "",
-            "1. 最终 E29 使用 task 内 percentile-rank 融合，该步骤不可微；因此结果是可审计的分支级 Expected-IG SHAP 近似，branch consensus 只是描述性平均。",
-            "2. SHAP 描述模型依赖，不证明因果机制；位置/残基结论需与已知 HLA motif 或独立实验验证交叉确认。",
-            "3. task 条件背景消除了组织/HLA 基线差异；结果解释的是同一 tissue–HLA 内的序列判别，而不是组织变量本身的因果效应。",
-            "4. occurrence-equal 设计降低了跨组织出现次数混杂，但不能消除来源蛋白、检测流程和数据库收录偏差。",
+            "1. Ultimately, E29 uses the percentile-rank integration in task, which is not insignificant; thus, the result is that the auditable branch level Expected-IG SHAP approximates that the branch consensus is merely descriptive average.",
+            "The SHAP description model relies on the non-proven causal mechanisms; location/residual base conclusions need to be cross-established with known HLA motif or independent experimental validation.",
+            "The background of the task condition removes the baseline differences in the organization/HLA; the result is explained by the sequence differentiation within the same tissue-HLA, rather than by the causal effect of the tissue variable itself.",
+            "4. The design of the occurrence-equival has reduced the number of interorganizational mixings, but has not eliminated the differences in source protein, detection processes and database intake.",
             "",
         ]
     )
-    (cli.output_dir / "SHAP_ANALYSIS_REPORT_zh.md").write_text("\n".join(lines), encoding="utf-8")
+    (cli.output_dir / "SHAP_ANALYSIS_REPORT.md").write_text("\n".join(lines), encoding="utf-8")
 
 
 def append_timing(rows: list[dict[str, Any]], seed: Any, stage: str, seconds: float) -> None:

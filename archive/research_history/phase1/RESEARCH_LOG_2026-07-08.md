@@ -1,42 +1,42 @@
-# 2026.7.8 研究日志
+# 2026.7.8 Research log
 
-## 1. 今日目标
+## 1. Targets for today
 
-今天的目标是完成并分析：
+Today ' s objective is to complete and analyse:
 
 ```text
 E8: validation-weighted soft ensemble of global branch and HLA branch
 ```
 
-E8 延续 E7 的两阶段设计，但不再 hard selection。
+E8 Continues the two-stage design of E7 but no longer has design.
 
-`hard selection` 指每个 task 只能二选一：要么使用 global branch，要么使用 HLA branch。
-E7 的结果说明这种二选一机制不够稳定。
+`hard selection` means that each task can only be selected by one option: either using global branch or HLA branch.
+The results of E7 indicate that this alternative mechanism is not stable enough.
 
-E8 改为 soft ensemble：
+E8 to soft answer:
 
 ```text
 final_score = w_hla * hla_score + (1 - w_hla) * global_score
 ```
 
-`soft ensemble` 指把多个模型的预测分数按权重融合，而不是只选其中一个模型。
-这里的 `prediction score` 是模型输出的正类概率。
+ZXQ0QZ refers to the integration of the projected scores of multiple models by weight, rather than one of the models.
+Here `prediction score` is the positive probability of model output.
 
-## 2. E8 代码
+## 2. E8 Code
 
-新增脚本：
+Add script:
 
 ```text
 scripts/run_tissuepmhc_soft_ensemble.py
 ```
 
-输出目录：
+Output directory:
 
 ```text
 results/tissuePMHC_soft_ensemble/
 ```
 
-主要输出文件：
+Main output file:
 
 ```text
 per_task_metrics.csv
@@ -48,7 +48,7 @@ comparison_metrics.csv
 metadata.json
 ```
 
-E8 使用 3 个 seed：
+E8 Use 3 seed:
 
 ```text
 20260704
@@ -56,7 +56,7 @@ E8 使用 3 个 seed：
 20260706
 ```
 
-训练参数：
+Training parameters:
 
 ```text
 device: cuda
@@ -71,32 +71,32 @@ validation_fraction: 0.2
 selection_metric: AUROC
 ```
 
-## 3. E8 实验设计
+## 3. E8 Experimental design
 
-E8 使用 leakage-safe 两阶段流程：
-
-```text
-1. 从 train 中切出 train-core 和 validation。
-2. 用 train-core 训练 validation global branch。
-3. 用 train-core 内每个 HLA group 训练 validation HLA branch。
-4. 在 validation 上得到每个 task 的 global_validation_metric 和 hla_validation_metric。
-5. 用完整 train 重新训练 final global branch。
-6. 用完整 train 内每个 HLA group 重新训练 final HLA branch。
-7. 在 test 上得到 global_score 和 hla_score。
-8. 用 validation 决定的权重融合 test score。
-```
-
-这样做的目的：
+E8 Use two-stage process:
 
 ```text
-validation 只用于决定融合权重。
-test 只用于最终评估。
-final branch 使用完整 train 训练，和 E2 使用相同训练数据量。
+1. Cuts the Train-core and value from the Train.
+2. Train with train-core valuation global branch.
+3. Train each HLA group in the train-core.
+4. Get every global_validation_metric and hla_validation_metric on the value.
+5. Retrain with complete train.
+6. Retrain every HLA group in the complete train.
+7. Get global_score and hla_score on test.
+8. The weights decided by the validation merge.
 ```
 
-## 4. E8 三种策略
+The purpose of this is to:
 
-E8 同时测试三种融合策略：
+```text
+The value is used only to determine the weight of integration.
+The test is only used for the final evaluation.
+Final branch uses complete trainee training and E2 uses the same amount of training data.
+```
+
+## 4. E8 Three strategies
+
+E8 tests three integration strategies:
 
 ```text
 E8a: e8a_fixed_average
@@ -106,14 +106,14 @@ E8c: e8c_validation_softmax
 
 ### 4.1 E8a fixed average
 
-固定平均：
+Fixed average:
 
 ```text
 hla_weight = 0.5
 global_weight = 0.5
 ```
 
-也就是：
+That is:
 
 ```text
 final_score = 0.5 * hla_score + 0.5 * global_score
@@ -121,33 +121,33 @@ final_score = 0.5 * hla_score + 0.5 * global_score
 
 ### 4.2 E8b validation-delta clipped
 
-根据 validation AUROC 差值调整 HLA 权重：
+Adjusting the HLA weight to value AUROC margin:
 
 ```text
 delta = hla_validation_auroc - global_validation_auroc
 hla_weight = clip(0.5 + 5.0 * delta, 0.15, 0.85)
 ```
 
-`clip` 指把数值限制在指定范围内。
-这里 HLA 权重不会低于 0.15，也不会高于 0.85。
+`clip` means that values are limited to the specified range.
+Here HLA weights are not below 0.15 or 0.85.
 
 ### 4.3 E8c validation softmax
 
-用 validation AUROC 的 softmax 生成权重。
+Generates weights with value AUROC's softmax.
 
-`softmax` 是一种把多个分数转换成非负权重且总和为 1 的函数。
-本实验中 softmax temperature 为：
+`softmax` is a function that converts multiple fractions to non-negative weights and totals 1.
+The softmax experiment is:
 
 ```text
 0.02
 ```
 
-`temperature` 控制 softmax 的尖锐程度。
-temperature 越小，权重越容易接近 0 或 1。
+`temperature` controls the sharpness of the softmax.
+The smaller the weight, the easier it is to approach 0 or 1.
 
-## 5. E8 主要结果
+## 5. E8 Main findings
 
-整体结果如下：
+The overall results are as follows:
 
 | model | mean AUROC | mean AUPRC | mean accuracy | mean MCC | worst-10 mean AUROC |
 |---|---:|---:|---:|---:|---:|
@@ -157,9 +157,9 @@ temperature 越小，权重越容易接近 0 或 1。
 | E8b validation-delta clipped | 0.8046 | 0.7916 | 0.7314 | 0.4660 | 0.7304 |
 | E8c validation softmax | 0.8020 | 0.7890 | 0.7274 | 0.4583 | 0.7279 |
 
-E8 明确超过 E2 和 E7。
+E8 is clearly above E2 and E7.
 
-E8a 相比 E2：
+E8a compared to E2:
 
 ```text
 mean AUROC  +0.0122
@@ -168,7 +168,7 @@ mean accuracy +0.0133
 mean MCC    +0.0253
 ```
 
-E8b 相比 E2：
+E8b is compared to E2:
 
 ```text
 mean AUROC  +0.0119
@@ -177,7 +177,7 @@ mean accuracy +0.0134
 mean MCC    +0.0256
 ```
 
-E8c 相比 E2：
+E8c compared to E2:
 
 ```text
 mean AUROC  +0.0092
@@ -186,7 +186,7 @@ mean accuracy +0.0094
 mean MCC    +0.0179
 ```
 
-按 task-seed rows 统计，AUROC 提升数量为：
+The number of AUROC upgrades by task-seed rows is:
 
 ```text
 E8a fixed average: 91 / 132 improved
@@ -194,12 +194,12 @@ E8b delta clipped: 88 / 132 improved
 E8c softmax:       84 / 132 improved
 ```
 
-`task-seed row` 指一个 task 在一个 seed 下的一条评估记录。
-44 个 task 乘 3 个 seed，一共 132 条。
+`task-seed row` means a task under an evaluation record in a seed.
+44 tasks multiplied by 3 seeds, 132 total.
 
-## 6. E8 权重分析
+## E8 weight analysis
 
-三种策略的 HLA 权重分布：
+The distribution of HLA weights for three strategies:
 
 | strategy | mean HLA weight | std | min | max |
 |---|---:|---:|---:|---:|
@@ -207,21 +207,21 @@ E8c softmax:       84 / 132 improved
 | E8b delta clipped | 0.4576 | 0.1461 | 0.1500 | 0.8500 |
 | E8c softmax | 0.4228 | 0.2567 | 0.0073 | 0.9868 |
 
-E8c 权重过于极端，接近 E7 的 hard selection。
-这可能解释了为什么 E8c 弱于 E8a 和 E8b。
+E8c weight is too extreme, close to E7 hard section.
+This may explain why E8c is weaker than E8a and E8b.
 
-最重要的观察：
+Most important observation:
 
 ```text
-最简单的 E8a fixed average 表现最好。
+The simplest E8a fixter performance.
 ```
 
-这说明 validation AUROC 对 task-level 权重的估计仍有噪声。
-固定平均没有过度相信 validation，因此更稳。
+This suggests that there is still noise in the estimation of the weight of the task-level.
+The fixed average does not over-construct value, so it's more stable.
 
-## 7. E8 task-level 结果
+## 7. E8 task-level results
 
-E8a 提升最大的 task：
+E8a Uplifts the biggest task:
 
 | target_tissue | mhc_restriction | AUROC delta vs E2 |
 |---|---:|---:|
@@ -231,7 +231,7 @@ E8a 提升最大的 task：
 | lymphoid | HLA-B*51:01 | +0.0369 |
 | lymphoid | HLA-B*27:05 | +0.0342 |
 
-E8a 下降最大的 task：
+E8a: The biggest drop:
 
 | target_tissue | mhc_restriction | AUROC delta vs E2 |
 |---|---:|---:|
@@ -241,212 +241,212 @@ E8a 下降最大的 task：
 | blood | HLA-C*05:01 | -0.0144 |
 | lymphoid | HLA-C*05:01 | -0.0122 |
 
-E8a 不只是提升少数 task。
-它在大多数 task-seed rows 上提升，并且 worst-10 mean AUROC 也从 E2 的 0.7178 提升到 0.7295。
+E8a is not just raising a few tasks.
+It is raised on most task-seed rows and works-10 means AUROC from 0.7178 of E2 to 0.7295.
 
-这说明 E8 改善了整体性能，也改善了困难 task 的下界。
+This suggests that E8 has improved overall performance and has improved the bottom of the difficult task.
 
-## 8. 为什么 E8 比 E2 高
+## 8. Why E8 is higher than E2
 
-E2 是：
+E2 is:
 
 ```text
 shared peptide encoder + task-specific heads
 ```
 
-E2 的优势是 global sharing。
-所有 44 个 tissue-HLA task 共享一个 peptide encoder，因此能学习跨 HLA、跨 tissue 的通用 peptide pattern。
+E2 has the advantage of global shareing.
+All 44 tissue-HLA task share a peptide encoder, thus learning generic peptide paper from across HLA, and across the tessué.
 
-但是 E2 的限制是：
+But E2 limits are:
 
 ```text
-所有 task 共用同一个 peptide representation。
+All task shares the same peptide re-entry.
 ```
 
-这可能让 encoder 更偏向全局平均规律，对 HLA-specific peptide pattern 不够敏感。
+This may make encoder more global averages and less sensitive to HLA-special peptide methodology.
 
-E8 增加了 HLA branch：
+E8 added HLA brach:
 
 ```text
 within-HLA shared peptide encoder + task-specific heads
 ```
 
-HLA branch 更容易学习某个 HLA allele 内部的 peptide motif。
+HLAbranch can learn more easily about some of the alpha alleles in the medium.
 
-`motif` 指序列中反复出现、具有功能意义的模式。
-在 HLA-I 9-mer peptide 中，某些位置的氨基酸常常对 HLA binding 很关键。
-这些关键位置也常被称为 `anchor residues`。
+`motif` refers to a recurring, functional pattern in the sequence.
+In HLA-I9-mer peptide, amino acids are often critical to HLA binting at certain locations.
+These key positions are also often referred to as `anchor residues`.
 
-E8 的成功说明：
-
-```text
-global branch 和 HLA branch 存在互补信息。
-```
-
-global branch 学到跨 HLA 的通用呈递信号。
-HLA branch 学到 HLA-specific binding preference。
-soft ensemble 把两者合并，因此超过 E2。
-
-## 9. 为什么 E8 比 E7 高
-
-E7 使用 hard selection：
+E8 Success statement:
 
 ```text
-每个 task 只能选 global branch 或 HLA branch。
+Complementarity information exists for global branch and HLA brach.
 ```
 
-如果 validation set 上的选择有噪声，E7 会完全丢掉另一个 branch 的信息。
+Global branch learns universal delivery signals across HLA.
+HLAbranch learns HLA-special finding preference.
+Soft Esmble merges the two, so it exceeds E2.
 
-E8 使用 soft ensemble：
+## 9. Why E8 is higher than E7
+
+E7 with hard section:
+
+```text
+Only global or HLA brach is selected for each task.
+```
+
+If the selection on validation set is noisey, E7 will completely lose another branch message.
+
+E8 with soft Esmble:
 
 ```text
 final_score = w_hla * hla_score + (1 - w_hla) * global_score
 ```
 
-即使某个 branch 在 validation 上略弱，它仍然能贡献一部分信息。
+Even if some branch is weak on value, it can still contribute some information.
 
-因此 E8 比 E7 稳定得多。
+So E8 is much more stable than E7.
 
-从结果看：
+From the results:
 
 ```text
 E7 mean AUROC = 0.7904
 E8a mean AUROC = 0.8050
 ```
 
-这说明问题不在于 HLA branch 没有价值，而在于 E7 使用 HLA branch 的方式太硬。
+The problem is not that HLA branch is worthless, but that E7 uses HLA branch in a way too hard.
 
-## 10. E8 逻辑可信性审计
+## E8 Logical credibility audit
 
-今天对 E8 进行了逻辑可信性分析。
+Today E8 is being analysed for logical credibility.
 
-结论：
+Conclusions
 
 ```text
-E8 的逻辑通路是可信的。
-E8 在当前 tissuePMHC standard split 下的结果大概率是真实的。
+The logic of E8 is credible.
+E8 The results under the current TissuePMHC standandard standard are probably true.
 ```
 
-### 10.1 没有明显 test leakage
+### 10.1 Not evident
 
-E8 的权重来自 validation，不来自 test。
+E8 weights are from value, not test.
 
-代码流程是：
+The code process is:
 
 ```text
 train → train-core + validation
-validation branch 只在 train-core 上训练
-validation metric 只在 validation 上计算
-final branch 用完整 train 重新训练
-test 只用于最终评估
+validationbranch only trains on train-core
+validation metric only calculates on validation
+Full train retrain
+Test only for final evaluation
 ```
 
-因此 E8 没有直接用 test set 调权重。
+So E8 doesn't directly use test set weight.
 
-特别是 E8a：
+In particular, E8a:
 
 ```text
 hla_weight = 0.5
 ```
 
-E8a 完全不使用 validation metric 调权重。
-它仍然是最强模型。
-这进一步支持 E8 的提升来自 global/HLA score 的真实互补，而不是 validation 调参带来的偶然收益。
+E8a does not use value metric weighting at all.
+It's still the strongest model.
+This further supports the E8 upgrade from the true complementarities of the global/HLA score, rather than the incidental benefits of the validation.
 
-### 10.2 分支覆盖完整
+### 10.2 Branch coverage complete
 
-检查结果：
+Results of the inspection:
 
 ```text
-每个 seed:
+Seed:
 validation global: 44 tasks
 validation HLA:    44 tasks
 test global:       44 tasks
 test HLA:          44 tasks
 ```
 
-最终每个 seed、每个 E8 strategy 都有 44 个 task 结果。
+Eventually, every Seed, every E8 Strategy has 44 tabs.
 
-### 10.3 score 对齐基本可信
+### 10.3 score alignment is largely credible
 
-E8 融合要求：
+E8 Integration requirements:
 
 ```text
-global_score[i] 和 hla_score[i] 对应同一个 test sample。
+The global_score[i] and hla_score[i] correspond to the same test screen.
 ```
 
-代码中已经检查：
+Checked in code:
 
 ```text
 global_test["y_true"] == hla_test["y_true"]
 ```
 
-同时，global branch 和 HLA branch 的 test 子集都来自同一个 test_df，并且过滤操作保留原始行顺序。
-因此当前 score 对齐基本可信。
+Meanwhile, the global branch and HLA brach sets of test subsets are from the same test_df and the filtering operation retains the original line order.
+So the current score alignment is basically credible.
 
-但为了论文级严谨，后续建议加入更强断言：
-
-```text
-sample_id 顺序也必须完全一致。
-```
-
-### 10.4 E8 结果不像实现 bug
-
-如果 E8 提升来自 bug，常见现象可能是：
+However, for the sake of paper-level rigour, it is suggested that the following be added with a stronger assertion:
 
 ```text
-只有某个 seed 异常高；
-只有平均 AUROC 高，但 worst-10 不高；
-复杂权重策略高，固定平均不高；
-结果集中由少数 task 拉高。
+The order of sample_id must also be fully consistent.
 ```
 
-实际结果不是这样：
+### 10.4 E8 didn't end up like a bug.
+
+If E8 upgrades are from bugs, the common phenomenon is that:
 
 ```text
-3 个 seed 都稳定高；
-worst-10 AUROC 也提升；
-最简单的 fixed average 最强；
-91/132 task-seed rows 提升。
+Only one saw is unusually high;
+Only average AUROC is high, but not worth-10;
+(a) Complex weight strategies with low fixed averages;
+The result was concentrated by a few tasks pulling up.
 ```
 
-因此，E8 的结果更符合真实 ensemble 增益，而不是明显 bug。
-
-## 11. E8 结果的边界
-
-E8 在当前 benchmark 上可信，但仍需注意：
+The result is not that:
 
 ```text
-当前 tissuePMHC split 是 closed-set。
+3 seeds are stable and high;
+The first-10 AUROC is also upgraded;
+Simplest fixover strongest;
+91/132 task-seed rows up.
 ```
 
-`closed-set` 指 test 中的 tissue、HLA 和 task 都在 train 中出现过。
+The E8 result is therefore more in line with the real ensemble gain than with the obvious bug.
 
-之前检查发现：
+## 11. E8 Ending boundary
+
+E8 is credible on the current benchmark, but still needs to be noted:
 
 ```text
-test peptide 中约 77.3% 在 train 的其他 task 出现过。
-test source protein 中约 95.8% 在 train 中出现过。
+The current TissuePMHC split is closed-set.
 ```
 
-因此 E8 当前证明的是：
+ZXQ0QZ means that the Tissue, HLA and task in the test have all appeared in the train.
+
+Previous inspection found:
 
 ```text
-在当前 closed-set tissuePMHC standard split 下，
-global sharing + HLA-specific sharing 的 soft ensemble 是最强结构。
+About 77.3% of the test peptide was found in other task in the train.
+About 95.8% of the test source protein appears in the train.
 ```
 
-但它还没有证明：
+Thus, E8 is currently proving:
 
 ```text
-对完全新 peptide、新 source protein、新 HLA 或外部数据也同样提升。
+The blogger writes about the current situation of the tissue-set tissuePHC standard split, which is a very important tool for the development of the new society.
+The global structure + HLA-special structure is the most powerful.
 ```
 
-这不是 E8 的逻辑错误，而是当前 benchmark 的泛化边界。
+But it has not yet proved:
 
-## 12. 当前模型排序
+```text
+The same is true for completely new peptide, new source protein, new HLA or external data.
+```
 
-截至 E8，当前模型排序为：
+This is not a logical error for E8 but a generalized boundary for the current benchmark.
+
+## 12. Current model sequencing
+
+As of E8, the current model is sorted as:
 
 ```text
 E8a fixed soft ensemble
@@ -470,113 +470,113 @@ E6 tissue grouped
 E4 HLA pseudo-sequence only
 ```
 
-当前建议主模型：
+Current suggested master model:
 
 ```text
 E8a fixed average soft ensemble
 ```
 
-原因：
+Reason:
 
 ```text
-结构最简单；
-mean AUROC 和 mean AUPRC 最高；
-提升稳定；
-不依赖 validation metric 调权重，因此更少过拟合 validation。
+(a) The simplest structure;
+means AUROC and means AUPRC highest;
+(b) Upgrading stability;
+Do not rely on value metric weighting, so less than the valueation.
 ```
 
-E8b 可以作为稳健备选：
+E8b can be a sound alternative:
 
 ```text
-MCC 和 worst-10 AUROC 略高于 E8a。
+MCC and World-10 AUROC are slightly higher than E8a.
 ```
 
-## 13. 下一步计划
+## 13. Next steps
 
-下一步不建议继续立刻堆复杂模型。
-应先做 E8 的可信性确认和泛化边界分析。
+It is not recommended that the complex model continue to be built immediately.
+The credibility of E8 should be confirmed and the border generalized analysis undertaken.
 
-推荐下一步：
+Suggesting next steps:
 
 ```text
-当日临时建议：E8 validation and stress tests
-（后续复盘后，不再把它作为正式 E9；正式 E9 主线见第 15 节。）
+Provisional recommendation: E8 valuation and stand measures
+(Return to formal E9 after the subsequent retreading; for official E9 mainline see section 15.
 ```
 
-具体包括：
+These include:
 
 ```text
-1. 加入 sample_id 对齐断言。
-   确认 global_score 和 hla_score 融合时对应完全相同的 test sample。
+1. Add sample_id alignment assertion.
+   Confirms that the global_score and hla_score blends correspond to exactly the same test screen.
 
-2. 做 negative control。
-   随机打乱 HLA branch score 后再 ensemble。
-   如果性能掉回 E2 附近或更低，说明 E8 提升来自真实互补信息。
+2. Do the nigative control.
+   Randomly disrupt HLAbranch score before opening.
+   If performance falls back near or lower than E2, then E8 upgrades come from real complementary information.
 
-3. 做 peptide-disjoint 或 protein-disjoint split。
-   测试 E8 在更严格泛化设置下是否仍超过 E2。
+3. Do peptide-disjoint or protein-disjoint split.
+   Test whether E8 still exceeds E2 under a more stringent generalization set.
 
-4. 增加 seed 数量。
-   将 E8a/E8b 从 3 seeds 扩展到 5 或 10 seeds。
+4. Increase the number of seeds.
+   Expand E8a/E8b from 3 seeds to 5 or 10 seeds.
 
-5. 分析 global_score 与 hla_score 的相关性。
-   如果两者相关但不完全相同，说明 ensemble 的增益来源合理。
+5. Analyses the relevance of global_score to hla_score.
+   If the two are relevant but not identical, indicate that the gains are reasonably generated by the Esemble.
 ```
 
-`negative control` 指故意破坏模型中的某个关键结构，检查性能是否下降。
-如果破坏后性能不下降，说明原始提升可能不可信。
-如果破坏后性能明显下降，说明原始结构确实有作用。
+`negative control` means the intentional destruction of a key structure in the model to check for performance decline.
+If performance does not decline after destruction, this may indicate that the original upgrade may not be credible.
+If the performance is significantly reduced after destruction, this suggests that the original structure does work.
 
-## 14. 今日结论
+## 14. Conclusion today
 
-今天最重要的结论是：
+The most important conclusion today is that:
 
 ```text
-E8 soft ensemble 明确超过 E2，成为当前最强模型。
+E8 soft Emble is clearly above E2, becoming the strongest model at present.
 ```
 
-更具体地说：
+More specifically:
 
 ```text
-E2 证明 multi-task shared peptide encoder 有效。
-E6 证明 HLA-specific sharing 有局部价值，但单独使用会损失 global information。
-E7 证明 hard selection 不稳定。
-E8 证明 global sharing 与 HLA-specific sharing 可以通过 soft ensemble 互补。
+E2 proves multi-task validated peptide encoded.
+E6 proves that HLA-special share has a partial value but that its use alone would have lost global information.
+E7 proves hard supply is unstable.
+E8 proves that global supply and HLA-special supply can be complemented by soft additional.
 ```
 
-因此，当前 tissuePMHC 的阶段性核心发现是：
+The current tissuePMMHC core findings are therefore:
 
 ```text
-最佳结构不是单一 global sharing，也不是单一 HLA grouping，
-而是 global branch + HLA-specific branch 的 soft ensemble。
+The best structure is not a single global structure, nor is it a single HLA grouping,
+It's a global branch + HLA-special branch soft ensemble.
 ```
 
-该结果在当前 standard split 下可信。
-但在写正式报告或论文时，必须明确说明：
+The result is now credible under the current standard split.
+However, when writing an official report or paper, it must be clearly stated that:
 
 ```text
-当前结论主要适用于 closed-set tissuePMHC benchmark。
-更严格的新 peptide / 新 protein / 外部数据泛化仍需后续验证。
+The current conclusions apply mainly to closed-set issuesPHC benchmark.
+A more rigorous new peptide/ new protein/ external data aggregation still needs to be validated.
 ```
 
-## 15. 后续主线校正说明
+## 15. Description of follow-up main line correction
 
-后续复盘时确认：本项目从 E6 到 E8 的主线应明确归为 E2 线，而不是 E4 线。
+The follow-up retune confirmed that the main line of the item, from E6 to E8, should be clearly classified as E2 instead of E4.
 
-E2 线指：
+E2 Thread:
 
 ```text
 shared peptide encoder + task-specific heads
 ```
 
-这条线关注的是：
+This line is concerned with:
 
 ```text
-task 之间应该如何共享 peptide encoder；
-global sharing、HLA-specific sharing、selective sharing、soft ensemble 哪种更合适。
+How to share the picture between tasks;
+Which is more appropriate for a global share, HLA-special share, slective share, soft esmble.
 ```
 
-因此，E6、E7、E8 的谱系应理解为：
+The spectrometry of E6, E7 and E8 should therefore be understood as:
 
 ```text
 E2 shared heads
@@ -585,25 +585,25 @@ E2 shared heads
 → E8 global branch + HLA branch soft ensemble
 ```
 
-E4 线指：
+E4 Thread:
 
 ```text
 peptide encoder + tissue embedding + HLA pseudo-sequence encoder
 ```
 
-这条线关注的是：
+This line is concerned with:
 
 ```text
-HLA pseudo-sequence 这种生物表示是否有价值；
-HLA ID、HLA pseudo-sequence、hybrid HLA representation 哪种更合适。
+HLA pseudo-equality is a value expressed by this creature;
+Which would be more appropriate for HLA ID, HLA pseudo-equality, hybrid HLA representation?
 ```
 
-由于 E4 在 standard split 上没有超过 E2，所以 E4 暂时不作为后续性能主线。
-E4 应保留为 biological representation branch，也就是生物表示分析线。
+E4 is not the main follow-up performance line for the time being, as E4 is not above E2 on standard split.
+E4 should be retained as biological representational branch, i.e., biological expression analytical line.
 
-因此，原 roadmap 中后续优化方法的底座应校正为 E2 线。
-同时，由于后续实际新增了 E7 hard selection 和 E8 soft ensemble，
-原 roadmap 中更靠后的方法编号需要顺延：
+The base of the follow-up optimization method in the original roadmap should therefore be corrected to E2.
+E7 hard addition and E8 solid update,
+The more backward method numbering in the original roadmap needs to be delayed:
 
 ```text
 E6: HLA/tissue task grouping on E2
@@ -614,13 +614,13 @@ E10: MMoE / PLE selective-sharing model on the E2/E8 shared-head line
 E11: E2 + DB-MTL
 ```
 
-`CAGrad` 指 Conflict-Averse Gradient Descent，用于缓解不同 task 的梯度冲突。
-`DB-MTL` 是一种动态多任务学习方法，用于平衡不同 task 的 loss scale 和 gradient magnitude。
-`MMoE` 和 `PLE` 都属于 selective-sharing model，用于让不同 task 自动选择不同程度的共享。
+ZXQ0QZ means Confect-Averse Gradient Descent, used to mitigate gradient conflicts between different tabs.
+`DB-MTL` is a dynamic multitasking learning method that balances lossscape and gradient magnitude for different task.
+ZXQ0QZ and ZXQ1QZ are both part of the secret-sharing mode that allows different tabs to automatically choose different levels of sharing.
 
-因此，后续研究顺序应为：
+The order of follow-up studies should therefore read:
 
 ```text
-先沿 E2/E8 性能主线继续完成 E9 CAGrad、E10 MMoE/PLE、E11 DB-MTL 等原 roadmap 内容；
-之后再研究 E8 reliability、stress tests、disjoint split 等新 roadmap 扩展内容。
+Continue with the original roadmap content of E9 CAGrad, E10 MMOE/ PLE, E11 DB-MTL, etc. along the E2/E8 performance main line;
+The new roadmap extension E8 reliability, stress tess, disjoint split.
 ```

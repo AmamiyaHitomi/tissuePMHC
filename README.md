@@ -158,7 +158,7 @@ python extra_occurrence_equal_dataset/aggregate_v7_paper_results.py
 ```
 
 See
-[`extra_occurrence_equal_dataset/README_zh.md`](extra_occurrence_equal_dataset/README_zh.md)
+[`extra_occurrence_equal_dataset/README.md`](extra_occurrence_equal_dataset/README.md)
 for the frozen protocol, individual experiment entry points, and output layout.
 
 ### Mouse occurrence-equal experiments
@@ -172,7 +172,7 @@ python extra_mouse_occurrence_equal_dataset/aggregate_v7_paper_results.py
 ```
 
 See
-[`extra_mouse_occurrence_equal_dataset/README_zh.md`](extra_mouse_occurrence_equal_dataset/README_zh.md)
+[`extra_mouse_occurrence_equal_dataset/README.md`](extra_mouse_occurrence_equal_dataset/README.md)
 for the Mouse-specific protocol and provenance notes.
 
 Training programs report per-epoch, per-seed, and total runtime information.

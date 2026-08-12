@@ -239,7 +239,7 @@ The current evidence does not support claims that:
 | E26 OOF selection | `scripts/run_tissuepmhc_e26_all_in_one.py`; `scripts/run_tissuepmhc_e26_greedy_ensemble_selection.py` |
 | E27 stacking | `scripts/run_tissuepmhc_e27_stacked_generalization.py` |
 | E29 CNN and OOF screen | `scripts/run_tissuepmhc_e29_multikernel_cnn_oof.py` |
-| E29 five-seed extension | `E29_5SEED_PREREGISTRATION_zh.md`; `scripts/run_tissuepmhc_e29_incremental_5seed.py` |
+| E29 five-seed extension | `E29_5SEED_PREREGISTRATION.md`; `scripts/run_tissuepmhc_e29_incremental_5seed.py` |
 | Frozen E29 result | `results/tissuePMHC_e29_multikernel_cnn_5seed/` |
 
 ## 11. Method references

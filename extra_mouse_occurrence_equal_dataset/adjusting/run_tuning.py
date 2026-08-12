@@ -31,7 +31,7 @@ import common  # noqa: E402
 
 SEEDS = [20260704, 20260705, 20260706]
 RESULT_LABEL = "TissuePMHC (tuned; mouse-training-CV-selected)"
-RESULT_LABEL_ZH = "tissuePMHC（调参后版本；小鼠训练集CV选择）"
+RESULT_LABEL_EN = "TissuePMHC (tuned; mouse-training-CV-selected)"
 METRIC_COLUMNS = [
     "accuracy",
     "balanced_accuracy",
@@ -753,7 +753,7 @@ def main() -> None:
     locked = config_map[locked_name]
     locked_payload = {
         "result_label": RESULT_LABEL,
-        "result_label_zh": RESULT_LABEL_ZH,
+        "result_label_en": RESULT_LABEL_EN,
         **asdict(locked),
     }
     (output_dir / "locked_config.json").write_text(
@@ -864,7 +864,7 @@ def main() -> None:
 
     metadata = {
         "result_label": RESULT_LABEL,
-        "result_label_zh": RESULT_LABEL_ZH,
+        "result_label_en": RESULT_LABEL_EN,
         "created_at": datetime.now(timezone.utc).astimezone().isoformat(),
         "device": device,
         "cuda_device": torch.cuda.get_device_name(0) if device == "cuda" else None,

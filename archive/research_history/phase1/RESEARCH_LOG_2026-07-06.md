@@ -1,8 +1,8 @@
-# 2026.7.6 研究日志
+# 2026.7.6 Research log
 
-## 1. 今日目标
+## 1. Targets for today
 
-今天的目标是继续 2026.7.5 日志中提出的下一步实验，重点完成并评估：
+The objective today is to continue the next experiment presented in the log, focusing on completion and evaluation:
 
 ```text
 E4: conditioned model with tissue embedding + HLA pseudo-sequence
@@ -10,31 +10,31 @@ E4b: conditioned model with tissue embedding + HLA ID embedding + HLA pseudo-seq
 E5: E2 shared peptide encoder + task-specific heads + FAMO
 ```
 
-`HLA` 是 Human Leukocyte Antigen，人类白细胞抗原。这里的 HLA allele 例如 `HLA-A*02:01`，表示一个具体 HLA 等位基因。
+ZXQ0QZ is Human Leukocyte Antigen, human white cell antigen. Here, for example, `HLA-A*02:01`, which represents a specific HLA-like gene.
 
-`pseudo-sequence` 指从 HLA 蛋白序列中抽取的一小段关键氨基酸位点序列，通常选取和 peptide binding 相关的 residue positions。`residue position` 指蛋白序列中的氨基酸编号。
+ZXQ0QZ refers to a small number of key amino acid sites extracted from the HLA protein sequence, usually selected for the remediate positions associated with the peptide binting. ZXQ1QZ refers to the amino acid number in the protein sequence.
 
-`FAMO` 是 Fast Adaptive Multitask Optimization，一种自适应多任务优化方法。它会动态调整不同 task 的 loss 权重，目标是让不同任务的训练进展更均衡。
+ZXQ0QZ is Fast Adaptive Multitask Implementation, a self-adapted multitasking optimization method. It dynamically adjusts the loss weights of different task tasks with the goal of making training more balanced.
 
-## 2. 新增和修改的代码
+## 2. New and modified codes
 
-今天新增了 4 个主要文件或结果表相关脚本。
+Four additional scripts have been added today, either to the main document or to the results sheet.
 
-### 2.1 HLA pseudo-sequence 构建脚本
+### 2.1 HLA pseudo-security build script
 
-新增脚本：
+Add script:
 
 ```text
 scripts/build_hla_pseudo_sequences.py
 ```
 
-用途：
+Purpose:
 
 ```text
-从 IPD-IMGT/HLA 官方蛋白 FASTA 中抽取当前数据集需要的 HLA class I pseudo-sequence。
+Take the HLA data items I pseudo-equality from the official IPD-IMG/HLA protein FASTA.
 ```
 
-输入 FASTA：
+Enter FASTA:
 
 ```text
 data/processed/A_prot.fasta
@@ -42,13 +42,13 @@ data/processed/B_prot.fasta
 data/processed/C_prot.fasta
 ```
 
-输出：
+Output:
 
 ```text
 data/processed/hla_pseudo_sequences.csv
 ```
 
-生成的 pseudo-sequence 覆盖当前数据集中全部 12 个 HLA allele：
+Generated pseudo-equality overwrite all 12 HLA allele:
 
 ```text
 HLA-A*02:01
@@ -65,40 +65,40 @@ HLA-C*05:01
 HLA-C*12:02
 ```
 
-每条 pseudo-sequence 长度为 34。
+The length of pseudo-equality per article is 34.
 
-构建方法：
+Build method:
 
 ```text
-1. 从 IPD-IMGT/HLA protein FASTA 读取 HLA-A、HLA-B、HLA-C 蛋白序列。
-2. 去除 N-terminal signal peptide 的前 24 个氨基酸。
-3. 按 NetMHCpan-style 34 个 MHC-I binding-site positions 抽取氨基酸。
-4. 写出 hla,pseudo_sequence,source 等字段。
+1. Reads the HLA-A, HLA-B, HLA-C protein sequence from IPD-IMGT/ HLA protein FASTA.
+2. Removes the former 24 amino acids from N-terminal signature peptide.
+3. The amino acid is extracted by using the NetMHCpan-style 34 MHC-I binding-site positions.
+4. Write the phrase " hla, pseudo_segment, sourge " .
 ```
 
-这里 `signal peptide` 指蛋白质 N 端用于引导分泌或膜定位的一段短序列。IPD-IMGT/HLA FASTA 中包含这段序列，而常见 MHC-I pseudo-sequence position 通常按成熟蛋白编号，所以需要先去掉前 24 个氨基酸。
+Here ZXQ0QZ refers to a short sequence of protein N end used to guide the positioning of the secretion or membrane. The sequence is contained in IPD-IMGT/HLA FASTA, and the common MHz-I pseudo-sequience position is usually numbered as mature proteins, so 24 amino acids need to be removed first.
 
-### 2.2 E4 HLA pseudo-sequence 脚本
+### 2.2 E4 HLA pseudo-sequience script
 
-新增脚本：
+Add script:
 
 ```text
 scripts/run_tissuepmhc_hla_pseudoseq.py
 ```
 
-用途：
+Purpose:
 
 ```text
-比较 E3 HLA ID embedding 与 E4 HLA pseudo-sequence encoder。
+Compare E3 HLA ID embedding with E4 HLA pseudo-segregation encoder.
 ```
 
-输出目录：
+Output directory:
 
 ```text
 results/tissuePMHC_hla_pseudoseq/
 ```
 
-主要输出：
+Main output:
 
 ```text
 per_task_metrics.csv
@@ -108,21 +108,21 @@ comparison_metrics.csv
 metadata.json
 ```
 
-### 2.3 E4b hybrid 脚本
+### 2.3 E4b hybrid script
 
-新增脚本：
+Add script:
 
 ```text
 scripts/run_tissuepmhc_hla_hybrid.py
 ```
 
-用途：
+Purpose:
 
 ```text
-比较 E3、E4 和 E4b。
+Compare E3, E4 and E4b.
 ```
 
-模型定义：
+Model definitions:
 
 ```text
 E3:
@@ -135,89 +135,89 @@ E4b:
 peptide encoder + tissue embedding + HLA ID embedding + HLA pseudo-sequence encoder
 ```
 
-`embedding` 指可训练向量表示。HLA ID embedding 是把 `HLA-A*02:01` 这种类别 ID 变成可训练向量。HLA pseudo-sequence encoder 是把 HLA 的氨基酸 pseudo-sequence 编码成向量。
+ZXQ0QZ means a training vector. HLA ID embedding is a vector that converts a category of ID from `HLA-A*02:01`. HLA pseudo-sequience encoder is a vector of amino acid from HLA.
 
-输出目录：
+Output directory:
 
 ```text
 results/tissuePMHC_hla_hybrid/
 ```
 
-### 2.4 E5 FAMO 脚本
+### 2.4 E5 FAMO script
 
-新增脚本：
+Add script:
 
 ```text
 scripts/run_tissuepmhc_famo.py
 ```
 
-用途：
+Purpose:
 
 ```text
-在 E2 shared peptide encoder + task-specific heads 上测试 FAMO-style adaptive task weighting。
+Test the FAMO-first effective task testing on E2 shared index + task-special headers.
 ```
 
-为了公平比较，该脚本同时跑：
+For fair comparison, the script runs simultaneously:
 
 ```text
 E2_task_balanced
 E5_E2_FAMO
 ```
 
-`task-balanced` 指每个 training step 中，每个 task 抽取相同数量样本。这样 FAMO 与非 FAMO 的比较使用相同 batch 构造方式。
+`task-balanced` means that each piece of Training Step draws the same number of samples. This way FAMO is constructed using the same catch pattern as a non-FAMO comparison.
 
-输出目录：
+Output directory:
 
 ```text
 results/tissuePMHC_famo/
 ```
 
-额外输出：
+Additional output:
 
 ```text
 task_weight_history.csv
 ```
 
-该文件记录每个 epoch 每个 task 的 FAMO 权重。
+This document records the FAMO weights of each epoch and task.
 
-## 3. E4 实验结果：HLA pseudo-sequence 替代 HLA ID embedding
+## 3. E4 Experimental results: HLA pseudo-security replacement HLA ID embedding
 
-E4 的核心问题是：
+E4 The core issue is:
 
 ```text
-如果用 HLA pseudo-sequence encoder 替代普通 HLA ID embedding，模型是否变强？
+If HLA replaces the normal HLA ID embedding with HLA pseudo-security encoded?
 ```
 
-实验结果：
+Experimental results:
 
 | model | mean AUROC | mean AUPRC | mean accuracy | mean MCC | worst-10 mean AUROC |
 |---|---:|---:|---:|---:|---:|
 | E3 HLA embedding | 0.7833 | 0.7685 | 0.7152 | 0.4350 | 0.6992 |
 | E4 HLA pseudo-sequence | 0.7728 | 0.7606 | 0.7042 | 0.4125 | 0.6705 |
 
-`AUROC` 是 Area Under the Receiver Operating Characteristic Curve，用来衡量模型区分正负样本的整体能力。
+`AUROC` is the Area Under the Refeiver Contracting Characteristic Curve, which measures the overall ability of the model to distinguish between positive and negative samples.
 
-`AUPRC` 是 Area Under the Precision-Recall Curve，更关注正样本检出能力。
+`AUPRC` is the Area Under the Precision-Recall Curve, more concerned with the ability to detect the samples.
 
-`MCC` 是 Matthews Correlation Coefficient，是二分类任务中比较稳健的综合指标。
+ZXQ0QZ is Matthews Correlation Coefficency, a more robust composite indicator in the classification task II.
 
-E4 相比 E3：
+E4 compared to E3:
 
 ```text
-mean AUROC 下降约 0.0105
-mean AUPRC 下降约 0.0079
-mean MCC 下降约 0.0225
-worst-10 mean AUROC 下降约 0.0287
+I mean AUROC down by about 0.0105
+I mean AUPPC drops about 0.0079
+I mean MCC drops about 0.0225
+World-10 means AUROC down by about 0.0287
 ```
 
-按 task 平均：
+Press task average:
 
 ```text
 15 tasks improved
 29 tasks degraded
 ```
 
-E4 提升最大的任务：
+E4 Upgraded to the greatest task:
 
 | target_tissue | mhc_restriction | AUROC delta |
 |---|---:|---:|
@@ -227,7 +227,7 @@ E4 提升最大的任务：
 | thymus | HLA-A*24:02 | +0.0168 |
 | blood | HLA-A*24:02 | +0.0150 |
 
-E4 下降最大的任务：
+E4 The greatest downfall:
 
 | target_tissue | mhc_restriction | AUROC delta |
 |---|---:|---:|
@@ -237,36 +237,36 @@ E4 下降最大的任务：
 | blood | HLA-B*51:01 | -0.0414 |
 | lymphoid | HLA-B*40:01 | -0.0368 |
 
-按 HLA 分组，E4 的规律比较明显：
+The pattern of E4 by HLA grouping is more obvious:
 
 ```text
-HLA-A*02:01 和 HLA-A*24:02 略有收益。
-多数 HLA-B 和 HLA-C 任务下降。
+HLA-A*02:01 and HLA-A*24:02
+Most HLA-B and HLA-C missions are down.
 ```
 
-结论：
+Conclusions
 
 ```text
-HLA pseudo-sequence 不能直接替代 HLA ID embedding。
+HLA pseudo-equality cannot directly replace HLA ID embedding.
 ```
 
-原因推测：
+The reason is assumed:
 
 ```text
-当前 train/test 是 closed-set HLA setting。
+Current train/test is closed-set HLA setting.
 ```
 
-`closed-set` 指测试集里的 HLA allele 在训练集中都出现过。在这种情况下，HLA ID embedding 可以直接记住每个 allele 的任务特征，而 pseudo-sequence encoder 需要把 12 个 HLA 压缩到共享序列编码器中，反而形成了信息瓶颈。
+ZXQ0QZ refers to the HLA allele in the test set that has been present in the training centre. In this case, HLA ID embedding can remember the mission characteristics of each allele directly, and pseido-segregation encoder needs to compress 12 HLAs into shared sequence encoder, instead creating information bottlenecks.
 
-## 4. E4b 实验结果：HLA ID embedding + HLA pseudo-sequence
+## 4. E4b Experimental results: HLA ID ebeding + HLA pseudo-sequence
 
-E4b 的核心问题是：
+The core issue of E4b is:
 
 ```text
-如果不让 pseudo-sequence 替代 HLA ID，而是作为额外生物信息加入，是否会提升 E3？
+Would you upgrade E3 if pseudo-equality were not allowed to replace HLA ID but to be added as additional biological information?
 ```
 
-实验结果：
+Experimental results:
 
 | model | mean AUROC | mean AUPRC | mean accuracy | mean MCC | worst-10 mean AUROC |
 |---|---:|---:|---:|---:|---:|
@@ -274,29 +274,29 @@ E4b 的核心问题是：
 | E4b hybrid | 0.7824 | 0.7704 | 0.7133 | 0.4303 | 0.6952 |
 | E4 pseudo-sequence only | 0.7728 | 0.7606 | 0.7042 | 0.4125 | 0.6705 |
 
-E4b 相比 E3：
+E4b compared to E3:
 
 ```text
-mean AUROC 下降约 0.0009
-mean AUPRC 提升约 0.0019
-mean MCC 下降约 0.0047
-worst-10 mean AUROC 下降约 0.0039
+I mean AUROC down by about 0.0009.
+In the AUPPC upgrades
+I mean MCC down by about 0.0047
+World-10 means AUROC down by about 0.0039
 ```
 
-E4b 相比纯 E4：
+E4b is purer than E4:
 
 ```text
-明显恢复了 E4 的性能损失。
+The E4 performance loss was apparently restored.
 ```
 
-按 task 平均：
+Press task average:
 
 ```text
 21 tasks improved
 23 tasks degraded
 ```
 
-E4b 提升最大的任务：
+E4b Upgraded to the greatest task:
 
 | target_tissue | mhc_restriction | AUROC delta vs E3 |
 |---|---:|---:|
@@ -306,7 +306,7 @@ E4b 提升最大的任务：
 | lymphoid | HLA-B*51:01 | +0.0190 |
 | uterine cervix | HLA-B*07:02 | +0.0164 |
 
-E4b 下降最大的任务：
+E4b The greatest drop in tasks:
 
 | target_tissue | mhc_restriction | AUROC delta vs E3 |
 |---|---:|---:|
@@ -316,7 +316,7 @@ E4b 下降最大的任务：
 | lymphoid | HLA-A*24:02 | -0.0223 |
 | lymphoid | HLA-B*40:02 | -0.0194 |
 
-按 HLA 分组：
+Grouping by HLA:
 
 ```text
 HLA-B*07:02   +0.0071
@@ -327,63 +327,63 @@ HLA-B*40:02   -0.0126
 HLA-B*15:01   -0.0115
 ```
 
-结论：
+Conclusions
 
 ```text
-E4b 说明 pseudo-sequence 作为辅助信息有一定价值，尤其对 AUPRC 有轻微帮助。
-但 E4b 没有超过 E3，也没有超过 E2。
+E4b states that pseudo-equality has a certain value as supporting information, especially for AUPRC.
+But E4b didn't exceed E3 and did not exceed E2.
 ```
 
-因此 E4b 可以作为后续讨论中的探索性结果，但不应作为当前主模型。
+E4b could therefore be an exploratory outcome of the subsequent discussions, but not as the current master model.
 
-## 5. E5 实验结果：FAMO adaptive task weighting
+## 5. E5 Experimental results: FAMO experimental task thinking
 
-E5 的核心问题是：
+E5 The core issue is:
 
 ```text
-在当前最强的 E2 shared peptide encoder + task-specific heads 上加入 FAMO，是否能缓解 negative transfer？
+E2 shared paper encoded + task-special headers, can you ease the speed transition?
 ```
 
-`negative transfer` 指多任务学习中某些任务受到其他任务干扰，性能反而下降。
+ZXQ0QZ refers to the fact that some tasks in multitasking learning are disrupted by other tasks and performance is reduced.
 
-为了公平比较，E5 脚本使用了 task-balanced batch 构造：
+For fair comparison, the E5 script used a task-balanced batt structure:
 
 ```text
-每个 training step 中，每个 task 抽取相同数量样本。
+Each piece of the train taking a sample of the same number.
 ```
 
-比较对象：
+Compare object:
 
 ```text
 E2_task_balanced
 E5_E2_FAMO
 ```
 
-实验结果：
+Experimental results:
 
 | model | mean AUROC | mean AUPRC | mean accuracy | mean MCC | worst-10 mean AUROC |
 |---|---:|---:|---:|---:|---:|
-| 原始 E2 shared heads | 0.7927 | 0.7777 | 0.7180 | 0.4404 | 0.7178 |
+E2 shared headers 0.77777  0.7180 0.4404 0.71778
 | E2 task-balanced | 0.7819 | 0.7639 | 0.7131 | 0.4290 | 0.7036 |
 | E5 FAMO | 0.7758 | 0.7571 | 0.7077 | 0.4193 | 0.6979 |
 
-E5 FAMO 相比 E2 task-balanced：
+E5 FAMO compared to E2 task-balanced:
 
 ```text
-mean AUROC 下降约 0.0061
-mean AUPRC 下降约 0.0069
-mean MCC 下降约 0.0097
-worst-10 mean AUROC 下降约 0.0057
+I mean AUROC down by about 0.0061
+I mean AUPPC drops about 0.0009.
+I mean MCC down by about 0.0097.
+World-10 means AUROC down by about 0.0057
 ```
 
-按 task 平均：
+Press task average:
 
 ```text
 13 tasks improved
 31 tasks degraded
 ```
 
-FAMO 提升最大的任务：
+FAMO Upgraded the biggest task:
 
 | target_tissue | mhc_restriction | AUROC delta vs E2_task_balanced |
 |---|---:|---:|
@@ -393,7 +393,7 @@ FAMO 提升最大的任务：
 | brain | HLA-B*40:02 | +0.0150 |
 | lung | HLA-B*15:01 | +0.0125 |
 
-FAMO 下降最大的任务：
+FAMO The greatest drop in tasks:
 
 | target_tissue | mhc_restriction | AUROC delta vs E2_task_balanced |
 |---|---:|---:|
@@ -403,14 +403,14 @@ FAMO 下降最大的任务：
 | lymphoid | HLA-B*51:01 | -0.0227 |
 | lymphoid | HLA-B*40:01 | -0.0220 |
 
-FAMO 最终权重范围较小：
+FAMO has a smaller ultimate weight:
 
 ```text
 approximately 0.0215 to 0.0271
 uniform weight = 1 / 44 = 0.0227
 ```
 
-这说明 FAMO 没有学出很强的 task 区分。权重最高的一些任务包括：
+This means that FAMO has not learned a strong task distinction. Some of the tasks with the highest weight include:
 
 | task | final mean weight |
 |---|---:|
@@ -420,7 +420,7 @@ uniform weight = 1 / 44 = 0.0227
 | lymphoid / HLA-B*51:01 | 0.0244 |
 | lung / HLA-B*15:01 | 0.0241 |
 
-权重最低的一些任务包括：
+Some of the tasks with the lowest priority include:
 
 | task | final mean weight |
 |---|---:|
@@ -430,23 +430,23 @@ uniform weight = 1 / 44 = 0.0227
 | lymphoid / HLA-C*03:04 | 0.0212 |
 | lung / HLA-A*02:01 | 0.0215 |
 
-结论：
+Conclusions
 
 ```text
-当前 E5 FAMO 版本不成功。
+The current E5 FAMO version is not successful.
 ```
 
-更重要的观察是：
+More important observations are:
 
 ```text
-E2_task_balanced 本身也明显弱于原始 E2。
+E2_task_balanced itself is also significantly weaker than the original E2.
 ```
 
-这说明强制每个 step 对所有 task 等量采样改变了训练分布，可能破坏了原始 E2 的优势。原始 E2 使用自然混合数据分布训练，可能更适合当前数据构造。
+This means that forcing each step to sample all task equivalents changes the training distribution and may undermine the advantages of the original E2. The original E2 uses a mix of natural data distribution training that may be more appropriate for the current data configuration.
 
-## 6. 当前模型排序
+## 6. Current model sequencing
 
-结合 2026.7.5 和 2026.7.6 的结果，当前模型排序为：
+The current model is sorted as follows, in combination with the results of 2026.7.5 and 2026.7.6:
 
 ```text
 E2 shared peptide encoder + task-specific heads
@@ -461,7 +461,7 @@ E5 FAMO
 E4 HLA pseudo-sequence only
 ```
 
-主要性能对照：
+Main performance comparisons:
 
 | model | mean AUROC | mean AUPRC | mean MCC | worst-10 mean AUROC |
 |---|---:|---:|---:|---:|
@@ -472,34 +472,34 @@ E4 HLA pseudo-sequence only
 | E5 FAMO | 0.7758 | 0.7571 | 0.4193 | 0.6979 |
 | E4 pseudo-sequence only | 0.7728 | 0.7606 | 0.4125 | 0.6705 |
 
-## 7. 今日主要结论
+## 7. Main findings of the day
 
-今天最重要的结论是：
+The most important conclusion today is that:
 
 ```text
-E2 仍然是当前最强、最稳定的主 baseline。
+E2 remains the strongest and most stable major.
 ```
 
-更具体地说：
+More specifically:
 
-1. HLA pseudo-sequence 不能直接替代 HLA ID embedding。
-2. HLA ID embedding + HLA pseudo-sequence 的 hybrid model 能明显修复纯 pseudo-sequence 的性能损失，但没有超过 E3。
-3. E4b 的 AUPRC 略高于 E3，说明 pseudo-sequence 可能对正样本检出有轻微信息增益。
-4. FAMO 当前版本没有提升 E2，反而降低 mean AUROC、mean AUPRC、MCC 和 worst-10 AUROC。
-5. task-balanced sampling 本身削弱了 E2，说明当前数据的自然训练分布可能比强制任务均衡更适合。
-6. negative transfer 仍然存在，但更可能需要通过 task grouping 或 selective sharing 解决，而不是简单 loss weighting。
+1. HLA pseudo-equality cannot directly replace HLA ID embedding.
+2. HLA ID embedding + HLA pseuddo-segregation 's hybrid model can repair the performance loss of pure pseudo-segrete, but it does not exceed E3.
+3. The AUPRC of E4b is slightly higher than E3, indicating that pseudo-equality may have slightly increased information for the positive samples.
+4. The current version of FAMO does not raise E2 but instead lowers the meaning of AUROC, mean AUPREC, MCC and World-10 AUROC.
+5. The task-balanced mapling itself weakens E2, suggesting that the natural training distribution of current data may be more appropriate than the balance of mandatory tasks.
+6. Negative transfer still exists, but may need to be solved by task grouping or serctive sharing rather than simply losing weighting.
 
-## 8. 下一步计划：进入 E6 task grouping
+## 8. Next steps: access to E6 task grouping
 
-根据今天结果，下一步不建议继续调 E4 或 E5。
+Based on today's results, it is not recommended to continue the adjustment of E4 or E5.
 
-推荐进入：
+Recommended access:
 
 ```text
 E6: HLA-based and tissue-based task grouping analysis
 ```
 
-具体实验：
+Specific experiments:
 
 ```text
 1. Train shared peptide encoder + task-specific heads within each HLA group.
@@ -508,31 +508,31 @@ E6: HLA-based and tissue-based task grouping analysis
 4. Analyze which tasks benefit from grouping and which tasks need global sharing.
 ```
 
-为什么 E6 更重要：
+Why E6 is more important:
 
 ```text
-E2 已经证明 shared peptide encoder 有效。
-但 E2 也出现了 14 个 degraded tasks。
-这些 degraded tasks 可能不是 loss weight 问题，而是 task sharing structure 问题。
+E2 has proven successful paper application.
+But E2 also appeared 14 degraded tasks.
+These degraded tasks may not be a loss question, but a question of task sharing structure.
 ```
 
-`task sharing structure` 指哪些任务应该共享模型参数、哪些任务不应该共享。当前任务天然分解为：
+ZXQ0QZ refers to which tasks should be shared with model parameters and which tasks should not be shared. The current task is naturally broken down to:
 
 ```text
 task = tissue + HLA
 ```
 
-因此最自然的下一步是分析：
+The next step, therefore, is analysis:
 
 ```text
-same HLA tasks 是否应该共享？
-same tissue tasks 是否应该共享？
-哪些 HLA 或 tissue group 容易产生 negative transfer？
+Should we share it?
+Should we share it?
+Which HLA or Tissue group are easily generated?
 ```
 
-## 9. 重要文件
+## 9. Key documents
 
-HLA pseudo-sequence 构建：
+HLA pseudo-security:
 
 ```text
 scripts/build_hla_pseudo_sequences.py
@@ -542,7 +542,7 @@ data/processed/B_prot.fasta
 data/processed/C_prot.fasta
 ```
 
-E4 代码和结果：
+E4 Code and results:
 
 ```text
 scripts/run_tissuepmhc_hla_pseudoseq.py
@@ -553,7 +553,7 @@ results/tissuePMHC_hla_pseudoseq/comparison_metrics.csv
 results/tissuePMHC_hla_pseudoseq/metadata.json
 ```
 
-E4b 代码和结果：
+E4b Code and results:
 
 ```text
 scripts/run_tissuepmhc_hla_hybrid.py
@@ -564,7 +564,7 @@ results/tissuePMHC_hla_hybrid/comparison_metrics.csv
 results/tissuePMHC_hla_hybrid/metadata.json
 ```
 
-E5 代码和结果：
+E5 Code and results:
 
 ```text
 scripts/run_tissuepmhc_famo.py
@@ -576,18 +576,18 @@ results/tissuePMHC_famo/task_weight_history.csv
 results/tissuePMHC_famo/metadata.json
 ```
 
-当前主 baseline：
+Current master baseline:
 
 ```text
 scripts/run_tissuepmhc_neural_baselines_v2.py
 results/tissuePMHC_neural_baselines_v2/stability_metrics.csv
 ```
 
-## 10. E6 task grouping 实验结果补充
+## 10. E6 task grouping supplementation
 
-完成 E6 后，将 grouped training 与原始 E2 all-task shared heads 进行比较。
+When E6 is complete, compare grouping and original E2 all-task shared headers.
 
-整体结果如下：
+The overall results are as follows:
 
 | model | mean AUROC | mean AUPRC | mean MCC | worst-10 mean AUROC |
 |---|---:|---:|---:|---:|
@@ -595,32 +595,32 @@ results/tissuePMHC_neural_baselines_v2/stability_metrics.csv
 | E6 HLA-grouped | 0.7862 | 0.7725 | 0.4316 | 0.7037 |
 | E6 tissue-grouped | 0.7387 | 0.7227 | 0.3548 | 0.6699 |
 
-E6 HLA grouping 相比 E2：
+E6 HLA grouping
 
 ```text
-mean AUROC 下降约 0.0065
-mean AUPRC 下降约 0.0052
-mean MCC 下降约 0.0088
+I mean AUROC down by about 0.0005
+I mean AUPPC drops about 0.0052.
+I mean MCC down by about 0.0088
 ```
 
-E6 tissue grouping 相比 E2：
+E6 compared to E2:
 
 ```text
-mean AUROC 下降约 0.0541
-mean AUPRC 下降约 0.0550
-mean MCC 下降约 0.0856
+I mean AUROC down by about 0.0541
+I mean AUPRC drops by about 0.0550
+I mean MCC drops about 0.0856.
 ```
 
-因此，E6 没有超过 E2。HLA grouping 只是接近 E2，而 tissue grouping 明显失败。
+So, E6. HLA grouping just approaches E2, and tissue grouping fails.
 
-按 task 统计，HLA grouping 在 44 个 task 中：
+In task, HLA grouping in 44 tasks:
 
 ```text
 18 tasks improved
 26 tasks degraded
 ```
 
-提升最大的 HLA-grouped task：
+The biggest HLA-grouped task:
 
 | target_tissue | mhc_restriction | AUROC delta vs E2 |
 |---|---:|---:|
@@ -630,7 +630,7 @@ mean MCC 下降约 0.0856
 | small intestine | HLA-B*15:01 | +0.0293 |
 | uterine cervix | HLA-B*07:02 | +0.0286 |
 
-下降最大的 HLA-grouped task：
+HLA-grouped task:
 
 | target_tissue | mhc_restriction | AUROC delta vs E2 |
 |---|---:|---:|
@@ -640,7 +640,7 @@ mean MCC 下降约 0.0856
 | lymphoid | HLA-B*15:02 | -0.0490 |
 | lymphoid | HLA-C*05:01 | -0.0419 |
 
-按 HLA group 平均，HLA grouping 中表现相对更好的 group 包括：
+On HLA group average, HLA grouping has performed relatively well group including:
 
 ```text
 HLA-B*51:01   +0.0101 AUROC
@@ -650,7 +650,7 @@ HLA-B*27:05   +0.0048 AUROC
 HLA-B*15:01   +0.0017 AUROC
 ```
 
-下降较明显的 group 包括：
+The decrease is more pronounced:
 
 ```text
 HLA-B*15:02   -0.0490 AUROC
@@ -659,43 +659,43 @@ HLA-C*03:04   -0.0352 AUROC
 HLA-C*05:01   -0.0243 AUROC
 ```
 
-结论：
+Conclusions
 
 ```text
-HLA grouping 有局部价值，但不能作为全局替代 E2 的主模型。
-tissue grouping 不建议继续。
+HLA grouping has a local value but cannot be a global replacement for the main E2 model.
+Tissue grouping does not recommend continuation.
 ```
 
-原因推测：
+The reason is assumed:
 
 ```text
-同一 HLA 内部共享有时可以减少跨 HLA 的 negative transfer。
-但很多 task 仍然需要跨 HLA 的全局 peptide pattern，因此 all-task E2 仍然更强。
-tissue grouping 会把 HLA binding pattern 差异很大的 task 强行共享，所以性能明显下降。
+The same HLA internal sharing can sometimes reduce the number of newer transfers across HLA.
+But many task still need to go over the whole HLA, so all-task E2 is still stronger.
+The system is a significant decline in performance because it's a big difference in sharing.
 ```
 
-下一步进入：
+Next steps to:
 
 ```text
 E7: validation-based selective HLA/global sharing
 ```
 
-E7 的核心思想是：
+E7's core philosophy is:
 
 ```text
-不要一刀切地选择 all-task global sharing 或 HLA grouping。
-先在训练集内部切出 validation set。
-对每个 task 比较 global E2 branch 与 HLA-grouped branch 的 validation AUROC。
-如果 HLA-grouped branch 在 validation 上更好，则该 task 使用 HLA branch；
-否则继续使用 global E2 branch。
-确定每个 task 的 branch 后，用完整训练集重新训练 global branch 和 HLA branch。
-最后在 test set 上评估这个 task-level selective model。
+Do not choose all-task global sharing or HLA grouping.
+The first step is to cut the value set inside the training set.
+Compares global E2 branch to the value AUROC of HLA-grouped branch for each task.
+If HLA-grouped branch is better on valueation, then task uses HLA branch;
+If you do not, then you will continue to use the global E2 branch.
+Retrain the global branch and HLA branch using the complete training set after each task has been identified.
+Finally evaluate this task-level spatially model on test set.
 ```
 
-这样可以避免直接用 test set 选择模型造成的数据泄漏。
-同时，最终 test 评估使用完整训练集重训后的分支，和原始 E2 使用相同训练数据量，比较更公平。
+This avoids the leakage of data from the test set selection model.
+At the same time, it is more equitable to use the full training after re-training component in the final test assessment and the original E2 in the same amount of training data.
 
-E6 代码和结果：
+E6 Code and results:
 
 ```text
 scripts/run_tissuepmhc_task_grouping.py
@@ -707,7 +707,7 @@ results/tissuePMHC_task_grouping/comparison_metrics.csv
 results/tissuePMHC_task_grouping/metadata.json
 ```
 
-E7 代码和计划输出：
+E7 code and planned output:
 
 ```text
 scripts/run_tissuepmhc_selective_grouping.py
@@ -720,38 +720,38 @@ results/tissuePMHC_selective_grouping/comparison_metrics.csv
 results/tissuePMHC_selective_grouping/metadata.json
 ```
 
-E7 脚本会在终端直接打印训练耗时：
+E7 Scripts take time to run a direct print training at the terminal:
 
 ```text
-每个 global branch 的训练用时
-每个 HLA branch 的训练用时
-每个 seed 的总用时
-整个 run 的总用时
+Training hours for every global branch
+Training hours for each HLA branch
+The total time of each seed
+Total Run Time
 ```
 
-## 11. E7 validation-based selective HLA/global sharing 结果
+## 11. E7 valuation-based results of private HLA/global share
 
-E7 的核心问题是：
+E7 The core issue is:
 
 ```text
-如果不强制所有 task 使用同一种 sharing structure，
-而是在 validation set 上为每个 task 选择 global branch 或 HLA-grouped branch，
-是否能超过原始 E2？
+If not to force all task to use the same share scheme,
+Select a global branch or HLA-grouped branch for each task on value set,
+Can you get more than the original E2?
 ```
 
-E7 使用两阶段流程：
+E7 Use two-stage process:
 
 ```text
-1. 从 train 中切出 validation set。
-2. 用 train-core 训练 validation global branch 和 validation HLA branch。
-3. 对每个 task 用 validation AUROC 选择 branch。
-4. 用完整 train set 重新训练 final global branch 和 final HLA branch。
-5. 在 test set 上评估每个 task 选中的 final branch。
+1. Cuts value set out of the train.
+2. Train with train-core value global brand and value HLA brand.
+3. Select the branch for each task using value AUROC.
+4. Retrain with complete global brand and final HLA brand.
+5. Assesss the selected final branch on each test set.
 ```
 
-这样既避免了 test leakage，也保证最终 test 评估与 E2 使用相同训练数据量。
+This avoids the test limit and ensures that the final test evaluation is the same amount of training data as E2.
 
-整体结果如下：
+The overall results are as follows:
 
 | model | mean AUROC | mean AUPRC | mean accuracy | mean MCC | worst-10 mean AUROC |
 |---|---:|---:|---:|---:|---:|
@@ -760,19 +760,19 @@ E7 使用两阶段流程：
 | E7 selective HLA/global | 0.7904 | 0.7754 | 0.7184 | 0.4405 | 0.7143 |
 | E6 tissue-grouped | 0.7387 | 0.7227 | 0.6765 | 0.3548 | 0.6699 |
 
-E7 相比 E2：
+E7 is a comparison with E2:
 
 ```text
-mean AUROC 下降约 0.0023
-mean AUPRC 下降约 0.0023
-mean accuracy 提升约 0.0005
-mean MCC 提升约 0.0001
-worst-10 mean AUROC 下降约 0.0035
+I mean AUROC down by about 0.0023
+I mean AUPPC drops about 0.00023
+I mean an improvement 0.0005
+means MCC upgrade 0.0001
+World-10 means AUROC down by about 0.0035
 ```
 
-因此，E7 明显好于 E6 HLA-grouped，但仍没有超过原始 E2。
+Thus, E7 is clearly better than E6 HLA-grouped, but still does not exceed the original E2.
 
-E7 的 branch 选择情况：
+The Branch selection for E7:
 
 | seed | global tasks | HLA-grouped tasks |
 |---:|---:|---:|
@@ -780,18 +780,18 @@ E7 的 branch 选择情况：
 | 20260705 | 26 | 18 |
 | 20260706 | 32 | 12 |
 
-HLA branch 被选择最多的 HLA group：
+HLAbranch was the most selected HLA group:
 
 ```text
-HLA-A*02:01  13 次
-HLA-A*24:02   7 次
-HLA-B*15:01   7 次
-HLA-B*07:02   4 次
-HLA-C*03:04   4 次
-HLA-B*51:01   4 次
+HLA-A*02:01 13
+HLA-A*24:02 7 times
+HLA-B*15:01 7 times
+HLA-B*07:02 4 times
+HLA-C*03:04 4 times
+HLA-B*51:01 4 times
 ```
 
-E7 提升最大的 task：
+E7 raise the biggest task:
 
 | target_tissue | mhc_restriction | AUROC delta vs E2 |
 |---|---:|---:|
@@ -801,7 +801,7 @@ E7 提升最大的 task：
 | blood | HLA-B*40:01 | +0.0141 |
 | spleen | HLA-B*15:01 | +0.0133 |
 
-E7 下降最大的 task：
+E7 top drop task:
 
 | target_tissue | mhc_restriction | AUROC delta vs E2 |
 |---|---:|---:|
@@ -811,78 +811,78 @@ E7 下降最大的 task：
 | lymph node | HLA-C*03:04 | -0.0250 |
 | blood | HLA-C*05:01 | -0.0217 |
 
-按最终被选中的 branch 分组，平均 delta 为：
+Grouping by the last selected branch, the average delta is:
 
 | selected branch | mean AUROC delta | mean AUPRC delta | mean MCC delta |
 |---|---:|---:|---:|
 | global | -0.0048 | -0.0068 | -0.0073 |
 | HLA-grouped | +0.0019 | +0.0055 | +0.0127 |
 
-这个结果说明：
+This results state that:
 
 ```text
-HLA branch 确实有局部收益。
-E7 的 validation-based hard selection 能恢复一部分 E6 损失。
-但 hard selection 仍然不够稳定，整体还没有超过 E2。
+HLAbranch does have a partial benefit.
+E7 value-based hard supply restores part of E6 loss.
+But hard supply is still not stable enough for the whole body to exceed E2.
 ```
 
-`hard selection` 指每个 task 只能二选一：要么使用 global branch，要么使用 HLA branch。
-这种方式的问题是 validation set 上的小波动会直接改变最终 branch 选择。
+`hard selection` means that each task can only be selected by one option: either using global branch or HLA branch.
+The problem with this is that the small fluctuations on the value set will directly change the ultimate branch selection.
 
-今天截至 E7 的结论：
+The conclusions as of today are as follows:
 
 ```text
-E2 仍然是当前最强主 baseline。
-E6 说明 HLA grouping 有局部价值，tissue grouping 明显不适合。
-E7 说明 task-level selective sharing 有价值，但 hard selection 不够稳定。
+E2 remains the most powerful man in the world today.
+E6 illustrates that HLA grouping has a local value and that it is clearly not appropriate.
+E7 indicates that task-level selective share is valuable, but hard supply is not stable enough.
 ```
 
-## 12. 下一步计划：E8 soft ensemble
+## 12. Next steps: E8 soft alternative
 
-下一步推荐进入：
+Next recommended entry:
 
 ```text
 E8: validation-weighted soft ensemble of global branch and HLA branch
 ```
 
-`soft ensemble` 指不再对每个 task 硬选择一个 branch，而是把两个 branch 的 prediction score 按权重融合。
-这里 `prediction score` 是模型输出的正类概率，表示 peptide 属于该 tissue-HLA task 的可能性。
+`soft ensemble` means that instead of choosing a branch for each task, you combine two branch prepositions score by weight.
+Here `prediction score` is the positive probability of model output, indicating that peptide belongs to the possibility of this Tissue-HLA task.
 
-E8 的具体实验设计：
+E8 specific experimental design:
 
 ```text
-1. 继续使用 E7 的 train-core / validation / full-train 两阶段设计。
-2. 在 validation set 上分别评估 global branch 和 HLA branch。
-3. 对每个 task 根据 validation AUROC 或 AUPRC 计算融合权重。
-4. 用完整 train set 训练 final global branch 和 final HLA branch。
-5. 在 test set 上输出：
+1. Continues to use E7 phases of Train-core/ valuation/ full-training.
+2. Assess global branch and HLA branch on value set.
+3. For each task, the weight of integration is calculated on the basis of the value AUROC or AUPRC.
+4. Train with complete global brand and complete HLA brand.
+5. Output on test set:
    final_score = w * hla_score + (1 - w) * global_score
-6. 比较 E8 soft ensemble 与 E2、E6、E7。
+6. E8 soft Eemble and E2, E6, E7.
 ```
 
-可以优先测试三种权重策略：
+Three weight strategies can be tested as a matter of priority:
 
 ```text
 E8a: fixed average
-global_score 和 hla_score 各占 0.5。
+Global_score and hla_score each account for 0.5.
 
 E8b: validation-delta clipped weight
-如果 HLA validation AUROC 比 global 高，则提高 HLA 权重；
-否则降低 HLA 权重，但不让权重变成 0 或 1。
+Increase the weight of HLA if HLA valuation AUROC is higher than the global;
+Otherwise, the weight of HLA is lowered, but no weight is given to 0 or 1.
 
 E8c: validation-rank softmax weight
-用 validation metric 的 softmax 生成 global/HLA 权重。
-softmax 是一种把多个分数转换成非负权重且总和为 1 的函数。
+Generates global/HLA weights with value metric softmax.
+Softmax is a function that converts multiple fractions to non-negative weights and totals 1.
 ```
 
-预期：
+It is expected that:
 
 ```text
-E8 可能比 E7 更稳。
-因为即使 validation 误判，soft ensemble 也不会完全丢弃另一个 branch。
+E8 may be more stable than E7.
+Because even if the validation misjudges, soft esmble will not completely abandon another branch.
 ```
 
-E7 代码和结果：
+E7 Code and results:
 
 ```text
 scripts/run_tissuepmhc_selective_grouping.py
@@ -895,11 +895,11 @@ results/tissuePMHC_selective_grouping/comparison_metrics.csv
 results/tissuePMHC_selective_grouping/metadata.json
 ```
 
-## 13. 后续编号校正说明
+## 13. Description of follow-up number correction
 
-后续复盘时确认：本日志中 E5、E6、E7 的主线判断是正确的，它们都应归入 E2 shared peptide encoder + task-specific heads 性能主线，而不是 E4 HLA pseudo-sequence 线。
+The subsequent retray confirmed that the main lines of E5, E6 and E7 in this log are correct and that they should all be included in the E2 shared page encoded + task-special headers, rather than the E4 HLA pseudo-sequience line.
 
-当前正式编号应理解为：
+The current official number should be understood to read:
 
 ```text
 E5: FAMO on E2
@@ -911,8 +911,8 @@ E10: MMoE / PLE selective-sharing model on the E2/E8 line
 E11: E2 + DB-MTL
 ```
 
-其中 `MMoE` 指 Multi-gate Mixture-of-Experts，多门控专家混合模型；`PLE` 指 Progressive Layered Extraction，渐进式分层提取模型。二者都属于 selective-sharing model，也就是让不同 task 自动选择不同共享程度的模型结构。
+Of these, ZXQ0QZ means Multi-gate Mixture-of-Experts, a multi-manophone expert hybrid model; ZXQ1QZ means Progress Layed Extraaction, a gradual layer extraction model. Both belong to the spatial-sharing model, which allows different tabs to automatically select models with different levels of sharing.
 
-`DB-MTL` 是一种 dynamic balancing multi-task learning 方法，用来平衡不同 task 的 loss scale 和 gradient magnitude，也就是损失尺度和梯度大小。
+ZXQ0QZ is a dynamic balancing multi-task learning method that balances lossscale and gradient size of different task.
 
-因此，本日志第 12 节的 E8 soft ensemble 后续应接正式 E9 CAGrad-on-E2，而不是把 CAGrad 接到 E4 线。
+Therefore, E8 soft esmble in section 12 of this log should be followed by the official E9 CaGrad-on-E2, instead of the CAGrad line.

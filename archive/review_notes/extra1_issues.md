@@ -1,182 +1,182 @@
-# 教授批注定位清单（2026-07-23）
+# Professorial Predictable List (2026-07-23)
 
-## 定位基准
+## Positioning benchmarks
 
-- 论文源文件：`paper.tex`
-- 截图中的正文页码：第 18–23 页及附录第 30 页
-- 下列行号对应 2026-07-23 当前工作区版本；后续编辑 `paper.tex` 后行号可能移动。
-- “支撑位置”表示论文中已有、可用于解释该批注的定义或结果，不一定是教授落笔的页面。
+- Paper Source: `paper.tex`
+- Text page number in screenshot: pp. 18-23 and appendix 30
+- The following line numbers correspond to the current workspace version of 2026-07-23; the subsequent editor `paper.tex` backline numbers may be moved.
+- "Support position" means that the definition or result of the comment is available in the paper and may be used to explain it, and is not necessarily a page on which the professor has written.
 
-## 截图 1：第 18 页（RQ1 与 RQ2 开头）
+## Screenshot 1: Page 18 (starting RQ1 with RQ2)
 
-| 教授批注 | 直接位置 | 关联/支撑位置 | 定位说明 |
+Professor's comment, direct position, link/support position, location description, location description, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location
 |---|---:|---:|---|
-| “RQ1，这个格式有点问题。” | `paper.tex:424` | `paper.tex:442,507,519,602` | RQ1 小节标题及其与其他 RQ 标题的格式一致性问题。 |
-| “这个表太小，增加几列不同的指标，比如 AUPRC、Sensitivity、Specificity、median AUROC……” | `paper.tex:428–438` | `paper.tex:97–110,390–408` | RQ1 的三行、三列表；当前只有 Model、Tasks、Mean AUROC。指标定义集中在 Evaluation Protocol。 |
-| “表没有编号” | `paper.tex:428–438` | `paper.tex:572–596,767–787` | 该表只是 `center + tabular`，没有 `table`、`\caption`、`\label`；后两处是已有编号表的写法。 |
-| “有提和现有方法的比较吗？” | `paper.tex:426–440` | `paper.tex:384,570–600` | RQ1 这里只比较 one-hot logistic regression 和 shared encoder；更完整的传统/神经基线位于严格折上的架构比较。 |
-| “增加几行：建议参考早期报告的 baseline” | `paper.tex:431–435` | `paper.tex:384,581–590,612–616` | 需要扩充的是 RQ1 表格的数据行；当前论文其他位置已有 BLOSUM62 RF、dual branch、MMoE 等候选基线。 |
-| “模型名建议去掉 Net 后缀，统一为 TissuePMHC” | 首次定义 `paper.tex:11,20,41`；本页 `paper.tex:444,455,470,478–485,488–500` | 全文所有旧模型名 | 这是全文级命名修改，不只涉及第 18 页。 |
-| “增加更多的比较方法，增加更多的行” | `paper.tex:446–458` | `paper.tex:384,570–600` | RQ2 主结果表目前只有 4 个模型；严格架构表有更完整模型清单。 |
+"RQ1, this format is problematic."  ZXQ0QZ ZXQ1QZ RQ1 and its consistency with the formatting of other RQ headings.
+"This table is too small to add a few different indicators, such as AUPRC, Sensitivity, Speciality, Media AUROC ..."  ZXQ0QZ  ZXQ1QZ  RQ1, three lines, list; only Model, Tasks, Mean AUROC are currently in the list. The definition of indicators is concentrated in the Evaluation Protocol.
+"Table without number"  ZXQ0QZ `paper.tex:572–596,767–787` This table is only `center + tabular`, there are no `table`, `\caption`, `\label`; the latter two are the same as the existing numbered table.
+ZXQ0QZ `paper.tex:384,570–600` RQ1 here is only one-hot comparison with shared encoder; a more complete traditional/neurological baseline is based on a strictly folded structure comparison.
+"Adding lines: it is recommended that reference be made to earlier reports for the baseline" ZXQ0QZ ZXQ1QZ Data lines of the RQ1 form be expanded; other locations for the current paper already have candidate baselines such as BLOSUM62 RF, Dualbranch, MMoE etc.
+"Model name suggests the removal of Net suffix, which is harmonized to TissePHC" First defined `paper.tex:11,20,41`; this page `paper.tex:444,455,470,478–485,488–500` All old model names in full This is a full-text level name change, not just page 18.
+ZXQ0QZ `paper.tex:384,570–600` RQ2 master results sheet currently has only 4 models; the strict architecture table has a more complete list of models.
 
-### 对应解答与处理结果
+### Response to answer and process results
 
-1. **“RQ1，这个格式有点问题。”**  
-   已修改。RQ1 标题改为问题式标题 **“Is Tissue-specific Preference Learnable?”**，并与 RQ2–RQ5 的研究问题结构保持一致。
+1. ** "RQ1, this format is a bit problematic."**
+   The title RQ1 has been modified to question ** "Is Tissue-speciality Learable?"** and is consistent with the structure of research issues in RQ2-RQ5.
 
-2. **“这个表太小，增加几列不同的指标，比如 AUPRC、Sensitivity、Specificity、median AUROC……”**  
-   已将原三行小表扩展为正式的 **Table 1**，增加 AUPRC、Worst-10 AUROC 和 Seeds，并将表格字号、行高和 caption 间距统一调整。没有补写 Sensitivity 和 Specificity：早期 44-task 实验没有保存所有模型在统一决策阈值下的混淆矩阵，AUROC/AUPRC 不能反推出这两个指标。Median AUROC 被加入 157-task 主结果表（Table 2）；44-task 历史归档缺少所有 baseline 的可比逐任务中位数，因此未在 Table 1 中虚构该列。
+2. ** "The table is too small to add a few different indicators, such as AUPRC, Sensitivity, Speciality, Media AUROC ..."**
+   The original three rows have been expanded to **Table 1**, with the addition of AUPPC, World-10 AUROC and Seeds, and the alignment of table fonts, row heights and captions. No additions have been made to Sensitivity and Space: Early 44-task experiments did not preserve the matrix of confusion under the harmonized decision threshold, and AUROC/AUPRC cannot reverse the two indicators. Media AUROC was added to the main results table 157-task (Table 2); 44-task history archive lacks all comparable mission-by-mission medians for baseline, and therefore the column is not constructed in Table 1.
 
-3. **“表没有编号。”**  
-   已解决。该表现在使用正式 `table` 环境，具有 `\caption`、`\label` 和正文交叉引用，编号为 **Table 1**。
+3. ** "The table is not numbered."**
+   This is manifested in the use of the official `table` environment, with cross-references to ZXQ1QZ, `\label` and text code **Table 1**.
 
-4. **“有提和现有方法的比较吗？”**  
-   已补充。Table 1 现在汇总当前项目中实际完成并可比较的历史 baseline，包括 one-hot logistic regression、HLA pseudo-sequence conditioning、FAMO、pair-ranking、CAGrad、DB-MTL、shared encoder、MMoE、auxiliary supervision、soft dual-branch ensemble 和 auxiliary dual-branch ensemble。NetMHCpan、MHCflurry、BigMHC 等外部方法仍只在 Related Work 中定性比较，因为没有它们在同一 matched benchmark、相同 split 和相同 task inventory 下的 held-out predictions，直接并列数值会形成不公平比较。
+4. ** "Is there a comparison with existing methods?"**
+   The list of historical examples of actual completion and comparison in the current project is now aggregated. The following are the following:
 
-5. **“增加几行：建议参考早期报告的 baseline。”**  
-   已解决。Table 1 已扩展为 11 个历史 baseline，并在 caption 中说明它们属于原始 44-task standard pair-disjoint benchmark，避免与后续 157-task benchmark 混淆。
+5. ** "Adding lines: suggested reference to earlier reports; baseline."**
+   Table 1 has been expanded to 11 historical lines and describes them in caption as original 44-task station plain-disjoined benchmark, avoiding confusion with subsequent 157-task benchmark.
 
-6. **“模型名建议去掉 Net 后缀，统一为 TissuePMHC。”**  
-   已完成全文修改。标题、摘要、Methods、Results、Discussion、表格、图注和交叉引用中的模型名称均统一为 **TissuePMHC**。
+6. ** "Model name suggested to remove Net suffix and to unify it to TissePMHC."**
+   The full text has been revised. The name of the model in the title, summary, Methods, Revers, Discussion, table, graph and cross-references is harmonized to **TissePMHC**.
 
-7. **“增加更多的比较方法，增加更多的行。”**  
-   已在 RQ1 的历史 baseline 表中增加可验证方法；RQ2 的 157-task Table 2 保留四个具有相同任务清单和评估构造的主要受控模型，以避免把不同任务范围或不同 held-out pools 的结果混入主排名。
+7. ** "Add more methods of comparison and more lines."**
+   A verifiable method has been added to the history baseline table in RQ1; 157-tasktable 2 of RQ2 retains four major controlled models with the same task list and assessment configurations to avoid mixing results from different task ranges or from different help-out tools into the main ranking.
 
-## 截图 2：第 19 页（Figure 1、matched OOF 表、RQ3 开头）
+## Screenshot 2: Page 19 (Figure 1, Matched OOF Table, Start of RQ3)
 
-| 教授批注 | 直接位置 | 关联/支撑位置 | 定位说明 |
+Professor's comment, direct position, link/support position, location description, location description, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location
 |---|---:|---:|---|
-| “图片要复杂化，不能这么简单。” | `paper.tex:460–486` | — | Figure 1 的 PGFPlots 柱状图、图注和标签。 |
-| “跟前面的表格对应；增加更多方法；建议 boxplot/violin plot；如果想显示 range” | 数据表 `paper.tex:446–458`；图 `paper.tex:460–486` | 单种子结果 `paper.tex:511–515`；任务级结果来源见 `results/` | 现图用每个方法的单个汇总值画柱状图，没有任务分布、种子分布或误差范围。 |
-| “可以按照 tissue/分型进一步细化结果” | `paper.tex:460–486` | `paper.tex:670–704` | 直接批注落在 Figure 1；论文现有 Task Heterogeneity 和 Branch Complementarity 可作为细化入口。 |
-| “为什么这个是 baseline？” | `paper.tex:490`；表中名称 `paper.tex:499` | baseline 定义 `paper.tex:384` | 指的是 “matched auxiliary dual-branch baseline / Matched auxiliary branch”。方法部分说明了 auxiliary MLP dual branch 的结构，但此处没有就“为何选它为 matched baseline”单独解释。 |
-| “结果在哪里？” | `paper.tex:505` | 详细结果 `paper.tex:519–600`；完整统计表 `paper.tex:767–787` | 第 505 行只再次报告 strict AUROC/AUPRC 并指向 RQ4，完整 strict 结果在 RQ4。 |
+"The picture is complicated and not so simple." `paper.tex:460–486`   PGFPlots column, graphs and labels for Figure 1.
+"Additional to the table above; additional methods; recommendations for boxplot/violin plot; if you want to show the range  data sheet ZXQ0XZ; figure ZXQ1QZ  single seed results ZXQ2 XZ; mission-level results source is shown in the column chart of the current map using individual aggregated values of each method, with no task distribution, seed distribution or error range.
+ZXQ0QZ `paper.tex:670–704` Direct comment on Figuure 1; the papers currently available are Task Heterogeneity and Branch Complexity as the portal for refinement.
+"Why is this a baseline??"  ZXQ0QZ; the name ZXQ1QZ  baseline definition in the table `paper.tex:384`  means "matched auxiliary dual-branch baseline / Matched auxiliarybranch?" The method partly describes the structure of the auxiliary MLP dualbranch, but there is no separate explanation here as to "why it was chosen as Matched base".
+`paper.tex:505`  Detailed results `paper.tex:519–600`; full statistical table `paper.tex:767–787`  505 line reports only the start AUROC/AUPREC and points to RQ4, the full list results in RQ4.
 
-### 对应解答与处理结果
+### Response to answer and process results
 
-1. **“图片要复杂化，不能这么简单。”**  
-   已重新设计 Figure 1。新图同时呈现 Mean AUROC、Median AUROC 和 Worst-10 AUROC，使图形既展示总体性能，也展示任务分布中心和低尾表现，而不再只是重复三个汇总值。
+1. ** "The picture is complicated, not so simple."**
+   The Figure 1 has been redesigned. The new figure presents the Mean AUROC, Median AUROC and World-10 AUROC, which allows the graphic to display both overall performance and mission distribution centres and low end performance, rather than simply repeating three aggregation values.
 
-2. **“跟前面的表格对应；增加更多方法；建议 boxplot/violin plot；如果想显示 range。”**  
-   Figure 1 已与 Table 2 的主要模型和指标对齐。没有强行生成完整 boxplot/violin plot，因为不同历史方法没有保存完全一致的逐任务、逐种子 held-out predictions；强行合并会混合 44-task、157-task、fixed-test 和 OOF 样本池。当前改用能够由现有数据可靠复核的 Mean、Median 和 Worst-10 摘要。
+2. ** "Reciprocal to the table above; additional methods added; recommendation boxplot/violin plot; if you want to show range."**
+   Figure 1 is aligned with the main models and indicators of Table 2. The complete boxplatt/violin plot is not generated by force, as different historical methods do not preserve fully consistent task-by-task, seed-by-seed feeds; forced mergers mix 44-task, 157-task, cross-test and OOF sample pools. Currently, the Meran, Median and World-10 summaries are used to allow reliable review of available data.
 
-3. **“可以按照 tissue/分型进一步细化结果。”**  
-   已在后续 Analysis/RQ5 中新增人类 tissue-level extremes、HLA locus、小鼠 tissue-level extremes 和 H2 restriction 分层表。单任务 tissue 的结果明确标注为描述性结果，避免将极小样本分组解释成稳定效应。
+3. ** "The results can be further refined according to the scale of the tissue/specify."**
+   The human scale has been added to the following Analysis/RQ5: humans-level exceptions, HLA locus, mouse scale extremes and H2 restriction. The results of single tasks are clearly marked as descriptive results, avoiding the interpretation of very small sample groups as stabilizing effects.
 
-4. **“为什么这个是 baseline？”**  
-   正文已补充解释：matched auxiliary dual-branch baseline 与最终 TissuePMHC 共享双分支监督和融合设定，主要差别是 MLP encoder 与 position-preserving multi-kernel encoder，因此它提供了针对编码器替换的受控比较，而不是随意选择的 baseline。
+4. ** "Why is this a baseline?"**
+   The text has been supplemented by an explanation: Matched auxiliary dual-branch base shares two-brand surveillance and integration settings with the ultimate TissePMHC, the main difference being MLP encoder and position-positioning multi-kernel encoder, so it provides controlled comparisons for encoder replacements rather than randomly chosen baselines.
 
-5. **“结果在哪里？”**  
-   已删除 RQ1/RQ2 对同一 strict 数值的重复报告，并将 globally unseen-peptide 的完整结果集中到 RQ4。RQ2 仅保留桥接说明，并通过交叉引用指向 RQ4、正式比较表和完整配对统计表。
+5. ** "Where did the results come from?"**
+   RQ1/RQ2 duplicate reports on the same stric values have been deleted and the complete results of the global unseen-peptide have been assembled in RQ4. RQ2 only retains the bridge link description and points to RQ4, the official comparison table and the full match sheet through cross-references.
 
-## 截图 3：第 19 页后半（RQ3 Component Contributions）
+## Screenshot 3: Page 19 at the end of Q3 Compont Conventions
 
-| 教授批注 | 直接位置 | 关联/支撑位置 | 定位说明 |
+Professor's comment, direct position, link/support position, location description, location description, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location
 |---|---:|---:|---|
-| “引用对应的表格” | `paper.tex:509–515` | 主结果表 `paper.tex:446–458`；matched OOF 表 `paper.tex:492–503`；strict 架构表 `paper.tex:572–596` | RQ3 三段消融结论目前都直接写数值，没有 `Table~\ref{...}`。前两个 RQ2 表也没有 label，暂时无法交叉引用。 |
+"Reference to the corresponding table"  `paper.tex:509–515`  master result table ZXQ1QZ; mashed OOF table ZXQ2QZ; list structure ZXQ3QZ RQ3 with three elimination conclusions currently written directly and no `Table~\ref{...}`. The first two RQ2 tables are not cross-referenced.
 
-### 对应解答与处理结果
+### Response to answer and process results
 
-1. **“引用对应的表格。”**  
-   已新增正式的 component evidence 表，并在 RQ3 正文中交叉引用。该表集中呈现 multi-kernel encoder、branch complementarity、fixed rank fusion 和 seed averaging 四类系统级证据。正文同时明确：现有实验支持 standard benchmark 上的系统级贡献，但不能在没有相同 strict folds 隔离消融的情况下声称 strict protocol 下的完整组件排名。
+1. ** "Reference to the corresponding table."**
+   Formal tables of component events have been added and are cross-referenced in RQ3. The tables focus on multi-kernel encoder, branch complement, cross-transaction and seed observing four system-level evidence. The text also makes clear that existing experiments support system-level contributions on the standard Benchmark, but cannot claim full component ranking without the same strictolds being isolated.
 
-## 截图 4：第 20 页（RQ4 开头与标准/严格结果表）
+## Screenshot 4: Page 20 (RQ4 start with standard/strict results table)
 
-| 教授批注 | 直接位置 | 关联/支撑位置 | 定位说明 |
+Professor's comment, direct position, link/support position, location description, location description, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location
 |---|---:|---:|---|
-| “OOF 啥意思？好像没有必要出现，pair-disjoint？” | `paper.tex:523,528–531` | 三种评估设置 `paper.tex:195–199`；Evaluation Protocol `paper.tex:366–408` | OOF 是 out-of-fold。论文在第 195 行以全称加缩写语境首次介绍，但 RQ4 表格直接使用缩写；pair-disjoint 与 peptide-disjoint 是两种不同拆分约束。 |
-| “结果重复？” | `paper.tex:523–534` | `paper.tex:440,490–505` | human strict 0.7652/0.7452 已在 RQ1、RQ2 出现；RQ4 再次出现是为了 matched standard-vs-strict 差值比较。 |
-| “小鼠上的完整结果？” | `paper.tex:531` | mouse strict 表 `paper.tex:588–590`；RQ5 `paper.tex:602–664` | RQ4 开头表只列 AUROC；小鼠 AUROC/AUPRC/Worst-6/PairAcc 及标准结果分散在 strict 架构表和 RQ5。 |
+"OOF What does it mean? There is no need to appear, Pair-disjoint?"  `paper.tex:523,528–531` Three assessment settings ZXQ1QZ; Evaluation Protocol ZXQ2QZ  OOF is out-of-fold. The paper is first introduced in full acronyms in line 195, but the RQ4 form uses direct acronyms; pair-disjoint is two separate compartments.
+ZXQ0QZ  ZXQ1 XZ  human standard 0.765/2.7452 appears in RQ1, RQ2; RQ4 appears again for match of margin for matchted standard-vs-strict.
+"The complete results on mice?"?  ZXQ0QZ  pattern table ZXQ1QZ; RT5 `paper.tex:602–664`  RQ4 opening table only listed AUROC; mouse AUROC/AUPREC/Work-6/PairAcc and standard results are spread over the strict architecture table and RQ5.
 
-### 对应解答与处理结果
+### Response to answer and process results
 
-1. **“OOF 啥意思？好像没有必要出现，pair-disjoint？”**  
-   已在 Methods 和 RQ4 前置定义：OOF 是 **out-of-fold**。standard pair-disjoint OOF 只阻止同一 matched pair ID 同时出现在 fitting 和 held-out 数据中；connected-component peptide-disjoint OOF 则在全局范围隔离 peptide identity。保留 OOF 是为了区分交叉验证折外预测与一次性 fixed test，但首次出现均使用全称。
+1. ** "What does that mean? It doesn't seem necessary, Pair-disjoint?"**
+   Already defined in pre-methods and RQ4: OOF is **out-of-old**. Standard pair-disjoint OOF only prevents the same match-fair ID from appearing in the same matchping and help-out data; negotiated-compont peptide-disjoint OOF separates the whole picture identity.
 
-2. **“结果重复？”**  
-   已解决。重复的 0.7652/0.7452 从 RQ1/RQ2 删除，完整 standard-versus-strict 结果和解释集中在 RQ4；其他章节只通过交叉引用指向 RQ4。
+2. ** "Repeal results?"**
+   The duplicate 0.7652/0.7452 is deleted from RQ1/RQ2, and the full standard-versus-strict results and explanations are concentrated in RQ4; other chapters point to RQ4 only through cross-references.
 
-3. **“小鼠上的完整结果？”**  
-   已补齐。RQ4/RQ5 现在报告小鼠 standard OOF、fixed test 和 peptide-disjoint OOF，并包含 AUROC、AUPRC、Worst-6、PairAcc 等现有可验证指标；同时增加 H2 restriction 和 tissue 分层结果。
+3. ** "The complete results on mice?"**
+   RQ4/RQ5 is now reporting the mouse standard OOF, fit test and peptide-disjoint OOF, and contains existing verifiable indicators such as AUROC, AUPRC, World-6, PairAcc; and adding H2 recovery and Tissuue stratification results.
 
-## 截图 5：第 20 页（Figure 2 与 RQ4 统计）
+## Screenshot 5: Page 20 (Figure 2 and RQ4 statistics)
 
-| 教授批注 | 直接位置 | 关联/支撑位置 | 定位说明 |
+Professor's comment, direct position, link/support position, location description, location description, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location
 |---|---:|---:|---|
-| “对角线用红点？这个是标准操作吗？” | Human `paper.tex:552`；Mouse `paper.tex:555` | 图注 `paper.tex:558` | 源码实际画的是黑色虚线 `y=x` identity line，不是红点；截图中的红色方块是虚线的渲染/显示效果。该线用于区分 strict 高于或低于 standard。 |
-| “peptide-disjoint 和 pair-disjoint 两个词有误导；需讨论 unseen in specific task 与 unseen before in any task” | 图轴/图注 `paper.tex:545–558`；解释 `paper.tex:562–566` | 协议定义 `paper.tex:195–199`；限制 `paper.tex:740` | 当前 strict 是全局 peptide entity 不跨折，因此是“该肽在任何任务的训练折中都未出现”，同时任务本身是 seen task；standard pair-disjoint 仅保证 pair ID 不重叠。 |
+"Red dot for the diagonal line? Is this standard operation?"  Human `paper.tex:552`; Mouse ZXQ1QZ  Figure `paper.tex:558`  Source is actually painted with black dot ZXQ3QXXity line, not red dots; red squares in the screenshot are the rewriting/showing effects of the dotted line. This line is used to distinguish strits from or below strid.
+"peptide-disjoint and pair-disjoint" are misleading; unseen in special task and unseen before in any task "  Axis/ Diagram ZXQ0XZ; explain `paper.tex:562–566` Protocol definition ZXQ2XZ; limit `paper.tex:740` current strit is global peptide intity and therefore "the strateg does not appear in any mission training discount", while the task itself is seen task; standard dai-disjoint only guarantees that there is no overlap.
 
-### 对应解答与处理结果
+### Response to answer and process results
 
-1. **“对角线用红点？这个是标准操作吗？”**  
-   已修改 Figure 2。\(y=x\) identity reference 改为清晰的灰色粗虚线，并在图注明确说明它是参考线而不是实验数据点。该线用于判断 peptide-disjoint AUROC 相对 matched standard OOF AUROC 是上升还是下降。
+1. ** "Diagonal dots? Is this standard? "**
+   The figure shows clearly that it is a reference rather than a test data point. The line is used to determine whether the data line is rising or falling relative to the match.
 
-2. **“peptide-disjoint 和 pair-disjoint 两个词有误导；需讨论 unseen in specific task 与 unseen before in any task。”**  
-   已在协议定义、RQ4 正文、坐标轴和图注中统一澄清：strict peptide-disjoint 表示 peptide 在任何任务的 fitting folds 中都未出现，即 **globally unseen peptide**；但被评估的 tissue–MHC task 本身仍是 seen task。它不是只对特定 task 未见，也不是 unseen-task 或 protein-disjoint evaluation。
+2. ** The words "peptide-disjoint and pair-disjoint are misleading; need to discuss unseen before in any task."**
+   The protocol definition, RQ4, the axis of coordinates and the graphs have been clarified: provisional peptide-disjoint indicates that peptide does not appear in the task 's little hands, i.e. **global unseen peptide**; but the assessed tesue-MHC task itself is still seen. It is not just missing from a particular task, nor unseen-task or protein-disjoint evaluation.
 
-## 截图 6：第 21 页（RQ5 小鼠主表）
+## Screenshot 6: Page 21 (RQ5 Mouse Master Table)
 
-| 教授批注 | 直接位置 | 关联/支撑位置 | 定位说明 |
+Professor's comment, direct position, link/support position, location description, location description, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location
 |---|---:|---:|---|
-| “表格太小” | `paper.tex:606–619` | — | 小鼠 train-only OOF 表，目前 5 个方法、3 个性能指标及 Evidence。 |
-| “更多的指标、更多的方法” | `paper.tex:608–618` | 完整 strict 方法/指标 `paper.tex:572–596`；指标定义 `paper.tex:390–408` | 可扩充 Accuracy、MCC、PairAcc 等，或补齐其他已完成 mouse baselines；需以已有 held-out predictions 为准。 |
-| “按照组织 / 按照分型” | `paper.tex:606–619` | H2 分组结果 `paper.tex:660`；task heterogeneity 分析结构 `paper.tex:670–694` | 教授希望小鼠结果进一步按 tissue 和 H2 restriction 分层展示。当前只在第 660 行给了 H2 group AUROC。 |
+"Form too small"ZXQ0QZ Rat rat-on-ly OOF table, currently 5 methods, 3 performance indicators and Evidence.
+"More indicators, more methods" ZXQ0QZ  Full strict methodology/indicator `paper.tex:572–596`; indicator definition `paper.tex:390–408`  expandable Accuracy, MCC, PairAcc etc. or complete other completed mouse baselines; subject to the already available help-out prections.
+"In accordance with the organization/ in accordance with the split" ZXQZ H2 group results ZXQ1QZ; Tsk analysis structure `paper.tex:670–694`  Professor wants the mouse results to be further displayed in the tissue and H2 distribution. Only at 660 are currently given to H2 group AUROC.
 
-### 对应解答与处理结果
+### Response to answer and process results
 
-1. **“表格太小。”**  
-   已统一增加 caption 与表体间距和表格行高；该表保持可读字号，不再使用强制整体缩放。
+1. ** "The table is too small."**
+   The caption space and table row height have been added uniformly; the table maintains readable characters and no more mandatory overall scaling.
 
-2. **“更多的指标、更多的方法。”**  
-   小鼠 baseline 表已扩展为 BLOSUM62 random forest、shared encoder、Factorized MMoE、H2-Kk residual adapter 和 five-seed Factorized MMoE，并报告 AUROC、AUPRC、Worst-6 和 Evidence。另一个协议汇总表补充 standard OOF、fixed test、peptide-disjoint OOF 以及 PairAcc。仅加入具有现成、同协议 held-out 结果的方法，未补造缺失指标。
+2. ** "Mo more indicators, more methods."**
+   The mouse baseline table has been expanded to BLOSUM62 grandester, share encoder, Factorized MMoE, H2-Kk residual apperter and five-said Fedorized MMoE, and reports AUROC, AUPRC, World-6 and Evidence. The other agreement matrix supplements the missing indicators by adding only those with ready-made, co-agreement-based help-out results.
 
-3. **“按照组织 / 按照分型。”**  
-   已新增 mouse tissue-level extremes 表和 H2-Db/H2-Kb/H2-Kd/H2-Kk 分层表。正文明确这些分组结果是描述性分析，不把任务量很少的分组解释为受控生物学效应。
+3. ** By organization/by segment.**
+   A table and a layer of H2-Db/H2-Kb/H2-Kd/H2-Kk have been added. The text clarifies that these subgroups result in descriptive analysis and does not interpret groups with very little task as controlled biological effects.
 
-## 截图 7：第 22 页（Figure 3、OOF 与 fixed-test 表）
+## Screenshot 7: Page 22 (Figure 3, OOF and cross-test table)
 
-| 教授批注 | 直接位置 | 关联/支撑位置 | 定位说明 |
+Professor's comment, direct position, link/support position, location description, location description, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location
 |---|---:|---:|---|
-| “为啥有这个东西？” | 对比表 `paper.tex:623–632`；Figure 3 `paper.tex:634–658` | 引入 `paper.tex:621`；解释 `paper.tex:660–664` | 该表/图用于比较 train-only OOF 与冻结模型的一次性 internal fixed test，意图是做标准 pair-disjoint 的内部确认；第 662 行同时承认 fixed test 有显著实体重叠。 |
+"Why is this something?" comparison table ZXQ0QZ; Figure 3 ZXQ1QZ  Introduction `paper.tex:621`; Interpretation `paper.tex:660–664`  This table/figure is used to compare the one-time internatixed test of the train-only OOF model with the freeze model, with the intention of making a standard internal confirmation of the pair-disjoint; line 662 also recognizes the existence of significant overlaps of the cross-reference test.
 
-### 对应解答与处理结果
+### Response to answer and process results
 
-1. **“为啥有这个东西？”**  
-   原 Figure 3 已删除，因为它只重复相邻表格中的三个汇总数值，没有提供分布或不确定性信息。保留并扩展了协议比较表，用来区分 train-only OOF、冻结模型的一次性 fixed test 和 peptide-disjoint OOF；正文同时说明 fixed test 存在显著 train/test entity overlap，因此只能确认 internal standard protocol 下的可学习性，不能证明严格实体泛化或模型迁移。
+1. ** "Why is this thing here?"**
+   The original Figure 3 was deleted because it only repeated three summary values in the adjacent table, without providing distribution or uncertainty information. The protocol comparison table was retained and expanded to distinguish the one-time transaction test of the train-only OOF, freezing model, and the peptide-disjoint OOF; the text also states that the cross-test has a significant trade/test entry overlap, so only learningability under the internal standard protocol cannot be confirmed and cannot be demonstrated by strict physical generalization or model migration.
 
-## 截图 8：第 23 页（HLA locus 描述性表）
+## Screenshot 8: Page 23 (HLA locus descriptive table)
 
-| 教授批注 | 直接位置 | 关联/支撑位置 | 定位说明 |
+Professor's comment, direct position, link/support position, location description, location description, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location
 |---|---:|---:|---|
-| “表格太小” | `paper.tex:676–690` | 更完整 task 统计 `paper.tex:670–694` | 表只有 HLA-A/B/C 三行，且无编号、caption、label；比较的是 original fixed 与 strict OOF，属于非匹配样本池的描述性比较。 |
+"Form too small"ZXQ0QZ Fuller task statistics `paper.tex:670–694` Tables only HLA-A/B/C line 3 and without numbering, caption, label; compared to orginal fixed with strict OOF, which is a descriptive comparison of non-matched sample pools.
 
-### 对应解答与处理结果
+### Response to answer and process results
 
-1. **“表格太小。”**  
-   已改为正式编号表，增加 caption、label、正文引用、caption 间距和表格行高。正文进一步说明 original fixed test 与 strict OOF 使用不同 held-out pools，因此该表的 Difference 只能作描述性比较，不能解释为 peptide-overlap effect；HLA-A/B/C 还包含不同 allele、tissue、训练规模和 peptide-component 结构，也不能解释为受控 locus 效应。
+1. ** "The table is too small."**
+   The table has been changed to a formal numbering table, adding caption, label, text references, caption spacing and table height. The text further explains that the orginal mix test is different from the list OF uses of help-out tools, so that the table 's Diffence can only be compared descriptively and cannot be interpreted as a peptide-overlap effect; HLA-A/B/C also contains allele, tessue, training scale and peptide-component structure, nor can it be interpreted as controlled locus effects.
 
-## 截图 9：附录 Table 1（paired statistics）
+## Screenshot 9: Appendix Table 1 (paired statuses)
 
-| 教授批注 | 直接位置 | 关联/支撑位置 | 定位说明 |
+Professor's comment, direct position, link/support position, location description, location description, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location
 |---|---:|---:|---|
-| “这个 table 是有编号的，但格式好像有问题。” | `paper.tex:767–787` | 正文引用 `paper.tex:564` | 这是 `tab:paired-stats`，有 caption/label；使用 `\resizebox{0.98\linewidth}{!}` 压缩 8 列，导致字号和可读性问题。表格在附录中因重新编号显示为 Table 1。 |
+"This table is numbered, but the format seems to be in trouble."  ZXQ0QZ  Text quote `paper.tex:564`  This is `tab:paired-stats` with caption/label; using the `\resizebox{0.98\linewidth}{!}` compressed column 8, resulting in word and readability problems. The table is re-numbered as Table 1.
 
-### 对应解答与处理结果
+### Response to answer and process results
 
-1. **“这个 table 是有编号的，但格式好像有问题。”**  
-   已取消 `resizebox`，将 Human 和 Mouse 拆成两个面板，使用统一的列距、行高和可读字号。表格现在正式编号为 Table 12，并保留 Mean difference、Median difference、Hodges–Lehmann difference、W/T/L、95% CI 和 BH-adjusted Wilcoxon \(p\) 值。拆分面板避免了整张八列统计表被强制缩得过小。
+1. ** "This table is numbered, but it seems to be in a different format."**
+   ZXQ0QZ was cancelled, Human and Mouse were removed into two panels, using a single column range, row height and readable characters. The table is now officially numbered Table 12 and retains the values of Mean differenceence, Media differenceence, Hodges–Lehmann differenceence, W/T/L, 95% CI and BH-adjusted Wilcoxon ZXQ1QZ. Dismantling the panel avoided the forced scaling of the entire eight statistical tables.
 
-## 截图 10：附录 Figure 4
+## Screenshot 10: Appendix Figure 4
 
-| 教授批注 | 直接位置 | 关联/支撑位置 | 定位说明 |
+Professor's comment, direct position, link/support position, location description, location description, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location, location
 |---|---:|---:|---|
-| “这个是啥意思？”（上图） | `paper.tex:789–810` | 引导段 `paper.tex:765`；图注 `paper.tex:832` | 上图是按 HLA locus/H2 restriction 汇总的 `peptide-disjoint OOF − matched standard OOF` 平均 AUROC；负值表示严格拆分后下降。 |
-| “这个是啥意思？”（下图） | `paper.tex:814–831` | 引导段 `paper.tex:765`；图注 `paper.tex:832` | 下图是每折 held-out 集合中的唯一 parent protein 与 fitting partition 的重叠比例；用来说明 peptide-disjoint 并不等于 protein-disjoint。 |
+(upshot) ZXQ0QZ  orientation paragraph ZXQ1QZ; figure ZXQ2QZ  is a summary of ZXQ3QZ average AUROC by HLA locus/H2 reduction; negative values indicate a decrease after strict split.
+ZXQ0QZ  orientation paragraph ZXQ1QZ; note `paper.tex:832`  is the only single parent profile in the held-out collection with a little biting part; the ratio used to explain that peptide-disjoint is not the protein-disjoint.
 
-### 对应解答与处理结果
+### Response to answer and process results
 
-1. **“这个是啥意思？”（上图）**  
-   已重写图前导说明、标题、纵轴和图注。上图表示各 HLA locus/H2 restriction 下的平均泛化差值：
+1. ** "What does this mean?"**
+   The diagrams are rewritten with the prefix, title, vertical axis and graph. The above graphs represent the average general deviations under HLA locus/H2 reduction:
    \[
    \Delta_{\mathrm{AUROC}}
    =
@@ -184,33 +184,33 @@
    -
    \mathrm{AUROC}_{\text{matched standard OOF}}.
    \]
-   柱子为负表示在隔离全局 peptide identity 后 AUROC 下降；它量化的是 peptide-separation generalization gap。
+   The column is negative for AUROC to decline after the isolation of the whole world; it is quantified as peptide-separation development cap.
 
-2. **“这个是啥意思？”（下图）**  
-   已明确为每折 held-out partition 中，唯一 parent protein 同时出现在 fitting partition 的比例。它用于说明：peptide-disjoint 只隔离 peptide identity，并不隔离整个 parent protein，因此 peptide-disjoint 不等于 protein-disjoint。图注还明确 `standard` 指 matched standard OOF control，而不是 original fixed test。
+2. ** "What does this mean?"**
+   It is clearly the only percentage of the head-out part of the equation that appears in the field. It is used to explain that pptide-disjoint is only isolated, not the entire partprotein, so peptide-disjoint is not protein-disjoint. The figure also indicates that ZXQ0QZ means matchted OF control, not or original match test.
 
-## 跨页问题汇总
+## Summary of cross-page questions
 
-1. **表格体系不统一**：RQ1、RQ2 两张表、RQ4 开头表、RQ5 两张表和 HLA locus 表均使用裸 `center + tabular`，没有统一编号、caption 和 label；只有 strict architecture 表与附录统计表采用正式 `table` 环境。
-2. **结果重复但叙事目的未显式区分**：0.7652/0.7452 依次出现在 RQ1、RQ2、RQ4；若保留，应分别明确“learnability summary / bridge to strict analysis / matched comparison”，否则合并。
-3. **术语需要前置且精确定义**：OOF、standard pair-disjoint、matched standard OOF、connected-component peptide-disjoint、fixed test 在 Results 中密集出现，但清晰定义主要位于 Methods。
-4. **图表信息密度不足或展示类型不匹配**：Figure 1 和 Figure 3 只显示汇总柱状值；教授希望看到更多方法、更多指标、分布/range，以及 tissue/MHC 分层。
-5. **完整基线其实已存在但分散**：最完整的人/鼠 strict 模型比较位于 `paper.tex:572–600`，Methods 的模型清单位于 `paper.tex:384`；可作为重组主结果表的来源。
-6. **命名修改是全文级任务**：旧模型名统一为 `TissuePMHC`，涉及标题、摘要、方法、结果、讨论、图表标签与图注，不能只改截图所在页。
+1. ** The tabular system is not uniform**: RQ1, RQ2, two tables, RQ4, opening tables, RQ5, two tables and HLA list tables are naked `center + tabular`, with no uniform numbering, caption and label; only the strict achite table and the appendix statistical tables are used in the official `table` environment.
+2. ** The results are repeated but the narrative is not clearly distinguished**: 0.7652/0.7452 appears in RQ1, RQ2, RQ4; if retained, the words "legality/bridge to object analysis/matched comparison" should be clearly identified.
+3. ** Terminology need to be pre-defined and precise**: OOF, standard pair-disjoint, met standard OOF, conned-component peptide-disjoint, fixed test appears in Reults, but the clear definition is mainly in Methods.
+4. ** The chart is not sufficiently dense or displaying a mismatch**: Figure 1 and Figure 3 show only aggregate column values; the professor would like to see more methods, more indicators, distribution/range, and Tissue/MHC stratification.
+5. ** Complete baseline exists but is dispersed**: the most complete human/rats stric model is compared to the model list at ZXQ0QZ and Methods is located at `paper.tex:384`; it can be used as a source for restructuring the master results table.
+6. ** Name change is a full-text task**: the old model is given a uniform name `TissuePMHC`, covering titles, summaries, methods, results, discussions, chart labels and graphs, and cannot be changed to just the page where the map is located.
 
-## 跨页问题的最终处理
+## Final treatment of cross-page issues
 
-1. **表格体系不统一**：已将新增和修改的结果表统一为正式 `table`、caption、label 和正文交叉引用；统一增加 caption 间距和行高，并取消会严重缩小字号的 `resizebox`。
-2. **结果重复**：strict globally unseen-peptide 结果集中到 RQ4，RQ1/RQ2 只保留必要的交叉引用。
-3. **术语定义滞后**：OOF、matched standard OOF、pair-disjoint、connected-component peptide-disjoint、fixed test 和 globally unseen peptide 已在 Methods 与 Results 首次使用处明确解释。
-4. **图表信息密度不足**：Figure 1 增加 Mean/Median/Worst-tail 信息；Figure 2 强化 identity reference；原 Figure 3 因重复表格数据而删除；新增 tissue、HLA/H2 和协议分层表。
-5. **基线分散**：44-task 历史 baseline、157-task 主模型、小鼠 baseline 和 strict protocol 结果已按研究问题重新组织，不再将不同任务范围和样本池强行混为同一排名。
-6. **全文命名**：旧模型名已统一替换为 `TissuePMHC`。
+1. ** The system of tables is not uniform**: the results tables for the new and modified tables have been harmonized into formal ZXQ0QZ, caption, label and cross-references for text; the caption is added to spacing and row height and `resizebox`, which would significantly reduce the font, is removed.
+2. ** Repeated results**: provisional global unseen-peptide results are grouped in RQ4, RQ1/RQ2 only with necessary cross-references.
+3. ** The terminology definition is delayed**: OOF, macheted stand, pair-disjoint, conned-component peptide-disjoint, fixed test and global unsenior peptide have been explained explicitly at the first use of Methods and Reults.
+4. ** The density of graphs and figures is insufficient**: Figure 1 increases the Mean/Median/World-Tail information; Figuure 2 enhances the identity reference; former Figure 3 is deleted as a result of duplicate table data; new tisue, HLA/H2 and protocol stratification.
+5. ** Baseline fragmentation**: 44-task History Baseline, 157-task Master Model, Mouse Baseline and Standard Protocol results have been reorganized by research issues and different task ranges and sample pools are no longer forcibly mixed into the same ranking.
+6. ** Full-text name**: Old model name has been replaced with `TissuePMHC`.
 
-## 当前版本复查结果
+## Current version review results
 
-- 当前 Overleaf 第二版共 33 页。
-- LaTeX Errors：0。
-- LaTeX Warnings：0。
-- Overfull boxes：0。
-- 剩余 Underfull 提示均来自窄列自动换行，不造成越界、遮挡或内容丢失。
+- Current Overleaf 2nd edition is 33 pages.
+- LaTeX Errors:0.
+- LaTeX Warnings:0.
+- Overfull boxes:0.
+- The remaining Underwood hints are automatically re-lined in narrow columns and do not cause transboundary, shield or loss of content.

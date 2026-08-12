@@ -1,28 +1,28 @@
-# 2026.7.5 研究日志
+# 2026.7.5 Research log
 
-## 1. 今日目标
+## 1. Targets for today
 
-今天的目标是完成 `NEW_RESEARCH_ROADMAP.md` 中 Stage 1 的第一轮深度学习优化实验。
+Today 's goal is to complete the first round of the Stage 1 in `NEW_RESEARCH_ROADMAP.md`.
 
-核心问题是：
+The core issues are:
 
 ```text
-传统单任务 baseline 之后，多任务神经网络是否能进一步提升 tissuePMHC 的预测性能？
+Could the multitask neural network further enhance the prediction of the TissuePMHC after the traditional single task baseline?
 ```
 
-本次重点实现和比较以下模型：
+The following models are being achieved and compared with this focus:
 
 1. `neural_single_task`
 2. `shared_peptide_encoder_task_heads`
 3. `conditioned_tissue_hla`
 
-其中，`shared_peptide_encoder_task_heads` 被确定为当前 E2 主 baseline。
+Of these, `shared_peptide_encoder_task_heads` is determined to be the current E2 master baseline.
 
-## 2. 数据和任务设置
+## 2. Data and task setting
 
-本次实验沿用已有的 `tissuePMHC` 标准 train/test split。
+The experiment follows the existing `tissuePMHC` standard train/test standard.
 
-数据规模：
+Data size:
 
 ```text
 Number of tasks: 44
@@ -32,75 +32,75 @@ Test set per task: 100 positive + 100 negative
 Peptide length: 9
 ```
 
-任务定义仍然是：
+The definition of the mandate remains:
 
 ```text
 task = target_tissue + mhc_restriction
 ```
 
-也就是说，每一个 tissue-HLA 组合是一个二分类任务。
+That is, each Tissue-HLA combination is a two-class task.
 
-## 3. 代码实现
+## 3. Code realization
 
-今天新增并整理了两个 PyTorch 训练脚本。
+Two PyTorch training scripts were added and sorted today.
 
-第一版脚本：
+First edition of script:
 
 ```text
 scripts/run_tissuepmhc_neural_baselines.py
 ```
 
-用途：
+Purpose:
 
 ```text
-单次运行 neural_single_task、shared_peptide_encoder_task_heads、conditioned_tissue_hla。
+One run each time, each operation is free, free, free, and free.
 ```
 
-第二版脚本：
+Script number two:
 
 ```text
 scripts/run_tissuepmhc_neural_baselines_v2.py
 ```
 
-用途：
+Purpose:
 
 ```text
-保留 E2 主 baseline，重复 3 个 seed，并对 conditioned_tissue_hla 做一轮调参。
+Keep E2 master baseline, repeat 3 seed and rotated to condition_issue_hla.
 ```
 
-第一版脚本保留作为可复现实验代码，第二版脚本单独输出到：
+Release 1 remains as a repossessable experimental code, while Release 2 is exported to:
 
 ```text
 results/tissuePMHC_neural_baselines_v2/
 ```
 
-这样不会覆盖第一版结果。
+This would not cover the results of the first edition.
 
-## 4. 模型说明
+## Modelling
 
 ### 4.1 neural_single_task
 
-`neural_single_task` 表示每一个 tissue-HLA 任务单独训练一个小神经网络。
+`neural_single_task` means that each mission trains a small neural network separately.
 
-输入：
+Enter:
 
 ```text
 peptide sequence
 ```
 
-输出：
+Output:
 
 ```text
 binary label
 ```
 
-这个模型用于检查简单神经网络是否能超过传统机器学习 baseline。
+This model is used to check whether simple neural networks can outpace traditional machine learning.
 
 ### 4.2 shared_peptide_encoder_task_heads
 
-`shared_peptide_encoder_task_heads` 是本次最重要的 E2 模型。
+`shared_peptide_encoder_task_heads` is the most important E2 model of this time.
 
-结构：
+Structure:
 
 ```text
 peptide sequence
@@ -109,21 +109,21 @@ peptide sequence
 -> binary prediction
 ```
 
-`shared peptide encoder` 指所有任务共享同一个肽段特征提取器。
+ZXQ0QZ means that all tasks are shared with the same thong feature extractor.
 
-`task-specific head` 指每个 tissue-HLA 任务有自己的分类层。
+ZXQ0QZ means that each task has its own classification layer.
 
-这个模型的含义是：
+The meaning of this model is:
 
 ```text
-不同任务共享 peptide 表示，但最后的分类边界由每个任务自己学习。
+Different tasks are shared by peptide, but the final classification boundaries are learned by each mission.
 ```
 
 ### 4.3 conditioned_tissue_hla
 
-`conditioned_tissue_hla` 是条件模型。
+`conditioned_tissue_hla` is a condition model.
 
-结构：
+Structure:
 
 ```text
 peptide encoder
@@ -133,17 +133,17 @@ peptide encoder
 -> binary prediction
 ```
 
-`embedding` 指可训练向量表示，用来把 tissue 或 HLA 这种类别变量变成神经网络可以使用的数值向量。
+`embedding` means a trainingable vector that is used to convert a class variable such as tissue or HLA into a numerical vector that can be used by a neural network.
 
-该模型的目标是学习：
+The model aims at learning:
 
 ```text
-给定 peptide、tissue 和 HLA，预测该 peptide 是否偏向在该 tissue-HLA 条件下出现。
+Gives a peptide, tessue and HLA for predicting whether the peptide is biased towards the tessue-HLA condition.
 ```
 
-## 5. 评价指标说明
+## 5. Description of evaluation indicators
 
-本次记录的核心指标包括：
+The core indicators of this record include:
 
 ```text
 AUROC
@@ -155,23 +155,23 @@ MCC
 worst-10-task mean AUROC
 ```
 
-`AUROC` 是 Area Under the Receiver Operating Characteristic Curve，表示模型整体区分正负样本的能力。
+`AUROC` is the Area Under the Receiver Contracting Characteristic Curve, which indicates the ability of the model to distinguish between positive and negative samples as a whole.
 
-`AUPRC` 是 Area Under the Precision-Recall Curve，更关注正样本检出能力。
+`AUPRC` is the Area Under the Precision-Recall Curve, more concerned with the ability to detect the samples.
 
-`MCC` 是 Matthews Correlation Coefficient，综合考虑 true positive、true negative、false positive 和 false negative，在二分类任务中通常比 accuracy 更稳。
+ZXQ0QZ is Matthews Correlation Coefficency, which combines the considerations of true realization, trueness, false position and false classivity, which are usually more stable than accuracy in category II tasks.
 
-`worst-10-task mean AUROC` 表示 AUROC 最差的 10 个任务的平均值，用来观察模型是否只提升平均性能，还是也改善困难任务。
+`worst-10-task mean AUROC` represents the average of the worst 10 AUROC missions, which is used to observe whether the model increases only average performance or also improves difficult tasks.
 
-## 6. 第一版实验结果
+## 6. Results of the first version of the experiment
 
-第一版实验输出目录：
+First version of the Experiment Output Directory:
 
 ```text
 results/tissuePMHC_neural_baselines/
 ```
 
-整体结果如下：
+The overall results are as follows:
 
 | model | mean AUROC | mean AUPRC | mean accuracy | mean MCC |
 |---|---:|---:|---:|---:|
@@ -179,7 +179,7 @@ results/tissuePMHC_neural_baselines/
 | `conditioned_tissue_hla` | 0.7756 | 0.7620 | 0.7053 | 0.4125 |
 | `neural_single_task` | 0.7326 | 0.7223 | 0.6669 | 0.3356 |
 
-原传统 baseline 中最好的平均模型是：
+The best average model of the original baseline is:
 
 ```text
 onehot_logistic_regression
@@ -189,21 +189,21 @@ mean accuracy = 0.6909
 mean MCC = 0.3841
 ```
 
-因此，第一版实验说明：
+Therefore, the first version of the experiment states:
 
 ```text
-shared_peptide_encoder_task_heads 明显超过传统 baseline。
-conditioned_tissue_hla 也超过传统 baseline，但弱于 shared_peptide_encoder_task_heads。
-neural_single_task 弱于传统 baseline。
+The video is available on the Internet and is available on the Internet.
+The viewed_issue_hla is also stronger than traditional baseline but weaker than traditional plande_peptide_encode_task_heads.
+The traditional baseline is weak.
 ```
 
-## 7. 第二版实验设计
+## 7. Experimental design for Release 2
 
-第二版实验将 E2 作为主 baseline，并重复 3 个 random seed。
+The second version of the experiment will use E2 as the main baseline and repeat three grandom seen.
 
-`random seed` 是随机数种子，用来控制模型初始化、batch shuffle 等随机过程。重复多个 seed 可以判断结果是否稳定。
+`random seed` is a random number of seeds that control random processes like model initialization, battling shuffle, etc. Repeats multiple seeds to determine whether the results are stable.
 
-使用的 seed：
+Use & & & seed:
 
 ```text
 20260704
@@ -211,7 +211,7 @@ neural_single_task 弱于传统 baseline。
 20260706
 ```
 
-第二版实验包含 5 组实验：
+The second version of the experiment contains five sets of experiments:
 
 ```text
 E2_shared_peptide_encoder_task_heads
@@ -221,7 +221,7 @@ E3_conditioned_wider_hidden
 E3_conditioned_low_dropout
 ```
 
-其中 conditioned model 的调参设置为：
+The reference settings for the conditioned model are:
 
 | experiment | condition_dim | hidden_dim | dropout | learning_rate |
 |---|---:|---:|---:|---:|
@@ -230,17 +230,17 @@ E3_conditioned_low_dropout
 | `E3_conditioned_wider_hidden` | 32 | 256 | 0.2 | 0.0005 |
 | `E3_conditioned_low_dropout` | 32 | 128 | 0.1 | 0.001 |
 
-`dropout` 是一种正则化方法，训练时随机丢弃一部分神经元输出，用来降低过拟合风险。
+`dropout` is a regular method of training to randomly discard some neuron output to reduce the risk of collusiveness.
 
-## 8. 第二版稳定性结果
+## 8. Second edition of the stabilization results
 
-第二版实验输出目录：
+Version 2 Experiment Output Directory:
 
 ```text
 results/tissuePMHC_neural_baselines_v2/
 ```
 
-3 个 seed 的稳定性结果如下：
+The stability of the three seeds has the following results:
 
 | experiment | mean AUROC | AUROC std | mean AUPRC | mean accuracy | mean MCC | worst-10 mean AUROC |
 |---|---:|---:|---:|---:|---:|---:|
@@ -250,39 +250,39 @@ results/tissuePMHC_neural_baselines_v2/
 | `E3_conditioned_default` | 0.7821 | 0.0020 | 0.7720 | 0.7112 | 0.4255 | 0.6912 |
 | `E3_conditioned_low_dropout` | 0.7770 | 0.0039 | 0.7618 | 0.7088 | 0.4216 | 0.6860 |
 
-`AUROC std` 是 3 个 seed 的 AUROC 标准差。标准差越小，说明不同随机种子下结果越稳定。
+`AUROC std` is a standard AUROC deviation of 3 seeds. The smaller the standard difference, the more stable the results are under different random seeds.
 
-关键结论：
+Key findings:
 
 ```text
-E2_shared_peptide_encoder_task_heads 的 mean AUROC 最高，而且 AUROC std 只有 0.0010。
+The AUROC is the highest and AUROC std is only 0.010.
 ```
 
-这说明 E2 的提升不是一次随机运气，而是比较稳定的模型收益。
+This suggests that E2 upgrades are not random luck but more stable model gains.
 
-## 9. E2 与传统 baseline 的比较
+## 9. E2 Comparison with traditional baseline
 
-传统最强平均 baseline：
+Tradition's Top Average:
 
 ```text
 onehot_logistic_regression mean AUROC = 0.7558
 ```
 
-E2 三个 seed 平均：
+E2 Seed average:
 
 ```text
 E2 mean AUROC = 0.7927
 ```
 
-提升：
+Upgrade:
 
 ```text
 0.7927 - 0.7558 = 0.0369
 ```
 
-这说明共享 peptide encoder 的多任务学习明显优于当前传统单任务 baseline。
+This means sharing the peptide encoder is clearly better than the current traditional single task baseline.
 
-E2 相比每个任务最好的传统 baseline：
+E2 Best tradition for each mission
 
 ```text
 30 tasks improved
@@ -291,9 +291,9 @@ mean AUROC delta = +0.0201
 mean AUPRC delta = +0.0199
 ```
 
-## 10. E2 提升最大的任务
+## E2 Upgraded to maximum task
 
-E2 相比每个任务最好的传统 baseline，提升最大的任务如下：
+E2 Baseline, the highest priority for each task, is as follows:
 
 | target_tissue | mhc_restriction | mean AUROC | baseline AUROC | AUROC delta |
 |---|---:|---:|---:|---:|
@@ -304,11 +304,11 @@ E2 相比每个任务最好的传统 baseline，提升最大的任务如下：
 | umbilical cord blood | HLA-A*02:01 | 0.9511 | 0.8958 | +0.0553 |
 | ovary | HLA-A*02:01 | 0.8440 | 0.7922 | +0.0518 |
 
-这些任务说明 shared peptide encoder 确实能从其他任务中学到可迁移信息。
+These mission statements do learn from other tasks to migrate information.
 
-## 11. E2 下降最大的任务
+## E2 Tasks with the greatest decline
 
-E2 相比每个任务最好的传统 baseline，下降最大的任务如下：
+E2 Compared to the best traditional baseline for each task, the most important reductions are as follows:
 
 | target_tissue | mhc_restriction | mean AUROC | baseline AUROC | AUROC delta |
 |---|---:|---:|---:|---:|
@@ -319,13 +319,13 @@ E2 相比每个任务最好的传统 baseline，下降最大的任务如下：
 | lymph node | HLA-A*02:01 | 0.8219 | 0.8491 | -0.0272 |
 | lung | HLA-A*24:02 | 0.8297 | 0.8475 | -0.0178 |
 
-这些下降任务提示存在 `negative transfer`。
+These drop task alerts exist in `negative transfer`.
 
-`negative transfer` 指多任务共享学习后，某些任务受到其他任务干扰，性能反而下降。
+ZXQ0QZ refers to the fact that after learning multitasking, certain tasks are disrupted by other tasks and performance is reduced.
 
-## 12. E2 按 HLA 分组的变化
+## 12. E2 Changes in HLA Grouping
 
-E2 在不同 HLA 上的平均 AUROC delta：
+E2 Average AUROC delta on different HLAs:
 
 | HLA | n_tasks | mean AUROC delta |
 |---|---:|---:|
@@ -337,16 +337,16 @@ E2 在不同 HLA 上的平均 AUROC delta：
 | HLA-B*27:05 | 2 | -0.0192 |
 | HLA-C*12:02 | 1 | -0.0497 |
 
-初步观察：
+Preliminary observations:
 
 ```text
-HLA-A*02:01 和 HLA-C*05:01 相关任务从共享学习中受益明显。
-HLA-B*27:05 和 HLA-C*12:02 相关任务可能更容易受到 negative transfer。
+The HLA-A*02:01 and HLA-C*05:01 tasks have benefited significantly from shared learning.
+HLA-B*27:05 and HLA-C*12:02 may be more vulnerable to new transactions.
 ```
 
-## 13. E2 按组织分组的变化
+## 13. E2 Changes in organizational groupings
 
-E2 在不同 tissue 上的平均 AUROC delta：
+AUROC deta mean on different tissue:
 
 | tissue | n_tasks | mean AUROC delta |
 |---|---:|---:|
@@ -361,16 +361,16 @@ E2 在不同 tissue 上的平均 AUROC delta：
 | lymph node | 4 | -0.0022 |
 | spleen | 1 | -0.0096 |
 
-初步观察：
+Preliminary observations:
 
 ```text
-部分小组织任务从共享学习中获益更明显。
-lymphoid 和 blood 虽然任务数较多，但平均提升不算最大。
+Some of the small organizational tasks benefit more clearly from shared learning.
+The average increase is not the largest, although the number of tasks is high.
 ```
 
-## 14. conditioned_tissue_hla 调参结论
+## 14. Convention_issue_hla cross-reference conclusions
 
-本次 conditioned model 最好的配置是：
+The best configuration for this conditioned model is:
 
 ```text
 E3_conditioned_wider_condition
@@ -381,50 +381,50 @@ learning_rate = 0.001
 mean AUROC = 0.7833
 ```
 
-相比默认 conditioned model：
+Compared to defaulted model:
 
 ```text
 0.7833 - 0.7821 = +0.0012
 ```
 
-提升很小。
+The lift is small.
 
-相比 E2：
+Compare E2:
 
 ```text
 0.7833 - 0.7927 = -0.0094
 ```
 
-因此，本轮调参没有让 conditioned model 超过 E2。
+Therefore, this rotation factor does not allow the conditioned model to exceed E2.
 
-结论：
-
-```text
-普通 tissue embedding + HLA embedding 的 conditioned model 目前不是最强模型。
-```
-
-但是 conditioned model 仍然有价值，因为它是后续 E4 HLA pseudo-sequence conditioning 的基础结构。
-
-## 15. 今日主要结论
-
-今天最重要的结论是：
+Conclusions
 
 ```text
-E2 shared_peptide_encoder_task_heads 是当前最强、最稳定的早期神经网络 baseline。
+The normal question-embeding + HLA embedding conditioned model is not currently the strongest model.
 ```
 
-更具体地说：
+However, the discussion continued to be valuable, as it was the infrastructure for the follow-up E4 HLA policy-making.
 
-1. `neural_single_task` 不如传统 baseline，说明单任务小神经网络在当前数据量下不稳定。
-2. `conditioned_tissue_hla` 超过传统 baseline，但不如 E2。
-3. `shared_peptide_encoder_task_heads` 明显超过传统 baseline，并且 3 个 seed 下非常稳定。
-4. E2 有 30 个任务超过每任务最佳传统 baseline，但也有 14 个任务下降。
-5. negative transfer 已经出现，后续需要做任务分组和更细的 transfer analysis。
-6. 普通 HLA embedding 的 conditioned model 调参收益有限，下一步更应该加入 HLA pseudo-sequence。
+## 15. Main findings of the day
 
-## 16. 当前模型排序
+The most important conclusion today is that:
 
-根据今天结果，当前模型排序为：
+```text
+E2 share_peptide_encoder_task_heads is the strongest and most stable early nervous network available.
+```
+
+More specifically:
+
+1. `neural_single_task` is less than the traditional baseline, which indicates that the single task little neural network is unstable under the current data volume.
+2. `conditioned_tissue_hla` exceeds the traditional baseline, but not as E2.
+3. `shared_peptide_encoder_task_heads` is significantly more than traditional baseline and three seeds are very stable.
+4. E2 has 30 tasks that exceed the best traditional baseline for each task, but 14 missions are down.
+5. New Transfer has emerged and the follow-up needs to be task grouped and more detailed.
+6. Normal HLA embedding conditioned model with limited benefits, and should be added to HLA pseuddo-sequience.
+
+## 16. Current model sequencing
+
+Based on today ' s results, the current model is sorted as:
 
 ```text
 E2 shared peptide encoder + task-specific heads
@@ -436,21 +436,21 @@ traditional single-task baseline
 E1 neural single-task baseline
 ```
 
-其中 E2 是当前主 baseline。
+Of which E2 is the current master baseline.
 
-## 17. 下一步计划
+## 17. Next steps
 
-下一步建议进入 E4：
+Next move is recommended to enter E4:
 
 ```text
 conditioned model with tissue embedding + HLA pseudo-sequence
 ```
 
-具体任务：
+Specific tasks:
 
-1. 获取或构建 HLA pseudo-sequence 表。
-2. 实现 HLA pseudo-sequence encoder。
-3. 比较：
+1. Fetch or construct the HLA table.
+2. Achieve HLA pseudo-sequience encoder.
+3. Comparison:
 
 ```text
 conditioned model + HLA embedding
@@ -458,9 +458,9 @@ vs
 conditioned model + HLA pseudo-sequence
 ```
 
-如果 HLA pseudo-sequence 有提升，说明模型确实受益于更有生物意义的 HLA 表示。
+If HLA pseudo-sequience is upgraded, it is suggested that models do benefit from the more biological HLA expression.
 
-之后再考虑：
+After that, consider:
 
 ```text
 E4 + FAMO
@@ -468,25 +468,25 @@ task grouping and negative transfer analysis
 CAGrad
 ```
 
-`FAMO` 是 Fast Adaptive Multitask Optimization，用于自动调节不同任务的 loss 权重。
+`FAMO` is Fast Adaptive Multitask Application, a loss weight that is used to customise different tasks.
 
-`CAGrad` 是 Conflict-Averse Gradient Descent，用于缓解不同任务梯度方向冲突的问题。
+ZXQ0QZ is the Confect-Averse Gradient Discent, which is used to mitigate conflicts between mission gradient directions.
 
-## 18. 重要文件
+## 18. Key documents
 
-第一版代码：
+First-page code:
 
 ```text
 scripts/run_tissuepmhc_neural_baselines.py
 ```
 
-第二版代码：
+Second-round code:
 
 ```text
 scripts/run_tissuepmhc_neural_baselines_v2.py
 ```
 
-第一版结果：
+Results of Release 1:
 
 ```text
 results/tissuePMHC_neural_baselines/per_task_metrics.csv
@@ -494,7 +494,7 @@ results/tissuePMHC_neural_baselines/summary_metrics.csv
 results/tissuePMHC_neural_baselines/metadata.json
 ```
 
-第二版结果：
+Results of Release 2:
 
 ```text
 results/tissuePMHC_neural_baselines_v2/per_task_metrics.csv
@@ -503,18 +503,18 @@ results/tissuePMHC_neural_baselines_v2/stability_metrics.csv
 results/tissuePMHC_neural_baselines_v2/metadata.json
 ```
 
-## 19. 后续编号校正说明
+## 19. Description of follow-up number correction
 
-后续复盘时确认：本日志第 17 节中的 `E4 + FAMO / task grouping / CAGrad` 是 2026-07-05 当天基于当时信息做出的临时计划，不再作为当前正式编号使用。
+The subsequent retrieval confirmed that `E4 + FAMO / task grouping / CAGrad` in section 17 of this log was a provisional plan based on the information available at the time of the event and was no longer used as the current official number.
 
-原因是后续实验显示：
+The reason for this is that the following experiments show that:
 
 ```text
-E4 HLA pseudo-sequence 线没有超过 E2。
-因此，后续性能主线应继续沿 E2 shared peptide encoder + task-specific heads 展开。
+The E4 HLA pseudo-security line does not exceed E2.
+Therefore, the follow-up performance main line should continue along E2 shared pattern encoded + task-specific headers.
 ```
 
-当前正式编号应理解为：
+The current official number should be understood to read:
 
 ```text
 E2: shared peptide encoder + task-specific heads
@@ -528,4 +528,4 @@ E8: global/HLA soft ensemble
 E9: E2 + CAGrad
 ```
 
-也就是说，E4 线现在保留为 HLA biological representation analysis，也就是 HLA 生物表示分析线；E2/E8 线才是当前性能主线。
+That is, the E4 line is now retained as HLA biological integration analysis, which is the HLA bioexpression analysis line; the E2/E8 line is the current performance main line.

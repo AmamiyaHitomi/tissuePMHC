@@ -139,16 +139,16 @@ def cell_text(cell, text, header=False, center=False):
 def stage_table(doc):
     table = doc.add_table(rows=1, cols=4)
     geometry(table, [700, 2450, 1250, 4960])
-    for cell, text in zip(table.rows[0].cells, ["阶段", "模型", "Mean AUROC", "核心贡献"]):
-        cell_text(cell, text, header=True, center=text != "核心贡献")
+    for cell, text in zip(table.rows[0].cells, ["Phase", "Model", "Mean AUROC", "Core contributions"]):
+        cell_text(cell, text, header=True, center=text != "Core contributions")
     entries = [
-        ("E0", "传统 one-hot Logistic Regression", "约 0.7558", "建立位置-氨基酸线性打分基线。"),
-        ("E2", "共享 peptide encoder + task heads", "约 0.7927", "让 44 个任务共同学习 peptide 的通用表示。"),
-        ("E8", "Global + HLA 双分支", "约 0.8050", "同时学习全局规律与 HLA 特异规律。"),
-        ("E14", "Auxiliary global + plain HLA", "约 0.8116", "用辅助监督增强共享表示，并保留 HLA 专门化。"),
-        ("E15", "Task-rank fusion", "约 0.8130", "消除两个分支概率尺度不一致的问题。"),
-        ("E17", "E14a 5-seed ensemble", "约 0.8263", "用独立随机种子平均降低训练方差。"),
-        ("E29", "Multi-kernel CNN E14a 3-seed", "0.8341", "显式提取局部 motif，并继续利用强双分支与 seed ensemble。"),
+        ("E0", "Tradition one-hot Logistic Repression", "About 0.7558", "Establish a position-amino acid linear scoring baseline."),
+        ("E2", "Share peptide encoder + task heads", "Roughly 0.7927", "Let 44 tasks learn generic expressions of peptide."),
+        ("E8", "Global + HLA Dual Branch", "About 0.8050", "The same is true of the same way that the whole system is taught about the different patterns of the HLA."),
+        ("E14", "Auxiliary global + plain HLA", "About 0.8116", "Enhanced sharing with subsidiary oversight and retention of HLA specialization."),
+        ("E15", "Task-rank fusion", "About 0.8130", "Eliminate the problem of the inconsistency between probabilities scales of the two branches."),
+        ("E17", "E14a 5-seed ensemble", "About 0.8263", "The training gap is reduced on average by the use of stand-alone random seeds."),
+        ("E29", "Multi-kernel CNN E14a 3-seed", "0.8341", "A visible extraction of local motif and continued to use strong dual branches with a seed esmble."),
     ]
     for row in entries:
         cells = table.add_row().cells
@@ -169,83 +169,83 @@ def setup(doc):
     normal.font.size = Pt(11)
     header = sec.header.paragraphs[0]
     header.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    font(header.add_run("tissuePMHC 模型原理说明"), 8.5, False, MID_GRAY)
+    font(header.add_run("TissuePMHC Model Explanatory Note"), 8.5, False, MID_GRAY)
     footer = sec.footer.paragraphs[0]
     footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    font(footer.add_run("从 E0 到 E29：模型结构、融合与集成"), 8.5, False, MID_GRAY)
+    font(footer.add_run("From E0 to E29: Model structure, integration and integration"), 8.5, False, MID_GRAY)
 
 
 def build():
     doc = Document()
     setup(doc)
 
-    p(doc, "tissuePMHC 关键模型原理说明", size=24, bold=True, color=BLACK, before=12, after=3, align=WD_ALIGN_PARAGRAPH.CENTER)
-    p(doc, "从传统线性模型到 E29 Multi-kernel CNN 3-seed ensemble", size=13, color=DARK_GRAY, after=14, align=WD_ALIGN_PARAGRAPH.CENTER)
-    callout(doc, "阅读重点", "这份文档不试图罗列全部实验，而是解释那些真正改变性能主线的模型：E0、E2、E8、E13/E14、E15、E17 和 E29。请重点理解每一步解决了哪个旧模型的瓶颈。")
+    p(doc, "TissuePMHC Key Model Rationale", size=24, bold=True, color=BLACK, before=12, after=3, align=WD_ALIGN_PARAGRAPH.CENTER)
+    p(doc, "From traditional linear models to E29 Multi-kernel CNN 3-seed Esmble", size=13, color=DARK_GRAY, after=14, align=WD_ALIGN_PARAGRAPH.CENTER)
+    callout(doc, "Read Focus", "This document does not attempt to list all experiments, but to explain the models that really change the main performance lines: E0, E2, E8, E13/E14, E15, E17 and E29. Please focus on which bottlenecks of the old models are solved at each step.")
 
-    add_heading(doc, "整体主线：模型是怎样一步一步变强的", 1)
-    p(doc, "可以把整个研究过程理解成：模型先学会“多个任务共享知识”，再学会“保留 HLA 差异”，然后通过辅助监督、排序融合、随机种子集成和 CNN 局部模式提取逐步增强。")
-    p(doc, "发展逻辑可以概括为：E0 传统线性模型 → E2 多任务共享编码器 → E8 双分支模型 → E14 辅助监督增强双分支 → E15 task-rank fusion → E17 多 seed 集成 → E29 Multi-kernel CNN 3-seed。", size=10.5, bold=True, color=DARK_GRAY, after=8)
+    add_heading(doc, "Corporate Principal: How models are built up step by step", 1)
+    p(doc, "The research process can be understood as a model that first learns to 'share knowledge across tasks', then learns to 'preserve HLA differences', and is progressively enhanced through auxiliary supervision, rank fusion, multi-seed ensembling, and CNN-based local pattern extraction.")
+    p(doc, "The development logic can be summarized as: E0 Traditional Linear Model E2 Multitask Sharing Encoder E8 Double Branch Model E14 Additional Oversight Enhancement Double Branch E15 task-rank foundation  E17 More Seed Integrating E29 Multi-kernel CNN 3-seed.", size=10.5, bold=True, color=DARK_GRAY, after=8)
     stage_table(doc)
 
-    add_heading(doc, "先理解任务：模型究竟在预测什么？", 1)
-    p(doc, "输入是一条长度固定为 9 的 peptide 序列。每个预测任务由 tissue 与 HLA allele 共同定义：模型需要判断这条 peptide 在给定 tissue-HLA 条件下是否更像正样本。项目的 standard split 包含 44 个任务。")
-    callout(doc, "直观比喻", "把每个任务看成不同实验室的判定标准：它们都在看 peptide，但关注点不完全相同。有些规律跨所有实验室通用，有些规律只在某一类 HLA 内成立。")
+    add_heading(doc, "Understanding the task first: what is the model predicting?", 1)
+    p(doc, "Enter a peptide sequence with a fixed length of 9. Each forecast task is defined by the tissue and HLA allele: the model needs to determine whether this peptide is more like a sample under the given tissue-HLA conditions. The project sstandsplit contains 44 tasks.")
+    callout(doc, "Intuitive metaphors", "Consider each task as a criterion for determining the different laboratories: they are looking at peptide, but the focus is not exactly the same. Some patterns are common across all laboratories, and some are established only within a particular class of HLA.")
 
-    add_heading(doc, "1. E0：传统线性模型 - 只会看“每个位置是什么”", 1)
-    p(doc, "E0 是最基础的序列打分器。每条 peptide 长度为 9，例如 SLYNTVATL。模型将“第几个位置是什么氨基酸”展开成 one-hot 特征，再使用 Logistic Regression 给出分数。")
-    formula(doc, "e0_linear", "E0 的线性位置-氨基酸打分形式。")
-    p(doc, "其中，位置 i 出现氨基酸 a 时，对预测的影响由对应权重决定。它能够学习“第 2 位是某个氨基酸通常更有利”这类独立位置效应。")
-    label_para(doc, "它擅长什么：", "快速、可解释，并能建立一个明确的传统基线。")
-    label_para(doc, "它缺少什么：", "它不擅长理解相邻氨基酸组合，也无法让不同任务共享经验。因此它更像一张位置-氨基酸打分表。")
+    add_heading(doc, "E0: Traditional linear models - only see what's in each location", 1)
+    p(doc, "E0 is the most basic sequence scoring machine. Each peptide has a length of 9, for example SLYNTVATL. The model expands the \"first position what amino acid is\" into one-hot features, using the Logistic Repression to give scores.")
+    formula(doc, "e0_linear", "E0 linear position - amino acid scoring form.")
+    p(doc, "In this case, i. When amino acids a occurs, the effect on the forecast is determined by the corresponding weight. It can learn to do independent location effects such as \"bit 2 is usually better for a amino acid\".")
+    label_para(doc, "What's it good at:", "It is fast, understandable and can establish a clear traditional baseline.")
+    label_para(doc, "What it lacks:", "It's not good at understanding the adjoining amino acid combinations, and it's not able to share experience with different missions. It's more like a position-amino acid score table.")
 
-    add_heading(doc, "2. E2：共享 peptide encoder - 44 个任务一起学习", 1)
-    p(doc, "E2 不再让 44 个任务各自训练完整模型，而是先让所有任务共享一个 peptide encoder。这个 encoder 将 peptide 压缩成一段表示向量，再交给各任务自己的输出头判断。")
-    formula(doc, "e2_shared", "共享表示与 task-specific head 的关系。")
-    callout(doc, "结构示意", "peptide → 共享 encoder → 44 个 task-specific heads。共享 encoder 学通用 peptide 规律；每个 head 学本任务如何使用这些规律。")
-    label_para(doc, "为什么有效：", "单个任务的数据有限，但不同任务中的 peptide 模式有共性。共享 encoder 相当于让所有任务共同积累一套“读 peptide 的基础知识”。")
-    label_para(doc, "局限：", "E2 默认所有任务共享同一套核心表示，没有明确区分跨 HLA 的通用规律和某个 HLA 的专属规律。")
+    add_heading(doc, "E2: Sharing peptide encoder - 44 tasks to learn together", 1)
+    p(doc, "E2 Instead of training complete models for 44 tasks, the task will be shared with all tasks. This encoder will compress the task into a vector and then leave it to the mission 's own output head to judge.")
+    formula(doc, "e2_shared", "Shares represent the relationship with the task-specific head.")
+    callout(doc, "Structures", "Shares 44 task-special headers. Shares share learns general peptide; how each head learning mission uses these.")
+    label_para(doc, "Why is it working?", "Data for individual tasks are limited, but the peptide mode is common in different tasks. Sharing encoder is equivalent to a set of basics for all tasks to accumulate together.")
+    label_para(doc, "Limitations:", "E2 Defaults to the same core set of messages for all tasks sharing, without clearly distinguishing between a common pattern across HLA and a particular HLA rule.")
 
-    add_heading(doc, "3. E8：Global + HLA 双分支 - 两个专家共同判断", 1)
-    p(doc, "E8 把共享策略拆成两条支路。Global branch 使用所有任务的数据，学习跨 tissue、跨 HLA 的通用模式；HLA branch 则按 HLA 分组，让同一 allele 下不同 tissue 的任务共享一个专门 encoder。")
-    callout(doc, "结构示意", "同一条 peptide 同时进入 Global expert 和 HLA expert。前者问“整体规律是什么”，后者问“这个 HLA 特别偏好什么”；最后融合两者判断。")
-    formula(doc, "e8_fusion", "E8 的基础双分支平均融合。")
-    label_para(doc, "为什么有效：", "这避免了二选一。若只用 global 模型，HLA motif 容易被稀释；若只按 HLA 分组，跨 HLA 的样本量和共性又被浪费。双分支同时保留两类信息。")
-    label_para(doc, "关键认识：", "这里的提升说明“如何共享”比单纯增加网络宽度更重要。")
+    add_heading(doc, "3. E8: Global + HLA Dual Branch - Joint Expert Judgement", 1)
+    p(doc, "E8 Splits the shared strategy into two feeder paths. Global Branch uses data from all tasks to learn common models across the tissue and across the HLA; HLAbranch groupes with HLA, allowing a special encoder to share a different task under the same allele.")
+    callout(doc, "Structure", "The same peptide enters the global expert and the HLA expert. The former asks 'what is the overall pattern?', while the latter asks 'what does this HLA especially favor?'; the two outputs are then combined.")
+    formula(doc, "e8_fusion", "E8 The basic two branches are on average integrated.")
+    label_para(doc, "Why is it working?", "This avoids choosing one. If you use a global model only, HLA motif is easily diluted; if you just group it by hLA, the number and commonality of samples across HLA are wasted. Both branches keep both types of information.")
+    label_para(doc, "Key insight:", "This upgrade suggests that 'how to share' is more important than simply increasing network width.")
 
-    add_heading(doc, "4. E13 与 E14：辅助监督 - 让全局分支学得更有方向", 1)
-    p(doc, "E13 在主二分类任务之外，额外要求共享表示去预测 tissue 和 HLA。最终目标仍是正负分类；辅助任务的作用是迫使 encoder 形成更有组织的 peptide 表示。")
-    label_para(doc, "直观理解：", "普通训练只告诉模型“这题答对还是答错”；辅助训练还要求它说出“这条 peptide 更像与哪个 HLA、哪个 tissue 有关”。这会给 encoder 更多学习线索。")
-    p(doc, "E14 将这条思路与 E8 组合：Global branch 使用 tissue/HLA auxiliary supervision，HLA branch 保持普通训练。这个组合比给两条分支都加入辅助任务更好。")
-    callout(doc, "为什么只增强 Global branch？", "Global branch 面对的任务范围最广，最需要借助 tissue/HLA 信息整理共享表示；HLA branch 已经按 allele 专门化，额外辅助约束可能反而限制其自由度。")
+    add_heading(doc, "4. E13 and E14: Auxiliary Supervision - Making Global Branches more oriented", 1)
+    p(doc, "E13 Additional requirements for sharing indications to predict tisue and HLA are added to the main II classification task. The ultimate goal remains positive and negative; the secondary task is to force encoder to form a more organized peptide expression.")
+    label_para(doc, "Intuitive understanding:", "The general training only tells the model \"Is this correct or wrong?\" The supplementary training also requires it to say \"This peptide is more about which HLA, which Tissue.\" This will give encoder more learning clues.")
+    p(doc, "E14 Group this idea with E8: Global Branch uses Tissue/HLA auxiliary training, HLAbranch to keep training. This combination is better than adding auxiliary tasks to both branches.")
+    callout(doc, "Why only increase Global Branch?", "Globalbranch is faced with the broadest range of tasks, most likely with the help of a Tissue/HLA information-sharing sign; HLAbranch has been specialized in allele, and additional secondary constraints may limit its freedom.")
 
-    add_heading(doc, "5. E15：Task-rank fusion - 先比较名次，再合并意见", 1)
-    p(doc, "两个分支都能输出概率，但概率数值不一定处于同一尺度。一个分支可能经常给出 0.80，另一个即使排得很准也只给出 0.55。直接平均概率时，数值更极端的分支会产生更大影响。")
-    p(doc, "E15 的做法是：在每个 task 内，先把每个分支的预测转换成百分位名次，再平均名次。它关注的是“这个样本在该 task 中排第几”，而不是“模型说它是 0.70 还是 0.90”。")
-    formula(doc, "e15_rank", "E15 的 task-rank fusion：先转为 task 内排名，再平均。")
-    label_para(doc, "为什么适合 AUROC：", "AUROC 评价的核心就是正样本是否被排在负样本前面。因此使用 task 内 rank，更贴近最终评价目标。")
+    add_heading(doc, "5. E15: Task-rank foundation - comparison of names first, consolidation of comments", 1)
+    p(doc, "Both branches can produce probabilities, but the probabilities are not necessarily at the same level. One branch may often give 0.80, while the other, even with a good ranking, only gives 0.55.")
+    p(doc, "E15 converts each branch prediction into a within-task percentile rank and then averages the ranks. The key question becomes 'where does this sample rank within the task?' rather than whether a model reports 0.70 or 0.90.")
+    formula(doc, "e15_rank", "E15 tab-rank Fusion: first move to the list in the list and then average.")
+    label_para(doc, "Why does AUROC fit:", "AUROC 's evaluation centred on whether the positive sample was in front of the negative sample. Therefore, the final evaluation target is more closely followed by the track.")
 
-    add_heading(doc, "6. E17：多 seed ensemble - 让多个独立模型投票", 1)
-    p(doc, "即使模型结构、数据和超参数完全一样，随机初始化、batch 顺序和 dropout 也会让不同训练过程得到略有不同的模型。一个模型可能偶然错分某些样本，另一个模型未必会犯相同的错误。")
-    formula(doc, "e17_seed", "多个独立 seed 的预测平均。")
-    callout(doc, "E17 的流程", "独立训练多个 E14a → Global 分支在 seed 间平均 → HLA 分支在 seed 间平均 → 最后进行 task-rank fusion。")
-    label_para(doc, "为什么有效：", "平均独立训练模型会保留多个模型共同认可的信号，同时削弱单个训练过程造成的偶然偏差。E17 5-seed 从 E14 的 0.8116 提升到 0.8263。")
-    label_para(doc, "为什么 checkpoint/SWA 没有同样成功：", "同一训练轨迹上的不同 checkpoint 太相似，错误也更相似；真正独立训练的 seed 才提供了更明显的多样性。")
+    add_heading(doc, "6. E17: More seen individual - multiple independent models voting", 1)
+    p(doc, "Even if model structures, data and hyper-parameters are identical, random initialization, battling and dropott allow for slightly different models for different training processes. One model may accidentally miss out on some samples, while another may not make the same mistakes.")
+    formula(doc, "e17_seed", "Multiple independents seed forecasts average.")
+    callout(doc, "E17 process", "The E14a  Global branch is trained independently on an average of the seed between the seed and the HLA branch on an average of the seed and lastly on a task-rank foundation.")
+    label_para(doc, "Why is it working?", "The average independent training model retains a common acceptance of multiple models while weakening the occasional deviations caused by individual training processes. E17 5-seed was raised from 0.8116 of E14 to 0.8263.")
+    label_para(doc, "Why does the checkpoint/SWA not succeed in the same way:", "The different checkpoints on the same training trajectory are too similar and more similar in error; the real independent training saw provided for a more distinct diversity.")
 
-    add_heading(doc, "7. E29：Multi-kernel CNN - 当前最强模型为什么更强", 1)
-    p(doc, "E14 的 peptide encoder 先把 9 个位置的 amino-acid embedding 直接拼接，再交给 MLP。它可以学习位置效应，但没有显式结构来识别连续的局部氨基酸片段。")
-    p(doc, "E29 用三组一维卷积同时扫描 peptide：长度为 2 的卷积看二肽组合，长度为 3 的卷积看短 motif，长度为 5 的卷积看更长的局部片段。三种尺度的特征再拼接，交给后续网络。")
-    callout(doc, "以 9-mer 为例", "若 peptide 是 SLYNTVATL，长度为 3 的卷积会重点观察 SLY、LYN、YNT、NTV 等连续片段。模型因而能直接学习“某种局部组合是否重要”，而不是只看每个位置的氨基酸。")
-    label_para(doc, "E29 的关键细节：", "卷积后的位置信息被保留，而不是只取一个全局最大值。对 HLA-I 9-mer，motif 出现在第 2 位附近还是第 9 位附近可能意义不同；保留位置能避免丢失这种锚定位置信息。")
-    label_para(doc, "为什么 E29 没有推倒重来：", "E29 只替换 peptide encoder，继续保留 E14 中已经证明有效的 Global auxiliary branch、HLA plain branch、task-rank fusion 和独立 seed ensemble。它是在强基线之上改善表示，而不是一次性改变所有因素。")
-    formula(doc, "e29_gain", "E29 的核心：更好的局部 motif 表示与独立 seed 平均可以叠加。")
-    p(doc, "最终，E29 3-seed ensemble 的 Mean AUROC 为 0.8341，Mean AUPRC 为 0.8228，Worst-10 Mean AUROC 为 0.7634，超过此前 E17 5-seed 的结果。")
+    add_heading(doc, "E29: Multi-kernel CNN - Why the current strongest model is stronger", 1)
+    p(doc, "E14 peptide encoder first directs the amino-acid embedding of nine locations to MLP. It learns position effects but does not have a visible structure to identify continuous local amino acid fragments.")
+    p(doc, "E29 Scanning peptide simultaneously with three sets of one-dimensional volume: Volumes with 2 lengths, Volumes with 3 lengths short view motif, Volumes with 5 lengths look at longer local segments. The three scales are re-assemble and pass on to the follow-on network.")
+    callout(doc, "Take 9-mer as an example.", "If peptide is SLYNTVATL, the volume of 3 focuses on continuous SLY, LYN, YNT, NTV, etc. The model can thus learn directly whether a local combination is important, rather than looking at amino acids at each location.")
+    label_para(doc, "E29 Key Details:", "The information on the position after the volume is retained, rather than just a global maximum. For HLA-I 9-mer, the presence of the motif near the second or ninth place may have different meanings; the position is kept to avoid losing this anchor position information.")
+    label_para(doc, "Why is E29 not pushing backwards:", "E29 replaces only the peptide encoder, and continues to keep the global auxiliary branch, HLA plain branch, task-rank foundation and independent seed ensemble. It is an improvement over a strong baseline, not a one-time change in all factors.")
+    formula(doc, "e29_gain", "E29 Core: Better local motif indicates that independence is possible on average.")
+    p(doc, "Eventually, E293-seed Esemble ' s Mean AUROC was 0.8341, Mean AUPPC was 0.8228, World-10 Mean AUROC was 0.7634, which exceeded the results of E175-seed before.")
 
-    add_heading(doc, "最核心的研究结论", 1)
-    p(doc, "这些实验最终指向了一个比较清晰的规律：有效提升主要来自合理的任务共享结构、互补的 global/HLA 分支、对 shared representation 有帮助的轻量辅助监督、与 AUROC 匹配的 task-rank fusion、真正独立的随机种子集成，以及符合 9-mer 局部 motif 特征的 CNN encoder。")
-    p(doc, "相反，没有带来明显提升的方向包括：复杂的动态 loss weighting、仅在同一训练轨迹上平均 checkpoint、SWA、MC Dropout、同质候选上的复杂 stacking，以及过于复杂的 expert/gate 结构。")
-    callout(doc, "一句话概括", "E2 让不同任务开始共享知识，E8 让共享变得有层次，E14 让共享表示获得辅助引导，E15 解决分支尺度差异，E17 降低训练随机性，E29 则真正增强了 peptide 局部 motif 的表示能力。")
-    p(doc, "说明：本文用于理解项目内部模型演进。所有性能数字均来自当前 closed-set standard split；它们不自动代表 peptide-disjoint、protein-disjoint、unseen-HLA 或外部数据上的泛化能力。", size=9.5, color=MID_GRAY, italic=True, before=8, after=0)
+    add_heading(doc, "Core findings", 1)
+    p(doc, "The experiments eventually point to a clearer pattern: effective upgrading of the global/HLA branch, which is derived mainly from a rational task sharing structure, complementary, light-weight auxiliary supervision that helps with the shared representation, a task-rank foundation matching AUROC, a truly independent random seed integration, and CNN encoder that meets the 9-mer local motif characteristics.")
+    p(doc, "Instead, the direction that did not bring about a significant improvement included complex dynamics, average checkpoints, SWA, MC Droopout, complex stacking on homogenous candidates, and overly complex expert/gate structures.")
+    callout(doc, "A word of generality.", "E2 lets different tasks start sharing knowledge, E8 lets sharing become hierarchical, E14 lets shared expressions be guided by help, E15 resolves branch scale differences, E17 reduces training randomity, and E29 really increases the expression power of peptide local motif.")
+    p(doc, "Note: This paper is used to understand the evolution of the project ' s internal model. All performance figures are derived from the current closed-set standlist; they do not automatically represent generalisation on the peptide-disjoint, protein-disjoint, unseen-HLA or external data.", size=9.5, color=MID_GRAY, italic=True, before=8, after=0)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     doc.save(OUT)

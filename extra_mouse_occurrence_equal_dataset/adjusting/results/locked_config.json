@@ -1,0 +1,21 @@
+{
+  "result_label": "TissuePMHC (tuned; mouse-training-CV-selected)",
+  "result_label_en": "TissuePMHC (tuned; mouse-training-CV-selected)",
+  "name": "c0_combined_top4",
+  "stage": "C",
+  "sampling": "task_balanced",
+  "embedding_dim": 16,
+  "conv_channels": 32,
+  "hidden_dim": 128,
+  "kernel_sizes": [
+    3,
+    5
+  ],
+  "dropout": 0.35,
+  "tissue_loss_weight": 0.05,
+  "hla_loss_weight": 0.1,
+  "fusion_global_weight": 0.5,
+  "learning_rate": 0.003,
+  "weight_decay": 0.0001,
+  "task_batch_size": 32
+}
