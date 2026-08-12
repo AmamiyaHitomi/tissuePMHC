@@ -1,0 +1,17 @@
+{
+  "dataset_name": "Human Protein Atlas consensus RNA",
+  "version": "25.1",
+  "download_date": "2026-08-01",
+  "license": "CC BY 4.0",
+  "measurement_level": "gene",
+  "normalization": "nTPM",
+  "ensembl_version": "109",
+  "source_url": "https://www.proteinatlas.org/download/tsv/rna_tissue_consensus.tsv.zip",
+  "source_page": "https://www.proteinatlas.org/humanproteome/tissue/data",
+  "uniprot_mapping_api": "https://rest.uniprot.org",
+  "uniprot_mapping_help": "https://www.uniprot.org/help/id_mapping_prog",
+  "protein_mapping_aggregation": "mean across mapped genes per UniProt",
+  "positive_negative_missing_rate_absolute_gap": 0.0,
+  "raw_hpa_sha256": "b001903da23f802c8dfbd1b6b3a8c20b831fedd4932f4bb721b06622d83ae60b",
+  "train_sha256": "333ada92ff15cf0318dd831f3cb5077a720f5024a73887f8d56e24c14cc64d0d"
+}

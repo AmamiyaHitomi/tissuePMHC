@@ -1,0 +1,66 @@
+target_tissue,mhc_restriction,n_pairs,n_positive_rows,n_negative_rows,n_positive_peptides,n_negative_peptides,n_uniprot_ids
+spleen,H2-Kd,570,570,570,570,570,504
+spleen,H2-Kb,541,541,541,541,541,458
+spleen,H2-Db,536,536,536,536,536,475
+colon,H2-Db,528,528,528,528,528,466
+liver,H2-Db,513,513,513,513,513,451
+liver,H2-Kb,467,467,467,467,467,387
+lymphoid,H2-Db,456,456,456,456,456,409
+lung,H2-Db,428,428,428,428,428,385
+skin,H2-Db,425,425,425,425,425,382
+thymus,H2-Db,411,411,411,411,411,372
+small intestine,H2-Db,389,389,389,389,389,348
+liver,H2-Kd,374,374,374,374,374,318
+skin,H2-Kd,355,355,355,355,355,318
+skin,H2-Kb,352,352,352,352,352,295
+kidney,H2-Db,331,331,331,331,331,301
+prostate,H2-Db,327,327,327,327,327,299
+thymus,H2-Kd,323,323,323,323,323,308
+colon,H2-Kb,308,308,308,308,308,269
+bone marrow,H2-Db,303,303,303,303,303,282
+uterus,H2-Db,295,295,295,295,295,275
+spleen,H2-Kk,245,245,245,245,245,224
+pancreas,H2-Kd,240,240,240,240,240,229
+skin,H2-Kk,225,225,225,225,225,209
+liver,H2-Kk,224,224,224,224,224,203
+lymphoid,H2-Kb,196,196,196,196,196,182
+testis,H2-Db,195,195,195,195,195,181
+pancreas,H2-Db,183,183,183,183,183,179
+prostate,H2-Kb,169,169,169,169,169,156
+bladder,H2-Db,167,167,167,167,167,157
+pancreas,H2-Kb,166,166,166,166,166,158
+central nervous system (CNS),H2-Db,164,164,164,164,164,157
+blood,H2-Kb,162,162,162,162,162,151
+adrenal gland,H2-Db,151,151,151,151,151,144
+heart,H2-Db,147,147,147,147,147,140
+bone marrow,H2-Kb,143,143,143,143,143,134
+brain,H2-Db,143,143,143,143,143,137
+small intestine,H2-Kb,138,138,138,138,138,133
+ovary,H2-Db,124,124,124,124,124,119
+lung,H2-Kb,121,121,121,121,121,112
+uterus,H2-Kb,119,119,119,119,119,115
+thymus,H2-Kb,113,113,113,113,113,109
+kidney,H2-Kb,106,106,106,106,106,101
+stomach,H2-Db,101,101,101,101,101,99
+skin,H2-b class I,86,86,86,86,86,77
+bone marrow,H2-b class I,83,83,83,83,83,69
+central nervous system (CNS),H2-Kb,70,70,70,70,70,65
+other,H2-Kb,67,67,67,67,67,66
+testis,H2-Kb,67,67,67,67,67,64
+other,H2-b class I,58,58,58,58,58,55
+spinal cord,H2-Db,56,56,56,56,56,54
+bladder,H2-Kb,49,49,49,49,49,48
+adrenal gland,H2-Kb,41,41,41,41,41,40
+stomach,H2-Kb,39,39,39,39,39,35
+heart,H2-Kb,29,29,29,29,29,28
+other,H2-Db,22,22,22,22,22,22
+NA,H2-Kd,20,20,20,20,20,19
+brain,H2-Kb,19,19,19,19,19,19
+ovary,H2-Kb,17,17,17,17,17,16
+NA,H2-Db,14,14,14,14,14,13
+NA,H2-Kb,10,10,10,10,10,9
+blood,H2-Kd,9,9,9,9,9,9
+lymphoid,H2-Kd,1,1,1,1,1,1
+other,H2-Kd,1,1,1,1,1,1
+other,H2-Ld,1,1,1,1,1,1
+spinal cord,H2-Kb,1,1,1,1,1,1

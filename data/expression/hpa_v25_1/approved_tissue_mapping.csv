@@ -1,0 +1,28 @@
+target_tissue,expression_tissue,review_status,weight,mapping_quality,reviewer,review_date,review_note
+blood,bone marrow,approved,1.0,low_proxy,Codex_user_authorized,2026-08-01,HPA consensus has no whole blood; bone marrow is retained as an explicit hematopoietic proxy.
+bone,bone marrow,approved,1.0,low_proxy,Codex_user_authorized,2026-08-01,HPA has no bone tissue; bone marrow is not anatomically equivalent and is used only as an explicit proxy.
+brain,amygdala,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight CNS-region aggregate.
+brain,basal ganglia,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight CNS-region aggregate.
+brain,cerebellum,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight CNS-region aggregate.
+brain,cerebral cortex,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight CNS-region aggregate.
+brain,choroid plexus,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight CNS-region aggregate.
+brain,hippocampal formation,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight CNS-region aggregate.
+brain,hypothalamus,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight CNS-region aggregate.
+brain,midbrain,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight CNS-region aggregate.
+brain,spinal cord,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight CNS-region aggregate.
+breast,breast,approved,1.0,exact,Codex_user_authorized,2026-08-01,Exact tissue-name match.
+colon,colon,approved,1.0,exact,Codex_user_authorized,2026-08-01,Exact tissue-name match.
+kidney,kidney,approved,1.0,exact,Codex_user_authorized,2026-08-01,Exact tissue-name match.
+lung,lung,approved,1.0,exact,Codex_user_authorized,2026-08-01,Exact tissue-name match.
+lymph node,lymph node,approved,1.0,exact,Codex_user_authorized,2026-08-01,Exact tissue-name match.
+lymphoid,appendix,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight lymphoid-organ aggregate.
+lymphoid,bone marrow,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight lymphoid-organ aggregate.
+lymphoid,lymph node,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight lymphoid-organ aggregate.
+lymphoid,spleen,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight lymphoid-organ aggregate.
+lymphoid,thymus,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight lymphoid-organ aggregate.
+lymphoid,tonsil,approved,1.0,aggregate_proxy,Codex_user_authorized,2026-08-01,Equal-weight lymphoid-organ aggregate.
+ovary,ovary,approved,1.0,exact,Codex_user_authorized,2026-08-01,Exact tissue-name match.
+spleen,spleen,approved,1.0,exact,Codex_user_authorized,2026-08-01,Exact tissue-name match.
+thymus,thymus,approved,1.0,exact,Codex_user_authorized,2026-08-01,Exact tissue-name match.
+umbilical cord blood,bone marrow,approved,1.0,low_proxy,Codex_user_authorized,2026-08-01,HPA has no umbilical cord blood; bone marrow is retained as an explicit hematopoietic proxy with developmental mismatch.
+uterine cervix,cervix,approved,1.0,synonym_exact,Codex_user_authorized,2026-08-01,Anatomical synonym match.

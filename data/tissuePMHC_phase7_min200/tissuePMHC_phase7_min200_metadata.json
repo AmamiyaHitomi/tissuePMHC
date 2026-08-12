@@ -1,0 +1,30 @@
+{
+  "dataset": "tissuePMHC_phase7_min200",
+  "description": "Phase 7 isolated human tissue-HLA benchmark with total_pairs > 200.",
+  "input": "D:\\my_python\\tissuePMHC\\data\\processed\\iedb_tissue_specificity_pairs.csv.gz",
+  "train_output": "D:\\my_python\\tissuePMHC\\data\\tissuePMHC_phase7_min200\\tissuePMHC_phase7_min200_train.csv.gz",
+  "test_output": "D:\\my_python\\tissuePMHC\\data\\tissuePMHC_phase7_min200\\tissuePMHC_phase7_min200_test.csv.gz",
+  "summary_output": "D:\\my_python\\tissuePMHC\\data\\tissuePMHC_phase7_min200\\tissuePMHC_phase7_min200_summary.csv",
+  "min_pairs_filter": "> 200 pairs per tissue-HLA group",
+  "test_pairs_per_tissue_mhc": 100,
+  "random_seed": 20260704,
+  "n_tissue_hla_groups": 157,
+  "train_rows": 147596,
+  "test_rows": 31400,
+  "train_pairs": 73798,
+  "test_pairs": 15700,
+  "labels": {
+    "1": "reported in target tissue-HLA",
+    "0": "same UniProt and HLA, reported in other tissue but not target tissue-HLA"
+  },
+  "filters": [
+    "human peptide source",
+    "human host",
+    "MHC-I",
+    "four-digit HLA allele",
+    "positive IEDB qualitative measurement",
+    "molecule_parent_uniprot_id available",
+    "unmodified standard amino-acid peptide",
+    "peptide length = 9"
+  ]
+}

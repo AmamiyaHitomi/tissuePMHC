@@ -1,0 +1,5 @@
+hla,pseudo_sequence,source,source_file,source_sha256,tool_version,source_alias
+H2-Db,YESYYREKAGQWFVSNLYLQSLFYTWSAYAYEWY,NetMHCpan versioned MHC pseudo-sequence resource,/home/hitomi/netMHCpan-4.1/data/MHC_pseudo.dat,2995d4f1158f5f7818099ce66055accb6510e5fd81c0e1d9a6deabe98ff95b5b,4.1b,H-2-Db
+H2-Kb,YVEYYREKAGNSFVDTLYIVSQYYTWAELAYTWY,NetMHCpan versioned MHC pseudo-sequence resource,/home/hitomi/netMHCpan-4.1/data/MHC_pseudo.dat,2995d4f1158f5f7818099ce66055accb6510e5fd81c0e1d9a6deabe98ff95b5b,4.1b,H-2-Kb
+H2-Kd,YVAFYEQRASDWFVSTAYFRFQFYTWADYAYEWY,NetMHCpan versioned MHC pseudo-sequence resource,/home/hitomi/netMHCpan-4.1/data/MHC_pseudo.dat,2995d4f1158f5f7818099ce66055accb6510e5fd81c0e1d9a6deabe98ff95b5b,4.1b,H-2-Kd
+H2-Kk,YHSYYRNIAGNIFVNTAYFRYEYYTWADDAYTWY,NetMHCpan versioned MHC pseudo-sequence resource,/home/hitomi/netMHCpan-4.1/data/MHC_pseudo.dat,2995d4f1158f5f7818099ce66055accb6510e5fd81c0e1d9a6deabe98ff95b5b,4.1b,H-2-Kk

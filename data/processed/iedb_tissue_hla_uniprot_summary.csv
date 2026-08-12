@@ -1,0 +1,1281 @@
+source_tissue,mhc_restriction,n_molecule_parent_uniprot_ids,n_peptides,n_peptide_mhc_tissue_protein_rows
+NA,HLA-A*02:01,452,1265,1424
+NA,HLA-B*07:02,99,177,188
+NA,HLA-A*03:01,83,146,149
+NA,HLA-A*01:01,73,93,104
+NA,HLA-B*27:05,73,74,100
+NA,HLA-A*24:02,72,165,179
+NA,HLA-A*11:01,65,110,114
+NA,HLA-B*15:01,40,48,50
+NA,HLA-A*33:03,39,41,41
+NA,HLA-C*08:02,39,39,39
+NA,HLA-C*05:01,38,38,38
+NA,HLA-B*35:01,31,50,51
+NA,HLA-B*51:01,28,54,54
+NA,HLA-B*39:06,27,27,30
+NA,HLA-B*27:06,26,25,27
+NA,HLA-A*29:02,22,23,25
+NA,HLA-A*31:01,22,30,30
+NA,HLA-B*27:04,22,20,23
+NA,HLA-C*06:02,22,30,31
+NA,HLA-A*69:01,20,20,20
+NA,HLA-B*57:01,19,20,20
+NA,HLA-C*07:02,19,26,26
+NA,HLA-A*02:06,18,132,175
+NA,HLA-B*58:01,18,25,25
+NA,HLA-A*68:02,17,101,142
+NA,HLA-B*15:02,16,23,28
+NA,HLA-B*27:09,16,15,20
+NA,HLA-B*27:02,15,14,17
+NA,HLA-C*04:01,15,20,20
+NA,HLA-A*02:03,14,148,193
+NA,HLA-A*68:01,14,17,17
+NA,HLA-B*45:06,14,14,14
+NA,HLA-B*54:01,14,28,28
+NA,HLA-A*02:02,13,161,206
+NA,HLA-B*15:42,13,13,13
+NA,HLA-C*12:03,13,23,23
+NA,HLA-B*53:01,12,21,21
+NA,HLA-B*83:01,12,12,12
+NA,HLA-B*14:02,11,12,12
+NA,HLA-B*39:01,11,12,12
+NA,HLA-A*33:01,10,14,14
+NA,HLA-B*40:02,10,11,11
+NA,HLA-C*14:02,10,15,15
+NA,HLA-B*08:01,9,11,11
+NA,HLA-B*27:01,9,9,9
+NA,HLA-A*66:01,7,7,7
+NA,HLA-B*18:01,7,8,8
+NA,HLA-B*44:03,7,13,15
+NA,HLA-A*02:07,6,6,6
+NA,HLA-B*27:03,6,7,7
+NA,HLA-B*39:09,6,6,6
+NA,HLA-C*03:04,6,12,14
+NA,HLA-B*38:01,5,5,5
+NA,HLA-B*40:01,5,11,11
+NA,HLA-B*46:01,5,10,10
+NA,HLA-C*03:03,5,13,13
+NA,HLA-C*15:02,5,11,11
+NA,HLA-A*25:01,4,4,4
+NA,HLA-A*26:01,4,4,4
+NA,HLA-A*32:07,4,4,4
+NA,HLA-A*68:23,4,4,4
+NA,HLA-B*15:16,4,6,7
+NA,HLA-B*44:02,4,4,5
+NA,HLA-C*01:02,4,7,7
+NA,HLA-A*32:15,3,3,3
+NA,HLA-A*02:12,2,2,2
+NA,HLA-A*30:01,2,5,5
+NA,HLA-B*13:02,2,10,10
+NA,HLA-B*44:05,2,2,4
+NA,HLA-B*57:03,2,2,2
+NA,HLA-C*07:01,2,7,7
+NA,HLA-A*02:04,1,2,2
+NA,HLA-A*02:05,1,1,1
+NA,HLA-A*02:11,1,1,1
+NA,HLA-A*11:02,1,5,5
+NA,HLA-A*23:01,1,1,1
+NA,HLA-A*24:03,1,1,1
+NA,HLA-A*24:87,1,1,1
+NA,HLA-A*26:02,1,2,2
+NA,HLA-A*31:08,1,1,1
+NA,HLA-A*80:01,1,1,1
+NA,HLA-B*13:01,1,8,8
+NA,HLA-B*15:17,1,3,3
+NA,HLA-B*27:10,1,1,1
+NA,HLA-B*37:01,1,1,1
+NA,HLA-B*40:06,1,4,4
+NA,HLA-B*40:13,1,1,1
+NA,HLA-B*48:01,1,7,7
+NA,HLA-B*52:01,1,4,4
+NA,HLA-B*73:01,1,1,1
+NA,HLA-C*03:02,1,9,9
+NA,HLA-C*08:01,1,6,6
+NA,HLA-C*12:02,1,11,11
+NA,HLA-C*14:03,1,7,7
+adipose tissue,HLA-A*02:01,1,1,1
+adrenal gland,HLA-A*11:01,418,440,440
+adrenal gland,HLA-A*03:01,389,408,408
+adrenal gland,HLA-B*15:01,360,389,389
+adrenal gland,HLA-A*68:02,341,353,353
+adrenal gland,HLA-A*02:01,327,339,339
+adrenal gland,HLA-A*01:01,296,307,307
+adrenal gland,HLA-B*44:02,288,306,306
+adrenal gland,HLA-B*50:01,271,287,287
+adrenal gland,HLA-B*07:02,236,249,249
+adrenal gland,HLA-A*69:01,235,242,242
+adrenal gland,HLA-A*23:01,188,195,195
+adrenal gland,HLA-B*14:02,127,129,129
+adrenal gland,HLA-B*35:01,125,132,132
+adrenal gland,HLA-B*37:01,104,106,106
+adrenal gland,HLA-A*68:01,91,91,91
+adrenal gland,HLA-B*08:01,91,94,94
+adrenal gland,HLA-B*27:05,74,76,76
+adrenal gland,HLA-A*32:01,51,51,51
+adrenal gland,HLA-C*04:01,48,48,48
+adrenal gland,HLA-B*49:01,45,47,47
+adrenal gland,HLA-C*08:02,41,41,41
+adrenal gland,HLA-B*45:01,35,35,35
+adrenal gland,HLA-C*03:03,35,36,36
+adrenal gland,HLA-C*02:02,23,25,25
+adrenal gland,HLA-A*24:02,22,22,22
+adrenal gland,HLA-C*07:02,22,22,22
+adrenal gland,HLA-B*35:03,18,18,18
+adrenal gland,HLA-C*03:04,16,16,16
+adrenal gland,HLA-C*06:02,9,9,9
+adrenal gland,HLA-C*07:04,7,7,7
+adrenal gland,HLA-C*16:01,7,7,7
+adrenal gland,HLA-C*07:01,4,4,4
+aorta,HLA-A*11:01,375,395,395
+aorta,HLA-A*01:01,198,205,205
+aorta,HLA-B*40:02,177,196,196
+aorta,HLA-B*15:01,159,165,165
+aorta,HLA-A*68:02,153,154,154
+aorta,HLA-A*03:01,120,123,123
+aorta,HLA-A*02:05,95,97,97
+aorta,HLA-A*02:01,90,91,91
+aorta,HLA-B*14:02,81,83,83
+aorta,HLA-B*44:02,80,85,85
+aorta,HLA-B*58:01,77,78,78
+aorta,HLA-B*07:02,75,79,79
+aorta,HLA-B*13:02,57,59,59
+aorta,HLA-A*69:01,52,53,53
+aorta,HLA-B*35:01,52,52,52
+aorta,HLA-B*35:08,37,37,37
+aorta,HLA-B*37:01,35,35,35
+aorta,HLA-C*04:01,28,28,28
+aorta,HLA-B*27:05,25,25,25
+aorta,HLA-A*24:02,24,24,24
+aorta,HLA-B*08:01,19,19,19
+aorta,HLA-C*02:02,19,20,20
+aorta,HLA-C*08:02,19,20,20
+aorta,HLA-A*30:01,14,14,14
+aorta,HLA-B*49:01,13,13,13
+aorta,HLA-C*07:01,12,12,12
+aorta,HLA-C*03:04,9,9,9
+aorta,HLA-C*03:03,7,7,7
+aorta,HLA-C*07:02,6,6,6
+aorta,HLA-C*06:02,2,2,2
+aorta,HLA-C*07:04,1,1,1
+bladder,HLA-B*15:01,289,310,310
+bladder,HLA-A*11:01,283,292,292
+bladder,HLA-B*45:01,198,211,211
+bladder,HLA-A*01:01,195,200,200
+bladder,HLA-A*68:01,189,191,191
+bladder,HLA-A*03:01,128,131,131
+bladder,HLA-B*35:03,122,128,128
+bladder,HLA-A*68:02,113,115,115
+bladder,HLA-B*40:02,112,119,119
+bladder,HLA-A*69:01,86,87,87
+bladder,HLA-A*24:02,83,84,84
+bladder,HLA-B*44:02,79,81,81
+bladder,HLA-B*14:02,76,77,77
+bladder,HLA-A*02:01,68,68,68
+bladder,HLA-A*02:05,61,61,61
+bladder,HLA-B*37:01,54,54,54
+bladder,HLA-B*58:01,32,32,32
+bladder,HLA-B*27:05,31,31,31
+bladder,HLA-C*04:01,31,31,31
+bladder,HLA-B*35:01,29,29,29
+bladder,HLA-A*32:01,20,20,20
+bladder,HLA-B*49:01,20,20,20
+bladder,HLA-C*03:03,20,20,20
+bladder,HLA-C*02:02,16,16,16
+bladder,HLA-C*16:01,16,16,16
+bladder,HLA-B*08:01,12,12,12
+bladder,HLA-C*03:04,11,11,11
+bladder,HLA-C*07:01,7,7,7
+bladder,HLA-C*08:02,6,6,6
+bladder,HLA-C*07:04,3,3,3
+blood,HLA-A*02:01,7936,22507,26437
+blood,HLA-B*15:02,5599,10851,11730
+blood,HLA-B*07:02,4606,8137,8999
+blood,HLA-B*40:02,4416,7825,10868
+blood,HLA-B*27:05,4117,6196,9733
+blood,HLA-C*12:02,3685,6738,6739
+blood,HLA-A*24:02,3535,5623,6999
+blood,HLA-B*57:01,3481,5395,8506
+blood,HLA-A*29:02,2833,3818,4373
+blood,HLA-A*01:01,2702,4052,4640
+blood,HLA-B*44:03,2630,3638,5200
+blood,HLA-C*05:01,2614,3781,4094
+blood,HLA-C*14:02,2404,3272,3283
+blood,HLA-C*03:04,2274,3114,3132
+blood,HLA-B*51:01,2036,2476,3574
+blood,HLA-A*02:07,2024,2688,2734
+blood,HLA-B*40:01,1998,2797,2823
+blood,HLA-B*08:01,1964,2661,3639
+blood,HLA-C*12:03,1946,2625,2637
+blood,HLA-B*27:09,1830,2297,2332
+blood,HLA-B*15:10,1819,2541,2552
+blood,HLA-A*32:01,1818,2445,2454
+blood,HLA-C*08:02,1745,2229,2229
+blood,HLA-C*16:01,1700,2027,2221
+blood,HLA-A*03:01,1573,1857,3160
+blood,HLA-B*57:03,1477,1989,2634
+blood,HLA-B*44:02,1458,1789,2218
+blood,HLA-C*04:01,1445,1657,1879
+blood,HLA-C*06:02,1405,1643,1791
+blood,HLA-A*11:01,1400,1706,1755
+blood,HLA-B*14:03,1358,1623,1626
+blood,HLA-C*15:02,1351,1638,1638
+blood,HLA-C*02:02,1328,1543,1543
+blood,HLA-A*02:04,1318,1718,1725
+blood,HLA-B*58:01,1309,1674,2263
+blood,HLA-B*14:02,1139,1336,1356
+blood,HLA-B*15:01,1121,1404,1666
+blood,HLA-B*18:01,1077,1279,1339
+blood,HLA-A*02:03,1049,1212,1212
+blood,HLA-A*30:01,911,1080,1081
+blood,HLA-A*68:02,885,1021,1063
+blood,HLA-C*01:02,884,989,989
+blood,HLA-C*07:02,813,894,957
+blood,HLA-C*03:03,800,878,889
+blood,HLA-B*35:01,643,730,827
+blood,HLA-B*35:02,607,675,675
+blood,HLA-B*54:01,558,608,608
+blood,HLA-A*31:01,528,602,604
+blood,HLA-B*39:01,525,570,575
+blood,HLA-B*50:01,398,424,504
+blood,HLA-C*17:01,394,418,418
+blood,HLA-B*45:01,371,405,406
+blood,HLA-B*56:01,356,390,390
+blood,HLA-C*07:01,300,310,310
+blood,HLA-B*41:01,281,307,307
+blood,HLA-A*02:05,195,211,211
+blood,HLA-B*15:03,187,198,198
+blood,HLA-B*39:24,124,129,129
+blood,HLA-B*27:03,119,121,122
+blood,HLA-B*35:03,119,124,150
+blood,HLA-B*27:06,107,111,111
+blood,HLA-B*18:03,105,105,105
+blood,HLA-B*73:01,102,104,105
+blood,HLA-A*23:01,99,100,101
+blood,HLA-B*27:04,99,104,104
+blood,HLA-B*15:11,86,86,86
+blood,HLA-B*27:02,54,54,54
+blood,HLA-B*44:27,54,56,56
+blood,HLA-B*27:08,53,54,54
+blood,HLA-B*44:08,29,28,29
+blood,HLA-B*13:02,28,28,28
+blood,HLA-B*39:06,25,25,25
+blood,HLA-B*27:07,23,23,23
+blood,HLA-B*27:01,21,22,22
+blood,HLA-A*26:01,13,13,13
+blood,HLA-A*66:02,12,12,12
+blood,HLA-A*66:01,10,10,10
+blood,HLA-B*38:01,10,10,10
+blood,HLA-B*37:01,8,9,9
+blood,HLA-B*39:09,8,8,9
+blood,HLA-A*68:01,7,7,7
+blood,HLA-B*42:01,6,6,6
+blood,HLA-A*02:14,5,5,5
+blood,HLA-A*11:10,5,5,5
+blood,HLA-B*15:08,5,5,5
+blood,HLA-B*15:42,5,5,5
+blood,HLA-B*49:01,5,5,5
+blood,HLA-B*51:02,4,4,4
+blood,HLA-A*30:02,3,3,3
+blood,HLA-A*30:03,3,3,3
+blood,HLA-A*30:04,3,3,3
+blood,HLA-B*15:09,3,3,3
+blood,HLA-B*39:05,3,3,3
+blood,HLA-B*39:10,2,2,2
+blood,HLA-B*52:01,2,2,2
+blood,HLA-A*29:13,1,1,1
+blood,HLA-A*32:02,1,1,1
+blood,HLA-B*27:16,1,1,1
+blood,HLA-B*44:05,1,1,1
+blood,HLA-B*55:01,1,1,1
+blood,HLA-C*12:15,1,1,1
+bone,HLA-A*02:01,3296,5490,5490
+bone marrow,HLA-B*15:01,728,825,825
+bone marrow,HLA-A*11:01,527,556,556
+bone marrow,HLA-A*02:01,458,487,488
+bone marrow,HLA-B*44:02,369,396,396
+bone marrow,HLA-B*45:01,349,371,371
+bone marrow,HLA-B*35:01,328,347,348
+bone marrow,HLA-B*40:02,320,348,348
+bone marrow,HLA-A*01:01,286,297,297
+bone marrow,HLA-A*68:02,268,277,277
+bone marrow,HLA-B*35:03,261,276,277
+bone marrow,HLA-A*03:01,189,191,191
+bone marrow,HLA-A*68:01,188,195,195
+bone marrow,HLA-A*24:02,187,192,192
+bone marrow,HLA-A*32:01,164,170,170
+bone marrow,HLA-A*02:05,144,147,147
+bone marrow,HLA-B*27:05,143,144,144
+bone marrow,HLA-B*14:02,142,145,145
+bone marrow,HLA-A*69:01,133,136,136
+bone marrow,HLA-B*08:01,109,111,111
+bone marrow,HLA-B*37:01,90,90,90
+bone marrow,HLA-B*58:01,85,85,85
+bone marrow,HLA-C*04:01,71,71,71
+bone marrow,HLA-B*13:02,53,53,53
+bone marrow,HLA-C*16:01,40,40,40
+bone marrow,HLA-B*49:01,39,39,39
+bone marrow,HLA-B*35:08,36,36,37
+bone marrow,HLA-C*02:02,29,30,30
+bone marrow,HLA-C*03:04,29,29,29
+bone marrow,HLA-C*08:02,26,26,26
+bone marrow,HLA-C*07:04,22,22,22
+bone marrow,HLA-A*30:01,12,12,12
+bone marrow,HLA-C*07:01,10,10,10
+bone marrow,HLA-C*03:03,5,5,5
+bone marrow,HLA-C*06:02,5,5,5
+bone marrow,HLA-B*35:02,4,4,4
+bone marrow,HLA-B*35:04,4,4,4
+bone marrow,HLA-B*35:06,3,3,3
+bone marrow,HLA-C*12:04,3,3,3
+bone marrow,HLA-B*38:01,1,1,1
+brain,HLA-B*40:02,1537,1992,1996
+brain,HLA-B*13:02,1347,1687,1687
+brain,HLA-A*11:01,1171,1364,1373
+brain,HLA-A*02:01,1160,1397,1402
+brain,HLA-A*66:01,636,688,688
+brain,HLA-A*01:01,585,639,645
+brain,HLA-B*08:01,571,642,643
+brain,HLA-B*14:02,314,331,332
+brain,HLA-C*06:02,293,307,307
+brain,HLA-A*68:02,201,209,209
+brain,HLA-C*08:02,146,157,158
+brain,HLA-A*68:01,127,128,128
+brain,HLA-C*01:02,127,129,129
+brain,HLA-B*15:01,126,133,133
+brain,HLA-C*07:01,110,113,113
+brain,HLA-A*69:01,96,99,99
+brain,HLA-A*03:01,80,80,80
+brain,HLA-B*44:02,73,79,79
+brain,HLA-B*37:01,57,57,57
+brain,HLA-A*32:01,55,56,56
+brain,HLA-B*27:05,36,36,36
+brain,HLA-B*07:02,30,31,31
+brain,HLA-A*24:02,28,28,28
+brain,HLA-B*58:01,24,24,24
+brain,HLA-A*02:05,20,20,20
+brain,HLA-B*35:01,18,18,18
+brain,HLA-C*02:02,17,17,17
+brain,HLA-B*49:01,16,16,16
+brain,HLA-B*35:03,15,15,15
+brain,HLA-C*03:03,13,14,14
+brain,HLA-C*07:02,10,10,10
+brain,HLA-C*07:04,10,10,10
+brain,HLA-C*16:02,10,10,10
+brain,HLA-C*04:01,4,4,4
+brain,HLA-B*39:06,1,1,1
+breast,HLA-A*02:01,722,848,900
+breast,HLA-B*08:01,286,313,313
+breast,HLA-B*15:03,185,191,191
+breast,HLA-A*68:02,184,190,190
+breast,HLA-B*40:06,164,166,166
+breast,HLA-B*45:01,155,162,162
+breast,HLA-A*24:02,146,150,150
+breast,HLA-A*01:01,142,147,147
+breast,HLA-B*35:01,142,151,151
+breast,HLA-C*15:02,142,149,149
+breast,HLA-A*03:01,133,136,136
+breast,HLA-A*29:02,114,125,125
+breast,HLA-A*23:01,94,94,94
+breast,HLA-B*07:02,93,101,101
+breast,HLA-A*68:01,76,77,77
+breast,HLA-B*14:02,75,76,76
+breast,HLA-B*51:01,46,46,46
+breast,HLA-B*44:02,32,33,33
+breast,HLA-C*08:02,28,30,30
+breast,HLA-C*07:01,17,17,17
+breast,HLA-C*04:01,15,15,15
+breast,HLA-C*07:02,11,11,11
+breast,HLA-B*18:01,8,8,8
+breast,HLA-C*05:01,7,7,7
+breast,HLA-B*35:08,6,6,6
+breast,HLA-A*31:01,4,5,5
+breast,HLA-C*02:02,3,3,3
+breast,HLA-C*03:04,3,3,3
+breast,HLA-B*40:01,2,2,2
+breast,HLA-C*06:02,1,1,1
+central nervous system (CNS),HLA-A*24:02,770,841,841
+central nervous system (CNS),HLA-B*35:03,723,806,806
+central nervous system (CNS),HLA-A*02:01,484,537,537
+central nervous system (CNS),HLA-C*14:02,245,256,256
+central nervous system (CNS),HLA-B*51:01,171,173,173
+central nervous system (CNS),HLA-C*04:01,147,152,152
+central nervous system (CNS),HLA-A*26:01,41,42,42
+central nervous system (CNS),HLA-B*38:01,28,28,28
+central nervous system (CNS),HLA-A*11:01,19,19,19
+central nervous system (CNS),HLA-A*03:01,8,8,8
+central nervous system (CNS),HLA-B*07:02,7,7,7
+central nervous system (CNS),HLA-A*31:01,6,6,6
+central nervous system (CNS),HLA-A*32:01,2,2,2
+cerebellum,HLA-B*13:02,328,346,346
+cerebellum,HLA-A*68:02,256,268,268
+cerebellum,HLA-A*02:05,222,230,230
+cerebellum,HLA-A*24:02,193,200,200
+cerebellum,HLA-A*11:01,185,191,191
+cerebellum,HLA-A*02:01,178,182,182
+cerebellum,HLA-B*35:08,172,177,177
+cerebellum,HLA-B*14:02,139,142,142
+cerebellum,HLA-B*50:01,129,132,132
+cerebellum,HLA-A*23:01,99,100,100
+cerebellum,HLA-A*01:01,97,99,99
+cerebellum,HLA-B*15:01,94,96,96
+cerebellum,HLA-A*30:01,78,80,80
+cerebellum,HLA-B*27:05,70,70,70
+cerebellum,HLA-A*03:01,60,60,60
+cerebellum,HLA-A*69:01,60,60,60
+cerebellum,HLA-B*35:01,41,41,41
+cerebellum,HLA-C*02:02,38,38,38
+cerebellum,HLA-C*04:01,38,38,38
+cerebellum,HLA-B*44:02,36,38,38
+cerebellum,HLA-C*06:02,36,36,36
+cerebellum,HLA-B*37:01,26,26,26
+cerebellum,HLA-B*07:02,25,26,26
+cerebellum,HLA-B*40:02,21,21,21
+cerebellum,HLA-A*68:01,20,20,20
+cerebellum,HLA-C*08:02,19,19,19
+cerebellum,HLA-C*07:01,18,18,18
+cerebellum,HLA-B*58:01,13,13,13
+cerebellum,HLA-B*35:03,9,9,9
+cerebellum,HLA-C*03:04,7,7,7
+cerebellum,HLA-C*07:02,6,6,6
+cerebellum,HLA-B*08:01,5,5,5
+cerebellum,HLA-B*49:01,2,2,2
+colon,HLA-A*24:02,713,787,787
+colon,HLA-A*11:01,668,715,715
+colon,HLA-A*02:01,570,623,627
+colon,HLA-B*40:02,455,509,509
+colon,HLA-B*15:01,385,407,407
+colon,HLA-A*68:01,378,399,399
+colon,HLA-A*01:01,309,320,320
+colon,HLA-B*44:02,285,308,308
+colon,HLA-A*02:05,238,251,251
+colon,HLA-B*58:01,204,212,212
+colon,HLA-A*69:01,191,196,196
+colon,HLA-A*32:01,131,135,135
+colon,HLA-C*04:01,128,128,128
+colon,HLA-A*68:02,125,130,130
+colon,HLA-B*37:01,85,86,86
+colon,HLA-A*03:01,81,82,82
+colon,HLA-C*07:06,61,62,62
+colon,HLA-B*14:02,44,45,45
+colon,HLA-B*13:02,41,42,42
+colon,HLA-B*07:02,39,41,41
+colon,HLA-C*03:03,36,36,36
+colon,HLA-B*35:08,35,35,35
+colon,HLA-B*08:01,34,34,34
+colon,HLA-C*03:04,34,34,34
+colon,HLA-B*49:01,30,31,31
+colon,HLA-B*35:01,17,17,17
+colon,HLA-C*02:02,11,11,11
+colon,HLA-A*30:01,9,9,9
+colon,HLA-C*07:04,9,9,9
+colon,HLA-C*07:01,8,8,8
+colon,HLA-C*08:02,8,8,8
+colon,HLA-C*06:02,3,3,3
+colon,HLA-C*07:02,3,3,3
+colon,HLA-B*18:01,1,1,1
+colon,HLA-B*45:01,1,1,1
+colon,HLA-C*05:01,1,1,1
+embryo,HLA-A*03:02,5,5,5
+embryo,HLA-A*02:01,1,3,3
+esophagus,HLA-A*11:01,565,621,621
+esophagus,HLA-B*15:01,458,497,497
+esophagus,HLA-B*40:02,355,397,397
+esophagus,HLA-B*44:02,256,268,268
+esophagus,HLA-A*01:01,217,225,225
+esophagus,HLA-A*68:01,194,196,196
+esophagus,HLA-B*13:02,183,187,187
+esophagus,HLA-A*02:05,179,186,186
+esophagus,HLA-A*68:02,168,173,173
+esophagus,HLA-A*02:01,148,152,152
+esophagus,HLA-B*35:01,148,155,155
+esophagus,HLA-B*58:01,146,152,152
+esophagus,HLA-B*14:02,109,111,111
+esophagus,HLA-B*35:08,89,92,92
+esophagus,HLA-A*24:02,87,87,87
+esophagus,HLA-A*69:01,57,58,58
+esophagus,HLA-C*03:03,50,52,52
+esophagus,HLA-B*08:01,48,48,48
+esophagus,HLA-C*04:01,48,48,48
+esophagus,HLA-B*27:05,47,48,48
+esophagus,HLA-A*32:01,39,39,39
+esophagus,HLA-A*30:01,31,31,31
+esophagus,HLA-B*37:01,27,27,27
+esophagus,HLA-C*02:02,26,28,28
+esophagus,HLA-B*49:01,22,22,22
+esophagus,HLA-C*07:04,19,19,19
+esophagus,HLA-C*06:02,14,14,14
+esophagus,HLA-C*08:02,11,11,11
+esophagus,HLA-C*07:01,9,9,9
+esophagus,HLA-C*03:04,8,8,8
+gallbladder,HLA-A*01:01,203,211,211
+gallbladder,HLA-A*69:01,110,110,110
+gallbladder,HLA-B*37:01,73,74,74
+gallbladder,HLA-B*49:01,19,19,19
+gallbladder,HLA-B*44:02,12,12,12
+gallbladder,HLA-A*02:01,7,7,7
+gallbladder,HLA-C*06:02,2,2,2
+gastrointestinal tract,HLA-A*68:01,11,12,12
+gastrointestinal tract,HLA-B*07:02,5,5,5
+gastrointestinal tract,HLA-A*02:01,4,4,4
+gastrointestinal tract,HLA-B*08:01,3,3,3
+gastrointestinal tract,HLA-A*03:01,2,2,2
+gastrointestinal tract,HLA-B*44:02,2,2,2
+gastrointestinal tract,HLA-C*07:02,2,2,2
+gastrointestinal tract,HLA-A*01:01,1,1,1
+gastrointestinal tract,HLA-A*24:02,1,1,1
+heart,HLA-B*49:01,539,605,605
+heart,HLA-A*11:01,476,518,518
+heart,HLA-B*07:02,276,292,292
+heart,HLA-B*15:01,169,175,175
+heart,HLA-A*01:01,158,164,164
+heart,HLA-B*40:02,153,167,167
+heart,HLA-B*58:01,79,81,81
+heart,HLA-B*13:02,78,82,82
+heart,HLA-A*02:05,64,65,65
+heart,HLA-A*68:01,61,63,63
+heart,HLA-B*44:02,59,63,63
+heart,HLA-B*35:01,47,47,47
+heart,HLA-B*35:08,43,43,43
+heart,HLA-A*69:01,42,45,45
+heart,HLA-A*02:01,34,34,34
+heart,HLA-C*04:01,27,27,27
+heart,HLA-A*24:02,23,23,23
+heart,HLA-A*32:01,20,20,20
+heart,HLA-C*03:03,20,20,20
+heart,HLA-B*37:01,19,19,19
+heart,HLA-C*02:02,18,19,19
+heart,HLA-A*23:01,16,16,16
+heart,HLA-A*30:01,13,13,13
+heart,HLA-B*50:01,11,11,11
+heart,HLA-C*07:01,10,11,11
+heart,HLA-C*06:02,6,6,6
+heart,HLA-C*03:04,5,5,5
+heart,HLA-C*07:02,3,3,3
+heart,HLA-C*07:04,1,1,1
+kidney,HLA-A*24:02,1417,1632,1635
+kidney,HLA-B*49:01,1318,1528,1528
+kidney,HLA-A*11:01,882,953,953
+kidney,HLA-B*15:01,836,956,956
+kidney,HLA-B*07:02,521,564,568
+kidney,HLA-A*02:01,399,421,422
+kidney,HLA-B*35:01,291,310,310
+kidney,HLA-B*50:01,271,288,295
+kidney,HLA-A*68:01,265,273,273
+kidney,HLA-A*01:01,250,258,258
+kidney,HLA-A*68:02,214,222,222
+kidney,HLA-B*40:02,210,226,226
+kidney,HLA-B*44:02,167,179,179
+kidney,HLA-A*23:01,154,156,156
+kidney,HLA-B*14:02,112,114,114
+kidney,HLA-A*02:05,110,110,110
+kidney,HLA-A*32:01,110,115,115
+kidney,HLA-B*27:05,101,103,103
+kidney,HLA-A*69:01,78,81,81
+kidney,HLA-B*18:01,73,74,74
+kidney,HLA-B*45:01,59,59,64
+kidney,HLA-C*04:01,51,51,51
+kidney,HLA-C*03:04,46,46,46
+kidney,HLA-B*41:03,38,40,40
+kidney,HLA-C*02:02,33,34,34
+kidney,HLA-B*58:01,29,29,29
+kidney,HLA-B*35:03,28,29,29
+kidney,HLA-A*03:01,22,24,24
+kidney,HLA-C*03:03,21,21,21
+kidney,HLA-B*47:01,18,18,18
+kidney,HLA-B*37:01,17,17,17
+kidney,HLA-C*07:04,16,16,16
+kidney,HLA-B*40:01,14,14,14
+kidney,HLA-B*41:04,13,13,13
+kidney,HLA-C*08:02,12,12,12
+kidney,HLA-C*07:02,11,11,11
+kidney,HLA-B*41:02,10,10,10
+kidney,HLA-B*41:05,10,10,10
+kidney,HLA-C*07:01,10,10,10
+kidney,HLA-B*41:01,9,9,9
+kidney,HLA-A*30:01,7,8,8
+kidney,HLA-C*16:01,5,5,5
+kidney,HLA-C*06:02,4,4,4
+kidney,HLA-B*41:06,3,3,3
+kidney,HLA-C*05:01,1,1,1
+liver,HLA-B*49:01,867,992,992
+liver,HLA-A*24:02,639,675,676
+liver,HLA-B*41:01,560,593,593
+liver,HLA-A*01:01,431,458,458
+liver,HLA-B*07:02,431,457,457
+liver,HLA-B*15:01,411,438,438
+liver,HLA-A*11:01,399,419,419
+liver,HLA-B*44:02,386,418,418
+liver,HLA-B*08:01,378,413,413
+liver,HLA-A*02:01,321,338,338
+liver,HLA-A*68:02,250,257,257
+liver,HLA-B*40:02,247,266,266
+liver,HLA-A*69:01,164,167,167
+liver,HLA-B*14:02,155,157,157
+liver,HLA-B*50:01,147,153,153
+liver,HLA-A*03:01,145,148,148
+liver,HLA-B*35:01,139,143,143
+liver,HLA-A*23:01,116,120,120
+liver,HLA-B*27:05,115,117,117
+liver,HLA-B*37:01,97,97,97
+liver,HLA-C*02:02,51,51,51
+liver,HLA-B*45:01,50,52,52
+liver,HLA-C*07:01,45,47,47
+liver,HLA-C*04:01,42,42,42
+liver,HLA-B*35:03,40,40,40
+liver,HLA-A*68:01,34,34,34
+liver,HLA-C*03:04,31,32,32
+liver,HLA-C*08:02,31,32,32
+liver,HLA-C*17:01,29,29,29
+liver,HLA-C*07:02,22,23,23
+liver,HLA-B*35:02,19,19,19
+liver,HLA-B*44:03,14,14,14
+liver,HLA-C*16:01,11,11,11
+liver,HLA-A*02:05,9,9,9
+liver,HLA-C*06:02,8,8,8
+liver,HLA-C*07:04,8,8,8
+liver,HLA-B*35:08,3,3,3
+liver,HLA-A*32:01,1,1,1
+liver,HLA-B*58:01,1,1,1
+liver,HLA-C*03:03,1,1,1
+lung,HLA-B*49:01,2266,3001,3047
+lung,HLA-B*35:02,2242,2798,2798
+lung,HLA-A*23:01,1579,1845,1849
+lung,HLA-B*18:01,1578,1885,2240
+lung,HLA-B*38:01,1494,1806,1806
+lung,HLA-A*03:01,1487,1777,1799
+lung,HLA-A*02:01,1444,1820,1842
+lung,HLA-B*35:01,1431,1734,1749
+lung,HLA-A*24:02,1396,1628,1629
+lung,HLA-A*11:01,1318,1505,1533
+lung,HLA-C*12:03,1237,1463,1705
+lung,HLA-B*15:01,1111,1316,1316
+lung,HLA-A*01:01,995,1098,1119
+lung,HLA-A*26:01,983,1121,1121
+lung,HLA-C*04:01,912,1031,1039
+lung,HLA-A*25:01,893,997,1131
+lung,HLA-B*44:02,819,914,925
+lung,HLA-B*44:03,793,914,914
+lung,HLA-B*08:01,761,881,886
+lung,HLA-B*07:02,678,764,764
+lung,HLA-C*07:01,672,797,797
+lung,HLA-B*41:01,643,722,722
+lung,HLA-A*33:01,625,692,692
+lung,HLA-B*57:01,600,730,730
+lung,HLA-B*58:01,573,654,658
+lung,HLA-B*14:02,543,569,579
+lung,HLA-A*30:01,539,584,584
+lung,HLA-B*40:01,461,521,521
+lung,HLA-A*68:01,441,468,474
+lung,HLA-B*53:01,428,467,467
+lung,HLA-B*40:02,410,482,482
+lung,HLA-A*68:02,409,437,437
+lung,HLA-B*50:01,397,422,431
+lung,HLA-C*05:01,397,424,424
+lung,HLA-C*03:04,384,411,414
+lung,HLA-C*08:02,382,399,403
+lung,HLA-B*39:01,381,420,420
+lung,HLA-B*27:05,341,364,364
+lung,HLA-A*32:01,316,332,333
+lung,HLA-C*06:02,269,291,291
+lung,HLA-A*02:05,261,279,279
+lung,HLA-B*51:01,251,267,267
+lung,HLA-A*31:01,239,252,252
+lung,HLA-B*15:17,195,199,199
+lung,HLA-B*35:03,191,201,201
+lung,HLA-A*03:02,108,119,119
+lung,HLA-C*07:02,100,125,125
+lung,HLA-C*17:01,100,101,101
+lung,HLA-C*02:02,81,82,82
+lung,HLA-C*03:03,41,42,42
+lung,HLA-B*45:01,35,36,36
+lung,HLA-C*07:04,11,11,11
+lung,HLA-C*16:01,3,3,3
+lymph node,HLA-A*02:01,5128,9850,9861
+lymph node,HLA-B*40:01,3138,4789,4792
+lymph node,HLA-C*05:01,2880,4087,4087
+lymph node,HLA-C*03:04,2148,2786,2787
+lymph node,HLA-B*44:02,2036,2605,2605
+lymph node,HLA-B*15:01,449,484,484
+lymph node,HLA-B*07:02,371,405,405
+lymph node,HLA-A*03:01,328,347,348
+lymph node,HLA-A*68:02,328,344,344
+lymph node,HLA-A*11:01,266,279,279
+lymph node,HLA-A*69:01,214,216,216
+lymph node,HLA-A*01:01,199,207,207
+lymph node,HLA-B*14:02,186,191,191
+lymph node,HLA-B*35:01,181,194,194
+lymph node,HLA-B*37:01,115,119,119
+lymph node,HLA-B*49:01,78,80,80
+lymph node,HLA-B*27:05,66,70,70
+lymph node,HLA-C*04:01,37,37,37
+lymph node,HLA-B*40:02,26,28,28
+lymph node,HLA-C*08:02,24,25,25
+lymph node,HLA-A*02:05,15,15,15
+lymph node,HLA-C*02:02,11,11,11
+lymph node,HLA-C*07:02,11,11,11
+lymph node,HLA-B*08:01,9,10,10
+lymph node,HLA-A*26:01,7,8,8
+lymph node,HLA-A*24:02,6,6,6
+lymph node,HLA-B*39:01,5,6,6
+lymph node,HLA-A*02:06,4,4,4
+lymph node,HLA-C*06:02,2,2,2
+lymph node,HLA-B*27:04,1,1,1
+lymph node,HLA-B*58:01,1,1,1
+lymph node,HLA-C*03:03,1,1,1
+lymph node,HLA-C*07:01,1,1,1
+lymph node,HLA-C*12:02,1,1,1
+lymphoid,HLA-B*27:05,3654,5372,6558
+lymphoid,HLA-A*02:01,3349,4915,6704
+lymphoid,HLA-A*29:02,2922,3960,4395
+lymphoid,HLA-B*07:02,2268,2918,3687
+lymphoid,HLA-C*15:02,2039,2714,2714
+lymphoid,HLA-A*33:03,1990,2493,2544
+lymphoid,HLA-A*02:07,1988,2552,2552
+lymphoid,HLA-B*15:01,1863,2356,2779
+lymphoid,HLA-B*49:01,1765,2253,2355
+lymphoid,HLA-C*16:01,1704,2134,2134
+lymphoid,HLA-A*02:02,1612,2084,2084
+lymphoid,HLA-B*44:02,1610,1908,2212
+lymphoid,HLA-B*13:01,1603,2059,2069
+lymphoid,HLA-A*11:01,1593,1947,2180
+lymphoid,HLA-C*08:02,1581,1948,1948
+lymphoid,HLA-A*34:02,1547,1889,1889
+lymphoid,HLA-B*42:01,1539,1906,1906
+lymphoid,HLA-B*27:01,1537,1862,1865
+lymphoid,HLA-C*03:04,1492,1809,1855
+lymphoid,HLA-A*02:05,1475,1866,1866
+lymphoid,HLA-B*15:03,1452,1736,1736
+lymphoid,HLA-B*40:02,1450,1907,1907
+lymphoid,HLA-C*14:03,1426,1739,1739
+lymphoid,HLA-C*12:03,1406,1712,1712
+lymphoid,HLA-A*02:03,1402,1716,1716
+lymphoid,HLA-B*38:02,1363,1636,1636
+lymphoid,HLA-A*02:06,1351,1647,1647
+lymphoid,HLA-C*03:03,1343,1623,1623
+lymphoid,HLA-C*05:01,1294,1507,1629
+lymphoid,HLA-A*24:02,1289,1508,1641
+lymphoid,HLA-B*13:02,1278,1572,1572
+lymphoid,HLA-B*51:01,1271,1442,1841
+lymphoid,HLA-A*23:01,1202,1409,1409
+lymphoid,HLA-A*02:04,1191,1468,1468
+lymphoid,HLA-B*40:01,1175,1416,1567
+lymphoid,HLA-A*34:01,1169,1346,1346
+lymphoid,HLA-A*11:02,1123,1289,1289
+lymphoid,HLA-B*38:01,1106,1280,1280
+lymphoid,HLA-C*04:01,1105,1214,1236
+lymphoid,HLA-A*02:11,1102,1307,1307
+lymphoid,HLA-A*33:01,1099,1261,1261
+lymphoid,HLA-B*40:06,1099,1241,1241
+lymphoid,HLA-B*53:01,1088,1254,1254
+lymphoid,HLA-C*06:02,1074,1255,1255
+lymphoid,HLA-B*15:17,1060,1237,1241
+lymphoid,HLA-B*27:02,1053,1253,1258
+lymphoid,HLA-C*08:01,1040,1193,1193
+lymphoid,HLA-B*35:07,1030,1189,1189
+lymphoid,HLA-B*57:03,1027,1216,1216
+lymphoid,HLA-A*74:01,1012,1157,1157
+lymphoid,HLA-A*32:01,1003,1138,1138
+lymphoid,HLA-A*66:01,1001,1141,1141
+lymphoid,HLA-C*12:02,963,1110,1110
+lymphoid,HLA-B*15:10,934,1072,1072
+lymphoid,HLA-B*58:01,931,1046,1047
+lymphoid,HLA-B*27:07,921,1083,1084
+lymphoid,HLA-B*35:03,898,1021,1021
+lymphoid,HLA-B*15:02,890,991,996
+lymphoid,HLA-B*27:09,883,1000,1016
+lymphoid,HLA-B*45:01,866,969,969
+lymphoid,HLA-A*03:01,832,914,984
+lymphoid,HLA-B*27:08,827,928,928
+lymphoid,HLA-A*30:02,820,913,913
+lymphoid,HLA-B*57:01,803,913,924
+lymphoid,HLA-C*14:02,796,891,891
+lymphoid,HLA-C*01:02,795,903,907
+lymphoid,HLA-B*56:01,777,879,880
+lymphoid,HLA-A*68:02,776,896,896
+lymphoid,HLA-B*14:02,765,850,850
+lymphoid,HLA-A*24:07,763,860,860
+lymphoid,HLA-B*07:04,750,839,839
+lymphoid,HLA-C*07:02,737,816,820
+lymphoid,HLA-B*55:01,735,818,819
+lymphoid,HLA-B*55:02,711,784,786
+lymphoid,HLA-C*03:02,711,773,773
+lymphoid,HLA-B*37:01,708,776,776
+lymphoid,HLA-B*18:01,703,772,772
+lymphoid,HLA-A*68:01,673,737,737
+lymphoid,HLA-B*35:01,665,741,823
+lymphoid,HLA-C*02:02,665,732,732
+lymphoid,HLA-B*27:04,653,731,747
+lymphoid,HLA-A*36:01,648,721,721
+lymphoid,HLA-B*27:06,645,718,734
+lymphoid,HLA-A*30:01,628,686,686
+lymphoid,HLA-C*17:01,628,692,692
+lymphoid,HLA-B*46:01,621,687,690
+lymphoid,HLA-A*26:01,618,673,673
+lymphoid,HLA-B*54:01,608,663,663
+lymphoid,HLA-C*04:03,548,592,592
+lymphoid,HLA-C*07:01,543,586,586
+lymphoid,HLA-A*01:01,538,579,631
+lymphoid,HLA-C*07:04,500,547,547
+lymphoid,HLA-B*58:02,490,522,526
+lymphoid,HLA-A*25:01,455,488,488
+lymphoid,HLA-B*08:01,454,483,510
+lymphoid,HLA-B*51:08,450,486,486
+lymphoid,HLA-A*31:01,427,464,464
+lymphoid,HLA-B*52:01,417,441,441
+lymphoid,HLA-B*27:03,404,428,440
+lymphoid,HLA-B*50:01,358,380,380
+lymphoid,HLA-B*44:03,331,360,360
+lymphoid,HLA-A*24:13,146,147,147
+lymphoid,HLA-A*24:06,112,115,115
+lymphoid,HLA-B*35:08,96,96,96
+lymphoid,HLA-B*44:09,81,84,84
+lymphoid,HLA-B*44:28,34,34,34
+lymphoid,HLA-B*41:01,28,29,29
+lymphoid,HLA-B*15:16,10,10,12
+lymphoid,HLA-B*15:09,8,8,8
+lymphoid,HLA-B*27:10,8,8,8
+lymphoid,HLA-B*15:13,6,6,6
+lymphoid,HLA-B*57:02,6,6,6
+lymphoid,HLA-B*15:08,2,2,2
+metastatic site,HLA-A*03:01,1,1,1
+mouth,HLA-A*24:02,1,1,1
+muscle,HLA-A*11:01,279,304,304
+muscle,HLA-B*40:02,122,131,131
+muscle,HLA-B*15:01,110,117,117
+muscle,HLA-A*68:01,102,107,107
+muscle,HLA-A*02:05,89,96,96
+muscle,HLA-A*01:01,78,80,80
+muscle,HLA-B*13:02,77,79,79
+muscle,HLA-B*44:02,61,64,64
+muscle,HLA-A*24:02,53,53,53
+muscle,HLA-B*58:01,48,49,49
+muscle,HLA-A*68:02,44,46,46
+muscle,HLA-A*69:01,35,38,38
+muscle,HLA-B*35:08,31,31,31
+muscle,HLA-A*32:01,28,28,28
+muscle,HLA-B*37:01,24,24,24
+muscle,HLA-B*14:02,22,23,23
+muscle,HLA-B*35:01,20,21,21
+muscle,HLA-C*03:03,17,17,17
+muscle,HLA-C*04:01,16,16,16
+muscle,HLA-A*30:01,15,15,15
+muscle,HLA-A*02:01,14,14,14
+muscle,HLA-A*03:01,9,9,9
+muscle,HLA-B*49:01,9,9,9
+muscle,HLA-C*02:02,9,9,9
+muscle,HLA-C*07:04,7,7,7
+muscle,HLA-B*07:02,4,4,4
+muscle,HLA-C*06:02,4,4,4
+muscle,HLA-B*27:05,2,2,2
+muscle,HLA-C*08:02,2,2,2
+oropharynx,HLA-A*02:01,1,1,1
+other,HLA-A*11:01,248,269,269
+other,HLA-A*02:01,136,147,149
+other,HLA-B*07:02,7,8,8
+other,HLA-A*24:02,6,6,6
+other,HLA-B*56:01,6,6,6
+other,HLA-B*27:05,3,3,3
+other,HLA-A*01:01,2,3,3
+other,HLA-A*03:01,2,2,2
+other,HLA-A*68:02,2,2,2
+other,HLA-B*44:02,2,2,2
+other,HLA-A*11:10,1,1,1
+other,HLA-A*68:01,1,2,2
+other,HLA-B*15:01,1,1,1
+other,HLA-B*35:01,1,1,1
+other,HLA-B*51:01,1,1,1
+other,HLA-B*53:01,1,1,1
+ovary,HLA-B*44:02,1318,1540,1540
+ovary,HLA-A*02:01,1237,1453,1453
+ovary,HLA-A*11:01,1028,1169,1169
+ovary,HLA-B*35:01,355,385,385
+ovary,HLA-B*15:01,327,347,347
+ovary,HLA-B*50:01,275,287,287
+ovary,HLA-C*05:01,265,284,284
+ovary,HLA-A*26:01,238,245,245
+ovary,HLA-A*23:01,225,233,233
+ovary,HLA-B*08:01,122,126,126
+ovary,HLA-C*04:01,78,78,78
+ovary,HLA-B*27:05,36,36,36
+ovary,HLA-C*07:02,34,35,35
+ovary,HLA-C*03:04,21,21,21
+ovary,HLA-C*02:02,10,10,10
+ovary,HLA-C*06:02,2,2,2
+ovary,HLA-A*24:02,1,1,1
+ovary,HLA-A*29:02,1,2,2
+ovary,HLA-A*31:01,1,2,2
+ovary,HLA-B*07:02,1,10,10
+ovary,HLA-B*15:17,1,8,8
+ovary,HLA-B*18:01,1,1,1
+ovary,HLA-B*39:01,1,5,5
+ovary,HLA-B*44:03,1,2,2
+ovary,HLA-B*49:01,1,1,1
+ovary,HLA-B*51:01,1,1,1
+ovary,HLA-B*56:01,1,1,1
+pancreas,HLA-A*68:02,183,185,185
+pancreas,HLA-A*01:01,170,176,176
+pancreas,HLA-B*14:02,113,115,115
+pancreas,HLA-A*02:01,96,99,99
+pancreas,HLA-A*69:01,82,83,83
+pancreas,HLA-A*11:01,54,54,54
+pancreas,HLA-B*27:05,53,53,53
+pancreas,HLA-B*40:02,38,40,40
+pancreas,HLA-B*37:01,33,34,34
+pancreas,HLA-B*35:08,30,31,31
+pancreas,HLA-B*49:01,29,30,30
+pancreas,HLA-A*24:02,26,26,26
+pancreas,HLA-B*58:01,24,24,24
+pancreas,HLA-B*13:02,21,21,21
+pancreas,HLA-A*02:05,18,18,18
+pancreas,HLA-C*02:02,17,17,17
+pancreas,HLA-A*03:01,13,14,14
+pancreas,HLA-B*40:01,13,14,14
+pancreas,HLA-C*08:02,13,13,13
+pancreas,HLA-A*23:01,6,6,6
+pancreas,HLA-A*30:01,5,5,5
+pancreas,HLA-C*04:01,5,5,5
+pancreas,HLA-C*07:01,5,5,5
+pancreas,HLA-C*03:04,4,4,4
+pancreas,HLA-B*39:01,3,4,4
+pancreas,HLA-C*06:02,3,3,3
+pancreas,HLA-C*14:02,3,3,3
+pancreas,HLA-A*25:01,2,2,2
+pancreas,HLA-C*12:03,1,1,1
+peripheral nervous system,HLA-A*02:01,2,2,2
+pituitary gland,HLA-A*02:01,2,2,2
+pleural effusion,HLA-B*18:01,288,306,306
+pleural effusion,HLA-A*02:17,202,213,213
+pleural effusion,HLA-A*02:01,87,94,96
+pleural effusion,HLA-A*30:02,75,76,76
+pleural effusion,HLA-B*14:02,53,54,54
+pleural effusion,HLA-B*41:01,27,29,29
+pleural effusion,HLA-C*05:01,25,25,25
+pleural effusion,HLA-A*33:01,14,14,14
+pleural effusion,HLA-C*02:02,7,7,7
+pleural effusion,HLA-C*17:01,4,4,4
+pleural effusion,HLA-A*03:01,1,1,1
+prostate,HLA-C*07:04,289,300,300
+prostate,HLA-A*01:01,152,154,154
+prostate,HLA-A*32:01,66,67,67
+prostate,HLA-A*69:01,63,64,64
+prostate,HLA-B*35:08,52,52,52
+prostate,HLA-B*37:01,50,50,50
+prostate,HLA-B*13:02,49,50,50
+prostate,HLA-A*11:01,39,40,40
+prostate,HLA-B*58:01,21,21,21
+prostate,HLA-C*03:03,21,21,21
+prostate,HLA-A*30:01,20,20,20
+prostate,HLA-B*15:01,14,14,14
+prostate,HLA-B*49:01,13,13,13
+prostate,HLA-B*40:02,10,10,10
+prostate,HLA-A*02:05,6,6,6
+prostate,HLA-C*04:01,6,6,6
+prostate,HLA-C*06:02,5,5,5
+prostate,HLA-A*02:01,3,3,3
+prostate,HLA-A*24:02,3,3,3
+prostate,HLA-B*44:02,3,3,3
+prostate,HLA-A*68:01,2,2,2
+salivary gland,HLA-A*02:01,2,2,2
+skin,HLA-B*45:01,373,401,401
+skin,HLA-A*11:01,254,269,270
+skin,HLA-A*26:01,223,234,239
+skin,HLA-B*15:01,195,203,203
+skin,HLA-B*50:01,182,189,189
+skin,HLA-A*03:01,170,175,176
+skin,HLA-B*07:02,159,171,171
+skin,HLA-A*01:01,157,162,163
+skin,HLA-A*02:01,137,153,160
+skin,HLA-A*24:02,124,125,125
+skin,HLA-A*32:01,124,135,135
+skin,HLA-B*35:03,117,123,123
+skin,HLA-B*49:01,115,123,126
+skin,HLA-B*35:01,71,73,73
+skin,HLA-A*69:01,59,65,65
+skin,HLA-A*23:01,57,59,59
+skin,HLA-C*04:01,43,43,43
+skin,HLA-C*16:01,38,38,38
+skin,HLA-A*68:02,30,30,30
+skin,HLA-B*37:01,30,31,31
+skin,HLA-B*58:01,28,28,28
+skin,HLA-C*03:04,22,22,22
+skin,HLA-B*57:02,19,19,19
+skin,HLA-C*03:03,15,15,15
+skin,HLA-B*40:02,14,14,14
+skin,HLA-C*07:02,13,13,13
+skin,HLA-B*40:01,12,13,13
+skin,HLA-A*02:05,9,9,9
+skin,HLA-B*14:02,8,8,8
+skin,HLA-B*27:05,5,5,5
+skin,HLA-C*02:02,4,4,4
+skin,HLA-C*06:02,4,4,4
+skin,HLA-C*08:02,4,4,4
+skin,HLA-C*12:03,4,4,4
+skin,HLA-C*05:01,3,3,3
+skin,HLA-B*15:18,2,2,2
+skin,HLA-C*01:02,1,1,1
+skin,HLA-C*07:01,1,1,1
+skin,HLA-C*07:04,1,1,1
+small intestine,HLA-B*15:01,934,1068,1068
+small intestine,HLA-A*11:01,615,670,670
+small intestine,HLA-B*07:02,458,490,490
+small intestine,HLA-A*03:01,449,476,476
+small intestine,HLA-A*68:02,419,443,443
+small intestine,HLA-A*68:01,327,342,342
+small intestine,HLA-B*35:01,267,287,287
+small intestine,HLA-A*02:01,210,214,214
+small intestine,HLA-B*44:02,196,208,208
+small intestine,HLA-B*13:02,195,201,201
+small intestine,HLA-B*14:02,180,183,183
+small intestine,HLA-B*58:01,178,181,181
+small intestine,HLA-B*35:03,155,161,161
+small intestine,HLA-A*01:01,151,157,157
+small intestine,HLA-A*32:01,141,144,144
+small intestine,HLA-B*40:02,92,96,96
+small intestine,HLA-C*04:01,89,91,91
+small intestine,HLA-B*35:08,86,87,87
+small intestine,HLA-A*24:02,70,70,70
+small intestine,HLA-A*02:05,59,60,60
+small intestine,HLA-C*03:03,53,54,54
+small intestine,HLA-C*03:04,49,49,49
+small intestine,HLA-C*08:02,49,51,51
+small intestine,HLA-B*45:01,40,40,40
+small intestine,HLA-A*30:01,23,23,23
+small intestine,HLA-C*07:02,18,18,18
+small intestine,HLA-C*06:02,17,17,17
+small intestine,HLA-C*07:04,13,14,14
+small intestine,HLA-B*08:01,11,11,11
+small intestine,HLA-C*16:01,8,8,8
+small intestine,HLA-C*07:01,4,4,4
+small intestine,HLA-C*02:02,2,2,2
+spinal cord,HLA-B*15:01,51,51,51
+spinal cord,HLA-A*68:01,36,36,36
+spinal cord,HLA-A*11:01,12,12,12
+spinal cord,HLA-B*35:03,8,8,8
+spinal cord,HLA-C*03:03,2,2,2
+spinal cord,HLA-C*04:01,2,2,2
+spleen,HLA-B*15:01,2762,4483,4992
+spleen,HLA-B*44:02,1045,1179,1179
+spleen,HLA-A*11:01,948,1065,1065
+spleen,HLA-B*46:01,941,1338,1338
+spleen,HLA-B*35:01,589,643,643
+spleen,HLA-B*13:02,573,618,618
+spleen,HLA-B*07:02,538,592,592
+spleen,HLA-A*02:01,510,554,554
+spleen,HLA-A*03:01,456,483,483
+spleen,HLA-C*01:02,374,414,414
+spleen,HLA-A*68:02,372,392,392
+spleen,HLA-A*68:01,361,379,379
+spleen,HLA-A*01:01,294,305,305
+spleen,HLA-B*08:01,282,310,310
+spleen,HLA-A*30:01,273,284,284
+spleen,HLA-A*69:01,265,273,273
+spleen,HLA-B*14:02,219,230,230
+spleen,HLA-A*23:01,213,219,219
+spleen,HLA-B*35:08,178,181,181
+spleen,HLA-A*32:01,160,164,164
+spleen,HLA-B*27:05,149,148,153
+spleen,HLA-B*37:01,130,135,135
+spleen,HLA-A*24:02,124,127,127
+spleen,HLA-B*35:03,119,121,121
+spleen,HLA-B*50:01,117,123,123
+spleen,HLA-C*06:02,102,106,106
+spleen,HLA-C*04:01,98,98,98
+spleen,HLA-B*58:01,93,97,97
+spleen,HLA-B*49:01,77,78,78
+spleen,HLA-C*03:03,75,75,75
+spleen,HLA-C*03:04,71,72,72
+spleen,HLA-B*40:02,70,73,73
+spleen,HLA-B*45:01,67,72,72
+spleen,HLA-C*08:02,47,48,48
+spleen,HLA-A*02:05,46,47,47
+spleen,HLA-C*02:02,30,30,30
+spleen,HLA-C*07:04,25,25,25
+spleen,HLA-C*07:01,23,23,23
+spleen,HLA-C*07:02,22,22,22
+spleen,HLA-C*16:01,6,6,6
+stomach,HLA-A*02:01,3,3,3
+testis,HLA-B*49:01,560,616,616
+testis,HLA-A*11:01,415,433,433
+testis,HLA-A*01:01,248,254,254
+testis,HLA-B*07:02,203,214,214
+testis,HLA-A*68:01,155,156,156
+testis,HLA-B*44:02,137,143,143
+testis,HLA-A*68:02,132,135,135
+testis,HLA-A*69:01,116,119,119
+testis,HLA-B*15:01,115,120,120
+testis,HLA-A*24:02,91,93,93
+testis,HLA-A*32:01,90,91,91
+testis,HLA-B*45:01,90,90,90
+testis,HLA-B*14:02,78,80,80
+testis,HLA-B*40:02,71,74,74
+testis,HLA-A*02:01,62,62,62
+testis,HLA-B*13:02,62,62,62
+testis,HLA-B*58:01,56,57,57
+testis,HLA-A*02:05,48,48,48
+testis,HLA-A*03:01,41,41,41
+testis,HLA-B*37:01,36,36,36
+testis,HLA-B*27:05,34,34,34
+testis,HLA-B*35:08,34,34,34
+testis,HLA-B*35:03,30,31,31
+testis,HLA-B*35:01,27,27,27
+testis,HLA-C*04:01,22,22,22
+testis,HLA-A*30:01,17,17,17
+testis,HLA-C*02:02,17,17,17
+testis,HLA-C*03:03,13,13,13
+testis,HLA-C*06:02,11,11,11
+testis,HLA-C*16:01,7,7,7
+testis,HLA-C*08:02,5,5,5
+testis,HLA-C*07:01,4,4,4
+testis,HLA-C*07:02,4,4,4
+testis,HLA-C*07:04,4,4,4
+thymus,HLA-A*24:02,1366,1556,1558
+thymus,HLA-B*44:03,1109,1291,1291
+thymus,HLA-B*15:01,831,956,957
+thymus,HLA-A*25:01,729,785,785
+thymus,HLA-B*07:02,724,816,816
+thymus,HLA-B*44:02,644,705,705
+thymus,HLA-A*01:01,615,665,665
+thymus,HLA-A*02:01,575,618,627
+thymus,HLA-B*18:01,558,604,611
+thymus,HLA-B*39:01,555,605,605
+thymus,HLA-A*03:01,472,504,507
+thymus,HLA-A*29:02,448,470,470
+thymus,HLA-B*41:01,414,437,437
+thymus,HLA-B*13:02,375,399,399
+thymus,HLA-A*26:08,333,338,338
+thymus,HLA-C*07:02,134,136,136
+thymus,HLA-C*12:03,120,124,124
+thymus,HLA-C*15:05,83,85,85
+thymus,HLA-C*03:04,81,85,85
+thymus,HLA-C*16:01,76,76,76
+thymus,HLA-A*66:01,27,27,27
+thymus,HLA-C*05:01,26,25,26
+thymus,HLA-A*68:02,24,24,24
+thymus,HLA-C*06:02,22,22,22
+thymus,HLA-A*31:01,21,21,21
+thymus,HLA-B*49:01,19,20,20
+thymus,HLA-B*08:01,17,17,17
+thymus,HLA-B*40:01,12,12,12
+thymus,HLA-A*30:02,11,11,11
+thymus,HLA-C*17:01,5,5,5
+thymus,HLA-A*01:03,3,3,3
+thymus,HLA-B*14:02,3,3,3
+thymus,HLA-A*11:01,2,2,2
+thymus,HLA-A*32:01,2,2,2
+thymus,HLA-B*07:06,2,2,2
+thymus,HLA-B*44:05,2,2,2
+thymus,HLA-B*50:02,1,1,1
+thyroid,HLA-B*49:01,879,1007,1007
+thyroid,HLA-A*11:01,582,620,620
+thyroid,HLA-B*15:01,462,506,506
+thyroid,HLA-B*07:02,415,447,447
+thyroid,HLA-A*01:01,370,387,387
+thyroid,HLA-B*13:02,300,314,314
+thyroid,HLA-B*44:02,242,251,251
+thyroid,HLA-A*68:01,230,239,239
+thyroid,HLA-A*02:01,213,225,225
+thyroid,HLA-B*50:01,210,218,218
+thyroid,HLA-A*24:02,158,163,163
+thyroid,HLA-A*23:01,148,156,156
+thyroid,HLA-B*35:03,138,144,144
+thyroid,HLA-B*35:08,122,127,127
+thyroid,HLA-A*69:01,117,120,120
+thyroid,HLA-A*68:02,103,105,105
+thyroid,HLA-B*35:01,91,94,94
+thyroid,HLA-C*04:01,79,80,80
+thyroid,HLA-A*30:01,78,80,80
+thyroid,HLA-B*37:01,68,68,68
+thyroid,HLA-B*45:01,63,63,63
+thyroid,HLA-B*14:02,53,54,54
+thyroid,HLA-B*08:01,49,52,52
+thyroid,HLA-C*06:02,47,48,48
+thyroid,HLA-B*58:01,44,44,44
+thyroid,HLA-A*03:01,30,30,30
+thyroid,HLA-B*27:05,29,29,29
+thyroid,HLA-C*03:03,26,26,26
+thyroid,HLA-A*02:05,20,21,21
+thyroid,HLA-B*40:02,19,21,21
+thyroid,HLA-C*02:02,18,18,18
+thyroid,HLA-C*03:04,10,10,10
+thyroid,HLA-C*16:01,8,8,8
+thyroid,HLA-C*07:01,7,7,7
+thyroid,HLA-C*08:02,5,5,5
+thyroid,HLA-C*07:02,3,3,3
+thyroid,HLA-C*07:04,1,1,1
+tongue,HLA-A*68:02,458,489,489
+tongue,HLA-A*03:01,365,392,392
+tongue,HLA-A*11:01,352,375,375
+tongue,HLA-B*07:02,334,372,372
+tongue,HLA-B*15:01,326,339,339
+tongue,HLA-A*01:01,260,273,273
+tongue,HLA-A*69:01,237,251,251
+tongue,HLA-B*14:02,228,232,232
+tongue,HLA-A*68:01,207,213,213
+tongue,HLA-B*40:02,192,210,210
+tongue,HLA-A*02:01,142,145,145
+tongue,HLA-B*37:01,123,127,127
+tongue,HLA-A*02:05,122,129,129
+tongue,HLA-B*58:01,112,120,120
+tongue,HLA-B*35:01,109,116,116
+tongue,HLA-B*44:02,95,101,101
+tongue,HLA-C*08:02,48,49,49
+tongue,HLA-B*49:01,42,43,43
+tongue,HLA-C*04:01,39,39,39
+tongue,HLA-B*27:05,35,35,35
+tongue,HLA-C*07:02,35,35,35
+tongue,HLA-C*03:04,19,19,19
+tongue,HLA-C*02:02,18,18,18
+tongue,HLA-C*03:03,12,12,12
+tongue,HLA-A*32:01,4,4,4
+tongue,HLA-C*07:04,3,3,3
+tongue,HLA-C*06:02,2,2,2
+tongue,HLA-C*07:01,1,1,1
+trachea,HLA-A*11:01,392,408,408
+trachea,HLA-B*45:01,353,370,370
+trachea,HLA-B*15:01,305,324,324
+trachea,HLA-A*01:01,235,244,244
+trachea,HLA-B*40:02,208,224,224
+trachea,HLA-A*69:01,180,186,186
+trachea,HLA-B*35:03,160,167,167
+trachea,HLA-A*03:01,142,143,143
+trachea,HLA-B*35:01,122,125,125
+trachea,HLA-A*68:02,121,123,123
+trachea,HLA-B*14:02,97,99,99
+trachea,HLA-A*02:01,89,90,90
+trachea,HLA-B*37:01,87,88,88
+trachea,HLA-A*02:05,81,81,81
+trachea,HLA-B*58:01,80,82,82
+trachea,HLA-A*24:02,54,54,54
+trachea,HLA-C*04:01,46,46,46
+trachea,HLA-B*27:05,42,42,42
+trachea,HLA-B*49:01,24,25,25
+trachea,HLA-C*16:01,24,24,24
+trachea,HLA-C*03:04,22,22,22
+trachea,HLA-C*02:02,15,15,15
+trachea,HLA-C*03:03,10,10,10
+trachea,HLA-C*08:02,8,8,8
+trachea,HLA-C*06:02,2,2,2
+trachea,HLA-C*07:01,1,1,1
+umbilical cord blood,HLA-A*02:01,671,739,739
+uterine cervix,HLA-B*51:01,3660,6018,6405
+uterine cervix,HLA-A*24:02,1369,1831,1831
+uterine cervix,HLA-A*02:01,1289,2139,2257
+uterine cervix,HLA-B*07:02,1101,1517,1543
+uterine cervix,HLA-B*15:03,872,969,969
+uterine cervix,HLA-A*01:01,865,1096,1148
+uterine cervix,HLA-A*68:02,750,850,850
+uterine cervix,HLA-B*27:05,644,723,723
+uterine cervix,HLA-C*12:03,557,604,604
+uterine cervix,HLA-B*45:01,66,70,70
+uterine cervix,HLA-B*35:01,62,63,63
+uterus,HLA-A*11:01,713,781,781
+uterus,HLA-B*15:01,643,731,731
+uterus,HLA-A*02:01,270,284,284
+uterus,HLA-B*35:01,238,254,254
+uterus,HLA-B*50:01,138,141,141
+uterus,HLA-A*23:01,89,91,91
+uterus,HLA-C*04:01,51,51,51
+uterus,HLA-C*03:04,35,35,35
+uterus,HLA-B*27:05,9,9,9
+uterus,HLA-C*02:02,2,2,2
+uterus,HLA-C*06:02,1,1,1

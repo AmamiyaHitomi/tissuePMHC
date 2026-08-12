@@ -1,0 +1,28 @@
+target_tissue,expression_tissue,review_status,weight,mapping_quality
+blood,bone marrow,approved,1.0,low_proxy
+bone,bone marrow,approved,1.0,low_proxy
+brain,amygdala,approved,1.0,aggregate_proxy
+brain,basal ganglia,approved,1.0,aggregate_proxy
+brain,cerebellum,approved,1.0,aggregate_proxy
+brain,cerebral cortex,approved,1.0,aggregate_proxy
+brain,choroid plexus,approved,1.0,aggregate_proxy
+brain,hippocampal formation,approved,1.0,aggregate_proxy
+brain,hypothalamus,approved,1.0,aggregate_proxy
+brain,midbrain,approved,1.0,aggregate_proxy
+brain,spinal cord,approved,1.0,aggregate_proxy
+breast,breast,approved,1.0,exact
+colon,colon,approved,1.0,exact
+kidney,kidney,approved,1.0,exact
+lung,lung,approved,1.0,exact
+lymph node,lymph node,approved,1.0,exact
+lymphoid,appendix,approved,1.0,aggregate_proxy
+lymphoid,bone marrow,approved,1.0,aggregate_proxy
+lymphoid,lymph node,approved,1.0,aggregate_proxy
+lymphoid,spleen,approved,1.0,aggregate_proxy
+lymphoid,thymus,approved,1.0,aggregate_proxy
+lymphoid,tonsil,approved,1.0,aggregate_proxy
+ovary,ovary,approved,1.0,exact
+spleen,spleen,approved,1.0,exact
+thymus,thymus,approved,1.0,exact
+umbilical cord blood,bone marrow,approved,1.0,low_proxy
+uterine cervix,cervix,approved,1.0,synonym_exact

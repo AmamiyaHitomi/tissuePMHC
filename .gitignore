@@ -15,8 +15,11 @@ build/
 dist/
 *.egg-info/
 
-# Datasets and generated experiment outputs (never commit these by default)
-data/
+# Large IEDB source export (download instructions are in data/README.md)
+data/raw/mhc_ligand_full.csv
+data/raw/mhc_ligand_full_single_file.zip
+
+# Generated experiment outputs (never commit these by default)
 results/
 output/
 **/results/
@@ -26,6 +29,11 @@ output/
 *.pt
 *.pth
 *.ckpt
+
+# Local secrets and environment variables
+.env
+.env.*
+!.env.example
 
 # Local backup made before the repository cleanup
 backup_before_cleanup_*/

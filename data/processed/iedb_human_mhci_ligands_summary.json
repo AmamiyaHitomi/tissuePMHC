@@ -1,0 +1,14 @@
+{
+  "rows_total": 5571809,
+  "rows_mhci": 3643999,
+  "rows_unmodified_standard_peptide": 3445971,
+  "rows_peptide_length_9": 1990718,
+  "rows_human_peptide_source": 1685478,
+  "rows_human_host": 1681733,
+  "rows_positive": 1678574,
+  "rows_four_digit_hla": 671925,
+  "rows_molecule_parent_uniprot": 669674,
+  "rows_written_evidence": 669674,
+  "rows_written_unique_peptide_mhc_tissue": 514017,
+  "rows_written_unique_peptide_mhc_tissue_protein": 549453
+}

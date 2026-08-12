@@ -1,0 +1,6 @@
+{
+  "input_pairs": 125649,
+  "dropped_missing_task_fields": 857,
+  "dropped_inconsistent_task_fields": 0,
+  "retained_pairs": 124792
+}

@@ -1,0 +1,31 @@
+{
+  "experiment": "Pre_E_biological_expression_data_preparation",
+  "parts": [
+    "Pre_E0_HPA",
+    "Pre_E1_UniProt_mapping",
+    "Pre_E2_tissue_review",
+    "Pre_E3_row_audit"
+  ],
+  "status": "e_ready_inputs_created",
+  "seed_policy": "deterministic data preparation; no seed; aligned E defaults to seed 20260704",
+  "test_data_read": false,
+  "train": "D:\\my_python\\tissuePMHC\\data\\humanPMHC_premium\\humanPMHC_train.csv.gz",
+  "train_rows": 39552,
+  "unique_uniprot": 5008,
+  "hpa_version": "25.1",
+  "hpa_ensembl_version": "109",
+  "hpa_url": "https://www.proteinatlas.org/download/tsv/rna_tissue_consensus.tsv.zip",
+  "hpa_zip": "D:\\my_python\\tissuePMHC\\data\\expression\\hpa_v25_1\\raw\\rna_tissue_consensus.tsv.zip",
+  "hpa_zip_sha256": "b001903da23f802c8dfbd1b6b3a8c20b831fedd4932f4bb721b06622d83ae60b",
+  "uniprot_mapping_source": "D:\\my_python\\tissuePMHC\\data\\expression\\hpa_v25_1\\raw\\uniprot_to_ensembl_raw.tsv",
+  "approved_tissue_mapping": "D:\\my_python\\tissuePMHC\\data\\expression\\hpa_v25_1\\approved_tissue_mapping.csv",
+  "tissue_review_policy": "all automatic suggestions remain pending_review until a human-approved file is supplied",
+  "isoform_policy": "submit exact UniProt strings; do not strip isoform suffixes automatically",
+  "non_human_policy": "retain as unmapped/missing unless mapping lands on an HPA ENSG gene",
+  "direct_uniprot_feature_used": false,
+  "output_files": {
+    "expression": "D:\\my_python\\tissuePMHC\\data\\expression\\hpa_v25_1\\processed\\hpa_consensus_expression.csv.gz",
+    "protein_mapping": "D:\\my_python\\tissuePMHC\\data\\expression\\hpa_v25_1\\processed\\uniprot_to_gene.csv",
+    "tissue_review_template": "D:\\my_python\\tissuePMHC\\data\\expression\\hpa_v25_1\\processed\\tissue_mapping_review_template.csv"
+  }
+}

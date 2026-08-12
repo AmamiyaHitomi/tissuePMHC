@@ -1,0 +1,9 @@
+dimension,group,metric,value
+overall,all,train_rows,39552.0
+overall,all,unique_uniprot,5008.0
+overall,all,mapped_uniprot,4987.0
+overall,all,hpa_gene_mapped_uniprot,4973.0
+overall,all,one_to_many_uniprot,313.0
+overall,all,uniprot_mapping_coverage,0.9958067092651757
+overall,all,hpa_usable_uniprot_coverage,0.9930111821086262
+overall,all,train_row_hpa_gene_mapping_rate,0.9884203074433657

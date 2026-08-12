@@ -1,0 +1,23 @@
+{
+  "experiment_name": "mousePMHC_phase6_e26_flank_features",
+  "test_data_read": false,
+  "train": "D:\\my_python\\tissuePMHC\\data\\mousePMHC\\mousePMHC_train.csv.gz",
+  "reference_fasta": "D:\\my_python\\tissuePMHC\\data\\mousePMHC\\uniprot_mouse_reference.fasta.gz",
+  "output": "D:\\my_python\\tissuePMHC\\data\\mousePMHC\\mousePMHC_train_flank_features.csv.gz",
+  "flank_length": 10,
+  "n_train_rows": 13532,
+  "n_reference_sequences": 54857,
+  "unique_mapping_fraction": 0.992462311557789,
+  "mapping_status_counts": {
+    "unique": 13430,
+    "ambiguous_0": 40,
+    "missing_accession": 26,
+    "ambiguous_11": 10,
+    "ambiguous_8": 9,
+    "ambiguous_7": 7,
+    "ambiguous_2": 7,
+    "ambiguous_9": 2,
+    "ambiguous_1": 1
+  },
+  "missing_policy": "retain row with '-' flank tokens and -1 numeric values"
+}
