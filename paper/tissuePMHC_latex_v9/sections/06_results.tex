@@ -1,0 +1,52 @@
+\section{Results}
+\label{sec:results}
+
+\subsection{Primary Human and Mouse Benchmarks}
+
+Table~\ref{tab:human-mouse-common-models} compares tissue-independent external controls and trainable models evaluated in both the 77-task Human and 11-task Mouse benchmarks. It reports AUROC and AUPRC, omits species-specific models, and uses MHC for corresponding HLA and H-2 architectures.
+
+\begin{table*}[!t]
+\centering
+\caption{Performance of tissue-independent external controls and model families evaluated in both benchmarks. External scores are deterministic; trainable-model values are task-macro means $\pm$ standard deviations across three seeds, except the row-level MLP aggregate ($\dagger$). Shared trainable models are ordered by Human AUROC, with thick rules separating external controls, comparison models, and TissuePMHC.}
+\label{tab:human-mouse-common-models}
+\scriptsize
+\renewcommand{\arraystretch}{1.00}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrrrr@{}}
+\toprule
+& \multicolumn{2}{c}{Human: 77 tissue--HLA tasks} & \multicolumn{2}{c}{Mouse: 11 tissue--H-2 tasks} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Model & AUROC & AUPRC & AUROC & AUPRC \\
+\midrule
+MHCflurry presentation score & 0.5044 & 0.5299 & 0.5009 & 0.5266 \\
+NetMHCpan binding-affinity rank & 0.4874 & 0.5144 & 0.4917 & 0.5249 \\
+NetMHCpan eluted-ligand rank & 0.4948 & 0.5193 & 0.4924 & 0.5245 \\
+\specialrule{1.2pt}{2pt}{2pt}
+Neural single-task MLP & $0.6908\pm0.0061$ & $0.6959\pm0.0070$ & $0.6866\pm0.0062$ & $0.6960\pm0.0039$ \\
+MHC pseudo-sequence conditioned & $0.7081\pm0.0089$ & $0.7136\pm0.0071$ & $0.7254\pm0.0109$ & $0.7361\pm0.0033$ \\
+Tissue-grouped hard sharing & $0.7114\pm0.0054$ & $0.7127\pm0.0058$ & $0.6941\pm0.0106$ & $0.6866\pm0.0142$ \\
+Conditioned tissue and MHC IDs & $0.7150\pm0.0073$ & $0.7191\pm0.0052$ & $0.6995\pm0.0089$ & $0.7051\pm0.0122$ \\
+MHC ID + pseudo-sequence hybrid & $0.7331\pm0.0058$ & $0.7359\pm0.0055$ & $0.7102\pm0.0065$ & $0.7180\pm0.0197$ \\
+Selective global/MHC grouping & $0.7643\pm0.0015$ & $0.7632\pm0.0037$ & $0.7365\pm0.0086$ & $0.7418\pm0.0067$ \\
+Validation-softmax dual-branch ensemble & $0.7722\pm0.0018$ & $0.7729\pm0.0035$ & $0.7429\pm0.0038$ & $0.7492\pm0.0068$ \\
+MMoE, 6 experts $\times$ width 128 & $0.7727\pm0.0010$ & $0.7745\pm0.0019$ & $0.7609\pm0.0184$ & $0.7672\pm0.0189$ \\
+Shared encoder with task heads & $0.7758\pm0.0087$ & $0.7759\pm0.0053$ & $0.7513\pm0.0151$ & $0.7618\pm0.0175$ \\
+Validation-delta clipped dual-branch ensemble & $0.7785\pm0.0017$ & $0.7799\pm0.0037$ & $0.7470\pm0.0039$ & $0.7529\pm0.0063$ \\
+MMoE, 4 experts $\times$ width 256 & $0.7816\pm0.0023$ & $0.7827\pm0.0050$ & $0.7571\pm0.0111$ & $0.7668\pm0.0190$ \\
+Fixed global/MHC dual-branch average & $0.7824\pm0.0016$ & $0.7851\pm0.0035$ & $0.7505\pm0.0035$ & $0.7552\pm0.0046$ \\
+Auxiliary-global + auxiliary-MHC dual branch & $0.7832\pm0.0028$ & $0.7836\pm0.0026$ & $0.7577\pm0.0106$ & $0.7648\pm0.0122$ \\
+DB-MTL shared heads & $0.7835\pm0.0073$ & $0.7800\pm0.0101$ & $0.7753\pm0.0175$ & $0.7880\pm0.0179$ \\
+Auxiliary-global + plain-MHC dual branch & $0.7911\pm0.0038$ & $0.7916\pm0.0054$ & $0.7613\pm0.0142$ & $0.7679\pm0.0180$ \\
+MLP dual-branch rank average$^\dagger$ & 0.8033 & 0.8018 & 0.7699 & 0.7793 \\
+\specialrule{1.2pt}{2pt}{2pt}
+TissuePMHC (untuned) & $0.8082\pm0.0033$ & $0.8081\pm0.0032$ & $0.7705\pm0.0036$ & $0.7785\pm0.0031$ \\
+TissuePMHC (tuned) & $\mathbf{0.8136\pm0.0021}$ & $\mathbf{0.8126\pm0.0021}$ & $\mathbf{0.8194\pm0.0157}$ & $\mathbf{0.8279\pm0.0121}$ \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+MHCflurry and NetMHCpan remain near random on the matched tissue-specific task, with AUROCs of 0.4874--0.5044 in the Human benchmark and 0.4917--0.5009 in the Mouse benchmark. Thus, general peptide--MHC scores do not explain the tissue-specific ranking. Removing tissue identity also creates conflicting labels for repeated peptide--MHC queries, and a trainable MHC-only control performs worse than TissuePMHC in every task (Supplementary Tables~\ref{S-tab:tissue-blind-conflict-audit} and~\ref{S-tab:trainable-tissue-blind-control}).
+
+Tuned TissuePMHC reaches AUROC/AUPRC values of 0.8136/0.8126 in the Human benchmark and 0.8194/0.8279 in the Mouse benchmark. The strongest shared comparators reach 0.8033/0.8018 in Human (MLP dual-branch rank average) and 0.7753/0.7880 in Mouse (DB-MTL). Relative to untuned TissuePMHC, training-only tuning improves AUROC/AUPRC by 0.0054/0.0045 and 0.0489/0.0494, respectively. Task-wise effects are provided in Supplementary Figure~\ref{S-fig:tuning-delta-by-species}.
+
+After matching MHC restriction, parent protein, and total positive tissue-occurrence count, sequence-based models retain above-random discrimination in both species. The occurrence-count-only score is exactly 0.5000 in every task, so the remaining signal is not explained by this controlled shortcut. It supports tissue-associated ranking in represented contexts, although residual study and detection structure may also contribute.

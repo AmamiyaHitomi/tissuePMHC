@@ -1,0 +1,78 @@
+{
+  "protocol_id": "human_aux_nested_cv_v1",
+  "status": "frozen_before_new_nested_cv_results",
+  "frozen_local_date": "2026-08-11",
+  "scope": "Human occurrence-equal auxiliary-loss weight selection and unbiased train-only evaluation",
+  "data": {
+    "development_train": "data/humanPMHC_occurence_equal_dataset/humanPMHC_train.csv.gz",
+    "development_train_sha256": "E381B3A71FD1023C20995431A288B7107B917BE87899C62E1CCCCDF53DBBA1AC",
+    "legacy_fixed_test": "data/humanPMHC_occurence_equal_dataset/humanPMHC_test.csv.gz",
+    "legacy_fixed_test_sha256": "5DFFF41AE57D3F01951C0BB8AB664103D98C2E58F1E2F13425FB5E013FC85543",
+    "legacy_fixed_test_role": "supplementary exploratory only; prohibited for selection, early stopping, epoch choice, thresholds, or model-version choice",
+    "new_untouched_test": null
+  },
+  "candidate_equal_auxiliary_weights": [0.0, 0.01, 0.03, 0.05, 0.1, 0.2, 0.3],
+  "training_seeds": [20260721, 20260722, 20260723, 20260724, 20260725],
+  "primary_selection_metric": "macro mean task AUPRC on inner validation folds",
+  "secondary_metrics": ["AUROC", "F1", "MCC", "accuracy", "pair_accuracy"],
+  "tie_rule": {
+    "absolute_primary_metric_threshold": 0.002,
+    "rule": "Among candidates whose mean inner-CV AUPRC is within 0.002 of the maximum, select the numerically smallest auxiliary weight."
+  },
+  "nested_cross_validation": {
+    "outer_folds": 5,
+    "inner_folds": 3,
+    "outer_split_seed": 2026081101,
+    "inner_split_seeds_by_outer_fold": [2026081201, 2026081202, 2026081203, 2026081204, 2026081205],
+    "group_definition": "Connected components over pair_id, exact peptide_sequence, peptide sequences with Hamming distance <= 1, and equal non-missing source_molecule_uniprot_id or molecule_parent_uniprot_id.",
+    "group_assignment": "Deterministic greedy balance of task-by-label cells; components are indivisible.",
+    "outer_holdout_prohibitions": ["weight selection", "early stopping", "epoch selection", "threshold selection", "model version selection"],
+    "inner_score_formula": "Mean of macro task AUPRC over 3 inner folds x 5 training seeds.",
+    "outer_refit": "For each outer fold, refit the inner-selected weight and no auxiliary on all four outer-training folds for each seed, then evaluate once on the outer holdout."
+  },
+  "final_weight_rule": {
+    "general_rule": "Average each candidate's inner-CV score and rank across the five outer folds; apply the frozen 0.002 smaller-weight tie rule to the overall mean inner-CV AUPRC.",
+    "special_0.10_vs_0.20_gate": "Select 0.20 over 0.10 only if its overall inner-CV AUPRC gain is strictly greater than 0.002 and it is not worse than 0.10 in at least 4 of 5 outer-fold inner-CV summaries; otherwise prefer 0.10 when these are the two leading candidates.",
+    "outer_holdout_metrics_used_for_final_choice": false
+  },
+  "fixed_training": {
+    "epochs": 20,
+    "early_stopping": false,
+    "learning_rate": 0.002,
+    "weight_decay": 0.0001,
+    "batch_size": 512,
+    "sampling": "row",
+    "embedding_dim": 16,
+    "kernel_sizes": [2, 3, 5],
+    "conv_channels": 32,
+    "hidden_dim": 128,
+    "dropout": 0.35,
+    "max_gradient_norm": 1.0,
+    "preprocessing": "Existing Human occurrence-equal preprocessing; 9-mer peptide encoding; task-specific heads.",
+    "pairing": "For a given fold and seed, all weights use identical shared-layer initialization, explicit independent torch.Generator state, row order, minibatch order, and dropout training stream. Auxiliary heads are initialized after shared layers and the training stream is reset before optimization."
+  },
+  "post_selection_full_training": {
+    "required_conditions": ["locked final weight", "0.10/0.10", "0.20/0.20", "0/0 no auxiliary", "all manuscript formal ablations"],
+    "seeds": [20260721, 20260722, 20260723, 20260724, 20260725],
+    "legacy_fixed_test_reporting": "supplementary exploratory"
+  },
+  "statistics": {
+    "paired_unit": "outer fold and seed where applicable",
+    "required": ["raw paired scores", "paired differences", "mean difference", "standard deviation", "95% confidence interval", "win count", "two-sided paired permutation test", "Wilcoxon signed-rank test"],
+    "primary_inference_metric": "AUPRC",
+    "confidence_interval": "paired hierarchical bootstrap over outer folds with seeds retained within fold"
+  },
+  "gradient_mechanism_analysis": {
+    "selection_use": false,
+    "stage": "post-selection full-data training only",
+    "schedule": "first five paired minibatches of every epoch",
+    "reported": ["mean cosine", "median cosine", "negative-batch proportion", "gradient norms", "weight-stratified trends"]
+  },
+  "interpretability": {
+    "timing": "only after final weight lock",
+    "models": ["locked final auxiliary model", "no auxiliary"],
+    "seeds": [20260721, 20260722, 20260723, 20260724, 20260725],
+    "methods": ["SHAP", "ISM"],
+    "selection_use": false
+  }
+}

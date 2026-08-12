@@ -1,0 +1,81 @@
+\clearpage
+\section{Analysis}
+
+\subsection{Variation among Tissue--HLA Combinations}
+
+This section examines variation in prediction difficulty and agreement between the model's two pathways. The observed patterns can motivate biological or data-quality hypotheses but cannot identify a molecular mechanism.
+
+Performance varies substantially across the 157 human tissue--HLA combinations. On the ordinary benchmark, the ten lowest-performing combinations have a mean AUROC of 0.6834, compared with an overall mean of 0.8448. These low values are concentrated in lung, blood, and lymphoid labels and range from 0.6510 for lung HLA-B*49:01 to 0.7056 for lymphoid tissue HLA-B*13:02. Biological similarity, cellular heterogeneity, annotation, sampling, and study effects are all plausible explanations.
+
+Table~\ref{tab:human-tissue-extremes} reports the tissue-level means for all 25 tissues, calculated with equal weight across the available HLA combinations within each tissue. Estimates for tissues represented by only one HLA combination are descriptive and potentially unstable.
+
+\begin{table*}[!b]
+\centering
+\caption{Descriptive human tissue-level performance on the 157-combination ordinary benchmark. Means are taken with equal weight across the available HLA combinations within each tissue. All 25 tissues are shown; values continue from the left block to the right block in ascending AUROC order.}
+\label{tab:human-tissue-extremes}
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrr@{\hspace{1.2cm}}>{\raggedright\arraybackslash}Xrr@{}}
+\toprule
+Tissue & AUROC & AUPRC & Tissue & AUROC & AUPRC \\
+\midrule
+Blood & 0.7618 & 0.7587 & Colon & 0.9204 & 0.9135 \\
+Lymphoid & 0.7914 & 0.7744 & Liver & 0.9281 & 0.9164 \\
+Uterine cervix & 0.8021 & 0.7797 & Kidney & 0.9287 & 0.9257 \\
+Brain & 0.8085 & 0.8012 & Thyroid & 0.9316 & 0.9252 \\
+Lung & 0.8135 & 0.8081 & Bone marrow & 0.9345 & 0.9256 \\
+Thymus & 0.8562 & 0.8405 & Esophagus & 0.9402 & 0.9327 \\
+Bone & 0.8585 & 0.8662 & Small intestine & 0.9534 & 0.9515 \\
+Lymph node & 0.8680 & 0.8415 & Testis & 0.9573 & 0.9597 \\
+Central nervous system (CNS) & 0.8937 & 0.8883 & Tongue & 0.9574 & 0.9535 \\
+Spleen & 0.8947 & 0.8869 & Uterus & 0.9617 & 0.9598 \\
+Ovary & 0.9014 & 0.8927 & Adrenal gland & 0.9778 & 0.9768 \\
+Heart & 0.9033 & 0.8798 & Umbilical cord blood & 0.9791 & 0.9805 \\
+Breast & 0.9095 & 0.9184 & & & \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+Prediction difficulty is not explained simply by the number of training examples. The association between training size and AUROC is weak under both evaluations and is not statistically reliable. A large tissue--HLA combination can remain difficult when tissue composition is heterogeneous, peptide evidence overlaps other tissues, or records originate from diverse studies.
+
+Table~\ref{tab:human-hla-locus} provides a descriptive summary by HLA locus for the saved test and peptide-separated analyses. HLA-A has the highest saved-test mean and HLA-C the lowest; HLA-C also shows the smallest descriptive decrease.
+
+These locus summaries combine different alleles, tissues, training sizes, and peptide-linked group structures and therefore do not estimate controlled HLA-locus effects. Differences are calculated from unrounded combination means, so subtracting displayed values can differ by 0.0001. The direct same-pool comparison used to quantify sensitivity to peptide separation appears under Research Question 4 and in Figure~\ref{fig:appendix-gap}.
+
+Saved-test and peptide-separated AUROCs correlate moderately across tissue--HLA combinations, with Spearman \(\rho=0.569\) and \(p<10^{-14}\). The descriptive median difference between these evaluations is -0.0652, with 16 increases and 141 decreases. Six of the ten largest decreases involve HLA-A*11:01 and two involve HLA-B*49:01, motivating follow-up that accounts for allele and peptide-linked-group structure without implying intrinsic allele effects.
+
+\subsection{Complementarity of the Two Human Model Pathways}
+
+We compare the global pathway with the HLA-specific pathway. Their peptide scores are moderately correlated on average, but agreement varies widely across tissue--HLA combinations, indicating related but non-identical sequence information.
+
+The global pathway has the higher overall mean but outperforms the HLA-specific pathway in only 81 of 157 combinations; the HLA-specific pathway performs better in the remaining 76. Global sharing is therefore stronger on average, while allele-restricted learning retains useful combination-specific ordering information.
+
+The combined ranking outperforms the better single pathway in 260 of 471 run-by-combination comparisons. Its median improvement is 0.0017 and mean improvement 0.0003. A simple measure of pathway disagreement, \(1-\operatorname{corr}(s_g,s_h)\), is not significantly associated with the benefit of combination, with Spearman \(\rho=-0.062\) and \(p=0.181\). Disagreement may represent either complementary signal or pathway-specific error.
+
+These results support the prespecified equal-weight combination as a robust aggregate rule but do not imply that every tissue--HLA combination benefits from both pathways.
+
+\subsection{Error Analysis}
+
+Per-combination results point to several recurring sources of difficulty. Low-performing combinations are concentrated in blood and lymphoid categories, where related cell populations and broad sampling may produce overlapping peptide evidence. Combinations with few examples can yield unstable estimates even though training size alone does not explain performance. Peptides reported across several tissues can also become difficult pseudo-negatives when an unobserved target-tissue record reflects incomplete measurement rather than true absence. Study and batch structure may also introduce systematic error.
+
+\begin{table}[!t]
+\centering
+\caption{Descriptive human AUROC by HLA locus. Difference is peptide-separated cross-validation minus the saved internal test result. Because the evaluated rows differ, this is not an estimate of the peptide-overlap effect.}
+\label{tab:human-hla-locus}
+\scriptsize
+\setlength{\tabcolsep}{1.5pt}
+\begin{tabularx}{\columnwidth}{@{}>{\raggedright\arraybackslash}X
+                                  >{\centering\arraybackslash}p{0.75cm}
+                                  >{\centering\arraybackslash}p{1.15cm}
+                                  >{\centering\arraybackslash}p{1.45cm}
+                                  >{\centering\arraybackslash}p{1.05cm}@{}}
+\toprule
+HLA locus & Comb. & \shortstack{Saved\\test} & \shortstack{Peptide-\\separated} & Diff. \\
+\midrule
+HLA-A & 55 & 0.8688 & 0.7824 & -0.0864 \\
+HLA-B & 79 & 0.8380 & 0.7507 & -0.0873 \\
+HLA-C & 23 & 0.8106 & 0.7738 & -0.0369 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\FloatBarrier

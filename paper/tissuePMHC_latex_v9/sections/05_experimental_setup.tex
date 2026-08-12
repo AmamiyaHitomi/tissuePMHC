@@ -1,0 +1,16 @@
+\section{Experimental Design and Evaluation}
+\label{sec:evaluation-protocol}
+
+\subsection{Fixed-Test Design and Model Selection}
+
+All experiments use the occurrence-matched splits described in Section~\ref{sec:data-benchmark}. Complete pairs remain together, with 50 pairs per tissue--MHC task assigned to the fixed test set and the remainder used for training. Models score peptides independently from sequence and context; pair identifiers support construction and evaluation but are not model inputs.
+
+Hyperparameters are selected by three-fold, task-stratified, pair-grouped cross-validation restricted to training data. Human selection emphasizes task-macro AUROC, whereas mouse selection considers both AUROC and AUPRC. The selected species-specific configuration is fitted to the complete training set using three initializations (20260704--20260706) and evaluated once on the fixed test. Test results are not used for model selection or early stopping. The complete protocol and information flow are summarized in Supplementary Table~\ref{S-tab:evaluation-protocols}, Supplementary Figure~\ref{S-fig:evaluation-setting-relationships}, and Supplementary Section~\ref{S-sec:detailed-evaluation}.
+
+\subsection{Comparisons and Performance Measures}
+
+To our knowledge, no existing method directly predicts tissue-specific preference under the matched task defined here. MHCflurry 2.0 \cite{odonnell2020mhcflurry} and NetMHCpan-4.1 \cite{reynisson2020netmhcpan} are therefore evaluated as tissue-independent external controls rather than like-for-like competitors.
+
+Trainable comparisons cover shared or context-conditioned peptide encoders, tissue- or MHC-grouped models, dual-branch ensembles, MMoE \cite{ma2018mmoe}, and DB-MTL \cite{lin2023dbmtl}. Additional analyses remove tissue information or ablate the MHC-specific pathway, rank fusion, auxiliary supervision, or multi-kernel encoder. All reported trainable comparisons use the same species-specific split and final-training seeds.
+
+AUROC and AUPRC are calculated within each tissue--MHC task and macro-averaged so every context has equal weight. Within-pair accuracy directly measures matched-pair ordering; threshold-dependent metrics are secondary. Seed-level results are summarized by mean and sample standard deviation, with task-level bootstrap intervals and corrected paired tests. Expected Integrated Gradients \cite{sundararajan2017integrated,erion2021expected} and single-residue mutagenesis support interpretation of the fixed human model. Full procedures and evaluation-scope limitations are reported in Supplementary Section~\ref{S-sec:detailed-evaluation}.

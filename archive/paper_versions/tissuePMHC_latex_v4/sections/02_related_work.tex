@@ -1,0 +1,45 @@
+\section{Related Work}
+
+\subsection{Predicting Peptide Binding to Antigen-presenting Molecules (Peptide--MHC Binding Prediction)}
+
+Predicting whether a peptide binds an \plainMHC{} (peptide--MHC binding prediction) is a foundational task in computational immunology. Established methods such as NetMHCpan \cite{reynisson2020netmhcpan}, MHCflurry \cite{odonnell2020mhcflurry}, and the attention-based convolutional binding model (ACME) \cite{hu2019acme} estimate binding affinity, binding rank, or peptide compatibility with an \plainMHC{} from peptide sequences and allele information. Predictors designed to work across many alleles (pan-allelic predictors) improve coverage by representing \plainMHC{} molecules through short sequence regions that summarize the peptide-binding groove (MHC pseudo-sequences) or related allele features. This representation allows information sharing across well-characterized and data-scarce alleles \cite{nielsen2007netmhcpan,reynisson2020netmhcpan}. These models are essential for filtering candidate epitopes, but binding is only one stage of antigen presentation. A peptide with favorable binding characteristics may still be absent from the cell-surface immunopeptidome because its source protein is not expressed or degraded, the peptide is not generated or transported efficiently, or it is not detected experimentally. Binding scores therefore do not directly encode presentation-evidence preferences among tissues that share the same antigen-presenting restriction (MHC restriction).
+
+\subsection{Predicting Cell-surface Antigen Presentation (Antigen Presentation Prediction)}
+
+Peptides experimentally recovered from \plainMHC{} molecules (eluted-ligand data) enable models to learn a broader presentation signal than binding measurements alone \cite{reynisson2020netmhcpan,odonnell2020mhcflurry}. General presentation predictors combine peptide sequence, antigen-presenting-molecule context (MHC context), and, in some cases, antigen-processing or source-protein features to distinguish observed ligands from background peptides. Systems such as the large-scale peptide--MHC model BigMHC \cite{albert2023bigmhc} illustrate how large immunopeptidomic collections and modern sequence models can improve ligand presentation prediction and candidate ranking. Their usual target, however, is whether a peptide is likely to be presented for an allele, sample, or pooled presentation setting. This target differs from the relative question studied here: given a fixed tissue--antigen-presenting-molecule task (tissue--MHC task), which of two peptides from the same parent protein has stronger tissue-conditioned presentation evidence? Consequently, a high general-presentation score need not imply a tissue-specific preference, and direct comparisons require a benchmark whose supervision reflects that distinction.
+
+\subsection{Tissue- and Sample-Context Immunopeptidomics}
+
+Multi-tissue immunopeptidomic atlases have revealed that ligand repertoires contain both broadly shared peptides and tissue-associated components \cite{marcu2021atlas,schuster2018mouse}. MHCflurry 2.0 incorporates antigen-processing features but does not use tissue identity \cite{odonnell2020mhcflurry}. More recent systems separate peptides assigned to several possible alleles (multi-allelic deconvolution), as in ImmuneApp \cite{xu2024immuneapp}, or combine peptide, \plainMHC{}, neighboring protein sequence (peptide flanks), and optional gene-expression features, as in HLApollo \cite{thrift2024hlapollo}. These approaches demonstrate that presentation is context dependent, but they generally do not define a tissue--antigen-presenting-molecule combination (tissue--MHC combination) as the supervised task or match every recorded positive and comparison peptide (pseudo-negative) on both antigen-presenting restriction (MHC restriction) and parent protein. Our formulation is therefore complementary to expression- and sample-aware prediction: it isolates a ranking problem conditioned on a known biological context (task-conditioned ranking) that can later be combined with molecular measurements.
+
+\subsection{Sharing Information across Tissue--MHC Groups (Multi-task Learning)}
+
+Some tissue--antigen-presenting-molecule combinations (tissue--MHC combinations) contain many observations, whereas others contain relatively few. Learning a completely separate model for every combination would waste information shared across tissues and alleles. Conversely, pooling all combinations into one model could blur allele-specific binding motifs and tissue-associated differences. Learning several related prediction tasks jointly (multi-task learning) provides a middle ground: related groups share a peptide representation, while each tissue--antigen-presenting-molecule combination (tissue--MHC combination) retains its own prediction function \cite{caruana1997multitask,ruder2017overview}. More structured methods allow different task groups to use shared and specialized model components \cite{ma2018mmoe,tang2020ple}. TissuePMHC adopts a biologically structured sharing scheme: one model view learns patterns across all human tasks, while a second view shares information only among tissues with the same \plainHLA{} allele.
+
+\subsection{Relation to This Work}
+
+The principal distinction from previous work is the prediction target. General predictors estimate peptide binding to or presentation by an \plainMHC{}, whereas TissuePMHC ranks peptides that share presenting restriction and parent protein (matched peptides) by evidence within a specified tissue--antigen-presenting-molecule context (tissue--MHC context). The human and mouse datasets define this comparison identically, although each species uses a separately trained model. We further distinguish the internal evaluation that permits a peptide to recur in another training task (standard evaluation) from the \plainPeptideOOF{}, in which a held-out peptide is absent from every fitting task. MHCflurry and NetMHCpan are therefore used as \plainGeneralPMHC{}s rather than as tissue-aware competitors.
+
+Table~\ref{tab:closest-work} makes these distinctions explicit. Negative construction varies across implementations and datasets; the entries therefore summarize the published task design rather than asserting identical data provenance.
+
+\begin{table}[tbp]
+\centering
+\caption{Comparison by biological prediction unit (task-level comparison) with representative methods for peptide binding to or presentation by an \plainMHC{}. ``Context'' denotes information beyond peptide and the \plainMHC{} used by the published method.}
+\label{tab:closest-work}
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{1.8cm}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{2.6cm}@{}}
+\toprule
+Method & Prediction target & Context & Negative/evaluation emphasis \\
+\midrule
+NetMHCpan 4.1 \cite{reynisson2020netmhcpan} & Binding and presentation learned from recovered ligands (eluted-ligand presentation) & Short sequence representation of the binding groove (MHC pseudo-sequence); no tissue task & Prediction across many alleles (pan-allelic general prediction) \\
+MHCflurry 2.0 \cite{odonnell2020mhcflurry} & Binding and presentation & Antigen-processing features; no tissue identity & Prediction across many alleles (pan-allelic general prediction) \\
+BigMHC \cite{albert2023bigmhc} & Presentation and immunogenicity & Peptide and antigen-presenting molecule (MHC) & Large-scale general prediction \\
+ImmuneApp \cite{xu2024immuneapp} & Epitope prediction and assignment to human class I alleles (HLA-I prediction and deconvolution) & Ligand data from samples with one or several alleles (mono- and multi-allelic data) & General/sample-level evaluation \\
+HLApollo \cite{thrift2024hlapollo} & Peptide presentation & Antigen-presenting molecule (MHC), neighboring protein sequence (peptide flanks), optional gene expression & Alternative background-peptide definitions (negative-set switching); evaluation across many alleles (pan-allelic evaluation) \\
+TissuePMHC benchmark & Presentation preference for one tissue and one antigen-presenting restriction (tissue--MHC preference) & Identity of the tissue and antigen-presenting restriction (tissue--MHC task identity) & Pairs matched on antigen-presenting restriction and parent protein (MHC- and parent-matched pairs); internal evaluation and \plainPeptideOOF{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:closest-work} is a task-design comparison, not a numerical leaderboard.

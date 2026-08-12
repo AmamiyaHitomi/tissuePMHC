@@ -1,0 +1,11 @@
+\section{Strict Generalization and Scope}
+
+\subsection{Generalization Supported by the Fixed Test}
+
+The fixed test holds out complete peptide pairs from each represented tissue--MHC task. Every test peptide is absent from the training rows of the same task, so the reported metrics measure discrimination for new task-specific rows in familiar biological contexts. The entity-overlap audit in Table~\ref{tab:fixed-overlap} quantifies the cross-task reuse that remains possible.
+
+\subsection{Entity-disjoint and Unseen-context Generalization}
+
+The training-only cross-validation used for hyperparameter selection is pair-grouped within each task but does not impose global peptide or parent-protein separation across tasks. It is therefore not an entity-disjoint generalization experiment. This revision reports no numerical result for an all-training-combinations peptide holdout; the fixed-test overlap audit in Table~\ref{tab:fixed-overlap} defines the entity reuse that remains possible.
+
+Accordingly, the present results do not estimate performance for an unseen tissue, unseen allele, unseen tissue--MHC combination, independent study, or prospective cohort. These are separate validation targets rather than alternative interpretations of the fixed-test score.

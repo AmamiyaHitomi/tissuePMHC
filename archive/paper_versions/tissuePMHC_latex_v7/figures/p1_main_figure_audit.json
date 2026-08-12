@@ -1,0 +1,161 @@
+{
+  "figure2_occurrence_totals": [
+    {
+      "target_tissue": "Thymus",
+      "label0": 174,
+      "label1": 174,
+      "difference": 0,
+      "species": "Human"
+    },
+    {
+      "target_tissue": "Kidney",
+      "label0": 198,
+      "label1": 198,
+      "difference": 0,
+      "species": "Human"
+    },
+    {
+      "target_tissue": "NA/unspecified",
+      "label0": 349,
+      "label1": 349,
+      "difference": 0,
+      "species": "Human"
+    },
+    {
+      "target_tissue": "Spleen",
+      "label0": 402,
+      "label1": 402,
+      "difference": 0,
+      "species": "Human"
+    },
+    {
+      "target_tissue": "Breast",
+      "label0": 528,
+      "label1": 528,
+      "difference": 0,
+      "species": "Human"
+    },
+    {
+      "target_tissue": "Ovary",
+      "label0": 633,
+      "label1": 633,
+      "difference": 0,
+      "species": "Human"
+    },
+    {
+      "target_tissue": "Brain",
+      "label0": 1350,
+      "label1": 1350,
+      "difference": 0,
+      "species": "Human"
+    },
+    {
+      "target_tissue": "Lung",
+      "label0": 1575,
+      "label1": 1575,
+      "difference": 0,
+      "species": "Human"
+    },
+    {
+      "target_tissue": "Uterine Cervix",
+      "label0": 2494,
+      "label1": 2494,
+      "difference": 0,
+      "species": "Human"
+    },
+    {
+      "target_tissue": "Bone",
+      "label0": 2884,
+      "label1": 2884,
+      "difference": 0,
+      "species": "Human"
+    },
+    {
+      "target_tissue": "Lymph Node",
+      "label0": 4555,
+      "label1": 4555,
+      "difference": 0,
+      "species": "Human"
+    },
+    {
+      "target_tissue": "Lymphoid",
+      "label0": 7241,
+      "label1": 7241,
+      "difference": 0,
+      "species": "Human"
+    },
+    {
+      "target_tissue": "Blood",
+      "label0": 10242,
+      "label1": 10242,
+      "difference": 0,
+      "species": "Human"
+    },
+    {
+      "target_tissue": "Colon",
+      "label0": 207,
+      "label1": 207,
+      "difference": 0,
+      "species": "Mouse"
+    },
+    {
+      "target_tissue": "Skin",
+      "label0": 666,
+      "label1": 666,
+      "difference": 0,
+      "species": "Mouse"
+    },
+    {
+      "target_tissue": "Spleen",
+      "label0": 952,
+      "label1": 952,
+      "difference": 0,
+      "species": "Mouse"
+    },
+    {
+      "target_tissue": "Liver",
+      "label0": 982,
+      "label1": 982,
+      "difference": 0,
+      "species": "Mouse"
+    }
+  ],
+  "figure7_tuning_statistics": [
+    {
+      "species": "Human",
+      "n_tasks": 77,
+      "mean_delta_auroc": 0.005392207792207796,
+      "median_delta_auroc": 0.006866666666666688,
+      "bootstrap_95_ci": [
+        0.0010533116883116684,
+        0.00978880952380953
+      ],
+      "wilcoxon_raw_p": 0.0059694859501675974,
+      "wilcoxon_holm_p": 0.0059694859501675974,
+      "n_improved": 54,
+      "n_declined": 23,
+      "n_tied": 0
+    },
+    {
+      "species": "Mouse",
+      "n_tasks": 11,
+      "mean_delta_auroc": 0.0489272727272727,
+      "median_delta_auroc": 0.044533333333333314,
+      "bootstrap_95_ci": [
+        0.029992575757575773,
+        0.0679516666666666
+      ],
+      "wilcoxon_raw_p": 0.001953125,
+      "wilcoxon_holm_p": 0.00390625,
+      "n_improved": 10,
+      "n_declined": 1,
+      "n_tied": 0
+    }
+  ],
+  "sources": {
+    "human_data": "D:\\my_python\\tissuePMHC\\data\\humanPMHC_occurence_equal_dataset",
+    "mouse_data": "D:\\my_python\\tissuePMHC\\data\\mousePMHC_occurence_equal_dataset",
+    "human_tuned": "D:\\my_python\\tissuePMHC\\extra_occurence_equal_dataset\\adjusting\\results\\e29_final_test",
+    "mouse_tuned": "D:\\my_python\\tissuePMHC\\extra_mouse_occurence_equal_dataset\\adjusting\\results"
+  }
+}

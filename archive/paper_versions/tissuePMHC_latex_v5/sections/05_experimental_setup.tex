@@ -1,0 +1,106 @@
+\section{Experimental Setup}
+
+\subsection{Evaluation Questions and Protocol}
+
+The experiments address seven questions: whether peptide sequence retains tissue-associated signal after matching the MHC and source protein; the performance of the human model; the contribution of major model components; the effect of excluding every held-out peptide from all training combinations; replication in mouse; the signal recoverable without tissue identity; and whether differences between model structures persist when exact peptide identities are separated. These questions connect the technical comparisons to their biological interpretation. The human--mouse analysis concerns replication of the benchmark definition, not transfer of one model between species.
+
+Many model choices were explored on the ordinary human benchmark. To avoid further adjustment after observing the harder results, the peptide-separated analysis was specified in advance, including the split, model versions, random initializations, training budget, comparison models, performance measures, and statistical tests. Exact split files, configurations, and timestamps are archived with the predictions.
+
+The two main biological questions are not interchangeable. The ordinary internal evaluation asks whether the model can rank held-out pairs within familiar tissue--MHC combinations while allowing an individual peptide to appear in another training combination. The peptide-separated analysis asks whether ranking remains possible when each held-out peptide is absent from every fitting combination. Table~\ref{tab:evaluation-protocols} defines the corresponding data pools, overlap rules, fold construction, and model repetitions.
+
+For every trainable method, held-out examples are excluded from parameter fitting. In the peptide-separated analysis, a held-out peptide and every pair connected to it remain outside the corresponding fitting fold. A reported prediction therefore cannot benefit from direct exposure to that peptide identity during fitting. This within-run separation does not imply that the overall model design was chosen without earlier access to the ordinary benchmark; model development had already used pair-preserving cross-validation on the same training pool.
+
+To assess sensitivity to peptide reuse, an ordinary reference split is generated from exactly the same pair pool with nearly the same held-out size per tissue--MHC combination. Its intended difference from the peptide-separated split is whether an exact peptide may cross the fitting boundary. Grouping pairs linked directly or indirectly by shared peptides can also alter parent-protein and motif distributions, however. The observed difference is therefore interpreted as a robustness gap under peptide separation rather than a causal estimate of the effect of repeated peptide identity.
+
+\subsection{Training and Baseline Models}
+
+All encoders and combination-specific output layers are optimized with AdamW \cite{loshchilov2019adamw} for 25 epochs, using a batch size of 512, a learning rate of \(10^{-3}\), weight decay of \(10^{-4}\), and gradient-norm clipping at 1.0. The global and HLA-specific pathways are trained independently for each random initialization. Within every cross-validation analysis, only the fitting partition is used to estimate model parameters; held-out rows are used solely for prediction and evaluation.
+
+The human model uses three random initializations: 20260704, 20260705, and 20260706. Its architecture, optimization settings, auxiliary-loss weights, score-combination rule, and random initializations were specified before the reported evaluation. Training follows a prespecified 25-epoch schedule without early stopping on held-out data. Preprocessing and combination mappings are reconstructed from each fitting partition so that held-out labels do not influence training.
+
+The comparison models range from simple sequence rules to architectures that share information across tissue--MHC combinations. One-hot logistic regression provides a linear sequence baseline. A BLOSUM62 random forest incorporates established similarities among amino-acid substitutions. The shared-encoder model learns one peptide representation with a separate output for each tissue--MHC combination. Dual-branch models compare global sharing with sharing restricted to one HLA allele. All methods within a table use the same tissue--MHC combinations and data split.
+
+The BLOSUM62 random forest \cite{henikoff1992blosum} concatenates the 20 substitution scores at each of nine positions into 180 input features. Each tissue--MHC combination receives a separate forest of 200 trees, with square-root feature subsampling and a minimum leaf size of two. The dual-branch neural controls use 16-dimensional residue vectors, flatten the nine positions, and apply two 128-unit multilayer-perceptron layers with rectified linear activation and dropout of 0.2 after the first layer. The model with auxiliary supervision adds tissue and HLA losses weighted 0.1 to the global pathway; the model without auxiliary supervision retains the same two pathways but omits those losses. Human neural predictions are averaged across three initializations, and mouse predictions in the peptide-separated analysis are averaged across five.
+
+Every model in the peptide-separated comparison uses the same archived fold assignments rather than regenerating the split. The human comparison contains 73,798 pairs in 17,036 groups linked directly or indirectly by shared peptides across 157 tissue--HLA combinations; the mouse comparison contains 6,766 pairs in 1,844 such groups across 24 tissue--H2 combinations. Both use three folds with zero complete-pair and exact-peptide overlap between fitting and held-out partitions.
+
+\subsection{Controls Without Tissue Information}
+
+The most direct biological control removes tissue identity while retaining peptide and MHC information. If this control performed as well as the full model, the benchmark could be explained largely by general peptide--MHC compatibility. The human and mouse controls use nearly the same model capacity and exactly the same evaluation splits as their full counterparts. The control is \(s=f(p,m)\): it receives peptide sequence and MHC restriction but no tissue input, tissue embedding, tissue auxiliary loss, or tissue--MHC-specific output head.
+
+Rows are not pooled, deduplicated, or assigned a consensus label after tissue identity is removed. Each original tissue-specific row and label is retained in the loss. Consequently, the same peptide--MHC query can carry both labels across tissues: it is positive where ligand evidence was reported and may be a pseudo-negative elsewhere. Table~\ref{tab:tissue-blind-conflict-audit} quantifies this deliberate label ambiguity. A ``conflicting query'' is a peptide sequence and MHC restriction with both labels in the stated partition; a ``conflicting row'' is any row belonging to such a query. These are not contradictions within one tissue--MHC task. They arise across tissues because the control is intentionally denied the variable that distinguishes those contexts.
+
+We also score every peptide--MHC query with MHCflurry and NetMHCpan, two established predictors that do not use the target tissue \cite{odonnell2020mhcflurry,reynisson2020netmhcpan}. These tissue-agnostic controls quantify how much of the matched-pair benchmark can be explained by general binding or presentation propensity. They are not retrained on the TissuePMHC labels.
+
+The control set contains 79,759 unique human peptide--MHC queries across 35 HLA alleles and 6,663 mouse queries across four H2 restrictions. The MHCflurry presentation score and the NetMHCpan eluted-ligand and binding-affinity scores cover every row and pair. Controls are evaluated on the saved internal test set and on the complete training pools used for the ordinary and peptide-separated cross-validation analyses. Because these external scores are predetermined rather than fitted within each fold, their standalone metrics are identical across the two cross-validation partitions of the same pool.
+
+\begin{table*}[t]
+\centering
+\caption{Label-conflict audit for controls without tissue information. A peptide--MHC query is conflicting when its retained tissue-specific rows contain both labels within the stated partition. Percentages in the query and row columns use all unique queries and all rows in that partition as their respective denominators. The trainable tissue-blind control preserves these rows and labels rather than collapsing them to a consensus target.}
+\label{tab:tissue-blind-conflict-audit}
+\fontsize{7.5}{8.5}\selectfont
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}
+  l
+  >{\raggedright\arraybackslash\hsize=1.30\hsize}X
+  >{\raggedleft\arraybackslash\hsize=0.70\hsize}X
+  >{\raggedleft\arraybackslash\hsize=0.80\hsize}X
+  >{\raggedleft\arraybackslash\hsize=1.05\hsize}X
+  >{\raggedleft\arraybackslash\hsize=1.15\hsize}X@{}}
+\toprule
+Species & Partition & Rows & Unique queries & \shortstack{Conflicting queries\\(\%)} & \shortstack{Rows in conflicting\\queries (\%)} \\
+\midrule
+Human & Training pool & 147,596 & 72,136 & 21,166 (29.34\%) & 60,137 (40.74\%) \\
+Human & Saved internal test & 31,400 & 24,015 & 1,375 (5.73\%) & 3,166 (10.08\%) \\
+Human & Complete benchmark & 178,996 & 79,759 & 26,700 (33.48\%) & 79,281 (44.29\%) \\
+\midrule
+Mouse & Training pool & 13,532 & 5,907 & 2,151 (36.41\%) & 5,652 (41.77\%) \\
+Mouse & Saved internal test & 4,800 & 3,306 & 381 (11.52\%) & 859 (17.90\%) \\
+Mouse & Complete benchmark & 18,332 & 6,663 & 3,516 (52.77\%) & 9,771 (53.30\%) \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+The high conflict fractions in the complete benchmarks show why this control is intentionally difficult: identical observed inputs can correspond to different tissue-specific targets. Its performance measures how much ranking signal is recoverable from peptide and MHC alone under that ambiguity; it is not an estimate from a noise-free, tissue-pooled presentation dataset.
+
+Finally, we test whether a tissue-agnostic presentation score adds information beyond the tissue-conditioned score. The combination rule is learned on other folds and applied to the held-out fold by cross-fitted stacking. This is a diagnostic analysis rather than a newly proposed final model.
+
+\subsection{Performance Metrics and Statistical Analysis}
+
+The main question is whether peptides reported in the target tissue rank above comparison peptides with the same MHC restriction and parent protein. AUROC is calculated separately for every tissue--MHC combination and then averaged with equal weight, preventing data-rich tissues or alleles from dominating:
+\[
+\operatorname{MacroAUROC}
+=
+\frac{1}{|\mathcal{T}_{\mathrm{valid}}|}
+\sum_{\tau\in\mathcal{T}_{\mathrm{valid}}}
+\operatorname{AUROC}_{\tau},
+\]
+where \(\mathcal{T}_{\mathrm{valid}}\) contains the prespecified combinations with both labels available. AUPRC is averaged in the same manner:
+\[
+\operatorname{MacroAUPRC}
+=
+\frac{1}{|\mathcal{T}_{\mathrm{valid}}|}
+\sum_{\tau\in\mathcal{T}_{\mathrm{valid}}}
+\operatorname{AUPRC}_{\tau}.
+\]
+Because the paired dataset has a constructed 1:1 label ratio, AUPRC is interpreted relative to the benchmark prevalence within each combination and is not compared directly with AUPRC from naturally imbalanced clinical cohorts.
+
+An average can hide weak performance in difficult tissues, so we also report the ten lowest-performing human combinations and six lowest-performing mouse combinations. Within-pair ordering accuracy is the fraction of matched pairs for which the recorded-positive peptide receives the higher score. Accuracy, F1, and MCC are secondary because they require a single decision threshold and the final score is not a calibrated biological probability.
+
+For each random initialization, predictions from all held-out folds are first concatenated. Metrics are then calculated for each tissue--MHC combination from its complete cross-validation prediction vector and averaged with equal weight. Prediction averaging in the peptide-separated analysis uses only models trained on the corresponding fitting fold. Fold-specific metrics are descriptive and are not treated as independent experimental replicates. Variation across initializations is reported separately from the final averaged prediction.
+
+Uncertainty intervals are obtained by resampling complete tissue--MHC combinations rather than treating folds or repeated runs as independent biological samples. Paired tests compare corresponding combinations, and multiple comparisons are corrected within each planned analysis family. Because combinations may share a tissue, allele, proteins, or related peptides, we emphasize effect size, the numbers improving or declining, and agreement between species rather than treating them as independent patient cohorts.
+
+\subsection{Cross-species Interpretation and Reproducibility}
+
+Human and mouse use the same matched-pair definition, eligibility threshold, saved internal test design, pair-preserving cross-validation, and peptide-separated cross-validation. They differ in the number of tissue--MHC combinations, MHC system, data composition, and selected model. Concordant findings support replication of benchmark learnability but do not establish a species-independent molecular mechanism or a controlled comparison of architectures.
+
+The human model uses random initializations 20260704--20260706; the mouse prediction average additionally uses 20260707 and 20260708. Both cross-validation schemes use recorded split random state 20260711. Cross-species comparisons emphasize above-random signal and the value of structured information sharing. Numerical differences between the selected architectures are not interpreted as species effects because data scale, biological diversity, and model selection differ.
+
+For reproducibility, each experiment records the train/test access policy, fold-assignment manifest, split random state, training initializations, model configuration, and command-line arguments. Reports include epoch count, batch size, optimizer, learning rate, weight decay, dropout, parameter count, training time, peak memory where available, hardware, and software versions. Predictions are saved at row level with tissue--MHC combination, label, pair identifier, fold, model member, and final score.
+
+Dataset and configuration files are accompanied by cryptographic hashes, and each result directory records the timestamped protocol and code state. Metadata for the mouse saved internal test set state that it was accessed only after model selection. Peptide-separated runs retain their peptide-linked-group assignments and zero-overlap audits.
+
+\subsection{Data and Code Availability}
+
+The accompanying repository contains processed benchmark tables, pair and peptide-linked-group fold manifests, row-level predictions, configuration files, cryptographic hashes, and analysis scripts. Raw material derived from the IEDB and third-party predictor assets remains subject to original access and licensing terms; NetMHCpan executables are not redistributed.

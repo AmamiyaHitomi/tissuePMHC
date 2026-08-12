@@ -1,0 +1,57 @@
+\section{Discussion}
+
+\subsection{Principal Findings}
+
+This study formulates tissue-specific MHC-I presentation as a shared-learning problem over peptide pairs matched by MHC restriction and parent protein. Rather than asking whether a peptide binds to or is presented by an MHC molecule in general, the benchmark asks which member of a matched pair has stronger evidence in a particular tissue--MHC combination. This formulation controls two major sources of trivial discrimination and focuses evaluation on tissue-conditioned relative evidence.
+
+Four findings carry the main biological message. First, peptide sequence contains reproducible tissue-associated information after controlling MHC restriction and source protein. Second, this result appears in both human and mouse, although the species use different models and do not constitute a controlled species comparison. Third, performance falls substantially when a test peptide is absent from every training combination, showing that repeated peptide identities make the ordinary benchmark easier. Fourth, removing tissue identity causes a further decrease, whereas general MHC binding and presentation predictors recover only part of the signal. Tissue context therefore matters to the ranking problem, but the sequence-only models cannot distinguish tissue expression, antigen processing, cell composition, and study structure.
+
+The ordinary and peptide-separated analyses answer complementary questions. The ordinary benchmark evaluates new matched pairs in familiar tissue--MHC combinations while allowing peptide reuse elsewhere in training. The harder analysis evaluates exact peptide identities absent from all fitting combinations within those same biological contexts. Neither evaluates a new tissue, new allele, or independent cohort.
+
+\subsection{Effects of Model Structure under Peptide Separation}
+
+Architectural differences are smaller after peptide separation than on the ordinary benchmark. In human, TissuePMHC remains above simple sequence baselines, the shared encoder, and the unguided dual branch, but is statistically comparable to the simpler guided dual branch. Auxiliary tissue and allele supervision is therefore the most reproducible component benefit; the comparison does not establish an independent advantage of the multi-kernel peptide encoder.
+
+The mouse interpretation is more conservative. In the identical-fold comparison of simple and dual-branch controls, the auxiliary dual branch has the highest mean AUROC. Auxiliary supervision gives a small but consistent improvement over its matched unguided control, while the random forest, shared encoder, and two dual-branch models remain close in absolute performance. The result therefore supports learnability of the biological comparison and a limited benefit from auxiliary supervision rather than a universal architectural advantage.
+
+\subsection{Relationship to General Peptide--MHC Prediction}
+
+TissuePMHC is not a replacement for general peptide--MHC prediction. General tools estimate whether a peptide is compatible with an MHC molecule or likely to be presented overall. TissuePMHC estimates tissue-associated preference relative to a matched comparison peptide. MHCflurry and NetMHCpan achieve AUROCs of approximately 0.65--0.69, confirming that general presentation propensity is relevant but does not fully explain the tissue-conditioned ranking.
+
+This distinction limits causal interpretation. Tissue-associated sequence patterns may reflect source-protein expression, antigen processing, cell composition, experimental sampling, or residual study structure. Because the model receives only peptide sequence and a tissue--MHC identifier, it cannot identify which process produced an association. Adding a general presentation score changes AUROC by at most 0.0041.
+
+\subsection{Potential Applications}
+
+The benchmark may support several research applications. Tissue-conditioned scores could help prioritize candidate antigens whose presentation evidence is concentrated in a target tissue, rank potential normal-tissue off-targets during early therapeutic screening, and select peptides for follow-up immunopeptidomics experiments. The same framework could also contribute to candidate triage for T-cell receptor therapies, vaccines, and other immunotherapies when used alongside binding affinity, immunogenicity, expression, safety, and population-coverage evidence.
+
+These are potential uses rather than validated clinical applications. The balanced benchmark does not reproduce clinical prevalence, and retrospective database associations cannot establish safety or therapeutic benefit. Deployment would require prospective validation, calibrated decision thresholds, uncertainty estimates, and representative cohorts. A low predicted score must not be treated as evidence that a peptide is absent from normal tissue.
+
+\subsection{Limitations}
+
+The benchmark has several important limitations. The negative member of a pair is a pseudo-negative based on missing database evidence, not an experimentally confirmed non-presented peptide. Incomplete tissue sampling and limited detection depth can therefore convert unobserved positives into apparent negatives. This issue is especially relevant for peptides reported across multiple tissues and for tissues with heterogeneous cellular composition.
+
+The source data are observational and inherit biases from studies in the IEDB. Tissue coverage, HLA frequency, sample preparation, mass-spectrometry platform, reporting practice, and detection depth are uneven. Matching on MHC and parent protein reduces specific confounders but does not remove study, laboratory, donor, or batch structure. The deliberately balanced 1:1 benchmark supports controlled ranking comparisons but does not represent real-world prevalence; its AUPRC and score thresholds should not be transferred directly to deployment settings.
+
+Source-tissue text is retained exactly as recorded in the IEDB. Synonyms, anatomical subregions, and differently formatted labels are not normalized to a controlled ontology, so semantically related tissues may remain separate. Resolving those labels would change the benchmark and require retraining all models.
+
+The present work covers unmodified canonical 9-mer MHC-I ligands. It does not address variable-length ligands, post-translationally modified or spliced peptides, or MHC-II presentation. It also excludes tissue transcriptomics, proteomics, source-protein abundance, flanking sequence, cell-type composition, and antigen-processing features. Tissue information enters through the combination definition and parameter-sharing structure rather than direct biological measurements.
+
+Generalization is restricted in several ways. In the ordinary evaluation, peptides and parent proteins can recur across fitting and evaluation data through different tissue--MHC combinations. Peptide-separated cross-validation prevents exact-peptide reuse but still permits recurring parent proteins, studies, platforms, and similar motifs. It does not enforce new parent proteins, new studies, future data, or external cohorts. Moreover, combination-specific output layers restrict all evaluations to previously represented tissue--MHC combinations; unseen tissues and alleles are not tested.
+
+The human saved test set was used repeatedly during a long model-development process, so project-level selection may have adapted to that benchmark in ways not captured by within-run confidence intervals. The mouse saved test was examined only after model selection, but 81.47\% of its unique peptides and 88.88\% of its UniProt parent identifiers appear in training. It therefore neither prevents all entity overlap nor constitutes external validation.
+
+MHCflurry and NetMHCpan provide tissue-agnostic external scores but are not guaranteed to be free of overlap with their own training data. Their pretraining may include IEDB observations or related immunopeptidomic studies. Peptide separation in the present benchmark therefore cannot guarantee that held-out peptides were absent from external pretraining collections. The near-tie between MHCflurry and the NetMHCpan eluted-ligand score in human is descriptive and does not establish superiority of either predictor.
+
+Finally, benchmark scale, MHC system, data composition, and the evaluated model sets differ between species, so the cross-species results cannot identify species effects. Within each species, identical-fold comparisons show that architectural superiority is not universal: the strongest guided dual-branch human model is comparable to TissuePMHC, and the mouse auxiliary dual branch has only a small advantage over its unguided counterpart.
+
+No control based on randomly reassigned tissue labels or pathway assignments is reported. Such a control requires refitting models after breaking the tissue association and cannot be reconstructed from archived predictions. The models retaining peptide and MHC information but omitting tissue identity answer the narrower question of performance without tissue information.
+
+\subsection{Future Work}
+
+Several extensions follow directly from these limitations. Data splits that exclude repeated parent proteins or studies, separate future from past observations, or use external cohorts should test whether performance survives removal of additional overlap and provenance shortcuts. Models refitted after randomly reassigning tissue labels or pathways could determine whether tissue-associated gains exceed those available from the combination structure alone. Auditable checks against external predictor training collections would strengthen interpretation of the tissue-agnostic controls.
+
+Second, the input representation can be expanded to variable-length peptides and MHC-II ligands. Tissue transcriptomics, proteomics, source-protein abundance, flanking sequences, proteasomal cleavage features, and cell-type composition could help separate peptide-intrinsic patterns from tissue context. These additions should be evaluated incrementally under splits that prevent inappropriate overlap.
+
+Third, positive--unlabeled learning and explicit models of observation probability may better reflect the fact that database absence is not biological absence. Calibrated uncertainty estimates could identify tissue--MHC combinations and peptides with insufficient evidence. Representations derived from tissue and MHC features, rather than a separate learned output for every observed combination, could enable principled evaluation on unseen tissues or alleles.
+
+Finally, controlled cross-species pretraining and adaptation could test whether learned features transfer beyond the shared benchmark definition. Such experiments require harmonized data and directly comparable baselines.

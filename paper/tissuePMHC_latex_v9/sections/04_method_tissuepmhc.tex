@@ -1,0 +1,46 @@
+\section{TissuePMHC Model}
+\label{sec:tissuepmhc-model}
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth,height=0.62\textheight,keepaspectratio]{figures/figure1_tissuepmhc_workflow.png}
+\caption{Overview of TissuePMHC for learning tissue-specific preferences in MHC-I presentation. TissuePMHC is formulated as a matched comparison task in which peptide pairs are controlled for tissue, MHC restriction, parent protein, and positive tissue-occurrence count. Each peptide is subsequently scored independently from its 9-mer sequence and tissue--MHC context. A position-aware convolutional encoder captures local sequence patterns while preserving residue positions. Two complementary pathways then learn peptide preferences at different sharing scopes: a global pathway shares information across tissue--MHC combinations, whereas an MHC-specific pathway shares information among tissues represented for the same MHC molecule. Each pathway produces a context-specific score, which is converted to a within-context percentile rank. The two ranks are combined with equal weight to obtain the final TissuePMHC score, representing relative tissue-specific preference rather than an absolute presentation probability.}
+\label{fig:tissuepmhc-architecture}
+\end{figure*}
+
+\subsection{Model Overview}
+
+TissuePMHC is designed to learn tissue-specific preference from peptide sequence while accounting for the MHC molecule under which presentation is observed. Its input is a canonical 9-mer peptide together with a represented tissue--MHC context. The model does not use parent-protein sequence, peptide flanks, expression measurements, antigen-processing measurements, or scores from existing binding predictors. These choices keep the prediction focused on sequence patterns associated with the matched comparison task.
+
+The model contains two complementary pathways (Figure~\ref{fig:tissuepmhc-architecture}). A global pathway learns peptide patterns shared across all represented tissue--MHC combinations. An MHC-specific pathway shares information only among tissues represented for the same MHC molecule, allowing allele-associated sequence preferences to remain distinct. Both pathways preserve peptide position and examine local residue patterns of several lengths. Each observed tissue--MHC combination has its own output, so combinations with more examples can support shared representation learning without requiring every tissue or allele to use an identical prediction rule.
+
+\subsection{Shared and MHC-Specific Learning}
+
+The peptide encoder keeps the order of all nine residues because the meaning of an amino acid depends strongly on its position in an MHC-I ligand. It also examines neighboring residues at several motif lengths, allowing the representation to capture both short positional signals and broader local patterns. For peptide \(p_i\) in context \(\tau_i\), the global and MHC-specific pathways produce
+\[
+q_{g,i}=\sigma\!\left(g^{(g)}_{\tau_i}(h_{g,i})\right),
+\qquad
+q_{m,i}=\sigma\!\left(g^{(m)}_{\tau_i}(h_{m,i})\right),
+\]
+where \(h_{g,i}\) and \(h_{m,i}\) are the pathway-specific peptide representations, \(g^{(g)}_{\tau_i}\) and \(g^{(m)}_{\tau_i}\) are their context-specific outputs, and \(\sigma\) is the logistic sigmoid.
+
+The global pathway is trained using the matched preference labels together with auxiliary tissue and MHC labels. These auxiliary tasks encourage the shared representation to retain information that distinguishes biological contexts, but their predictions are not used in the final score and should not be interpreted as measurements of particular antigen-processing mechanisms. The MHC-specific pathway is trained separately within each represented MHC group and focuses on peptide patterns that distinguish tissues while the MHC restriction is held constant. Together, the two pathways balance broad information sharing with preservation of MHC-associated motif structure.
+
+The two sharing scopes are particularly useful because the benchmark is unevenly distributed across tissues and MHC molecules. Global sharing allows data-rich combinations to support a common peptide representation, whereas MHC-specific sharing reduces the risk that allele-associated motifs are obscured by unrestricted pooling. These pathways are complementary statistical views of the same peptide; they are not intended to represent separate biological stages of antigen processing.
+
+Although the benchmark is constructed from peptide pairs, TissuePMHC scores each peptide independently during training. Pair identifiers are used to create controlled examples and evaluate relative ordering, not as model inputs. Full encoder dimensions, convolution settings, loss functions, auxiliary weights, and implementation details are provided in Supplementary Section~\ref{S-sec:detailed-model}.
+
+\subsection{Prediction and Training}
+
+The two pathways are trained independently and their raw scores need not share the same calibration. TissuePMHC therefore converts each pathway's scores to percentile ranks within the relevant tissue--MHC context and combines them with equal weight:
+\[
+s_i=\frac{1}{2}\left[
+\operatorname{Rank}_{\tau_i}(q_{g,i})+
+\operatorname{Rank}_{\tau_i}(q_{m,i})
+\right].
+\]
+This produces a relative ordering rather than an absolute presentation probability, consistent with the matched benchmark. The score depends on the candidate set used to define the within-context ranks; prospective applications would therefore require a predefined candidate set or reference distribution.
+
+Equal weighting is specified in advance and is used for every represented context. No tissue, MHC molecule, or test set is used to select a preferred pathway, avoiding context-specific tuning of the final combination rule.
+
+Human and mouse models are trained independently, with no parameter transfer between species. The mouse implementation replaces HLA-specific sharing with H-2-specific sharing and is tuned separately for its smaller set of tissue--H-2 contexts. Independent training runs are used to quantify optimization variability, while model selection is restricted to training data. Because every final output is learned for an observed tissue--MHC combination, TissuePMHC is evaluated only in represented contexts and does not claim prediction for unseen tissues, MHC molecules, or tissue--MHC combinations. Species-specific settings, random seeds, rank-fusion implementation, and reporting rules are detailed in Supplementary Section~\ref{S-sec:detailed-model}.

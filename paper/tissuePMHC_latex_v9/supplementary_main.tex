@@ -1,0 +1,215 @@
+\documentclass[webpdf,modern,large,nocrop,noinfo]{oup-authoring-template}
+
+\usepackage[T1]{fontenc}
+\usepackage{xurl}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{flafter}
+\usepackage{placeins}
+\usepackage{balance}
+\usepackage{tikz}
+\usepackage{xr-hyper}
+\externaldocument[M-]{main}
+\usetikzlibrary{arrows.meta,fit,backgrounds}
+
+\setlength{\emergencystretch}{2em}
+\hbadness=4000
+\vbadness=10000
+
+\newcommand{\plainMHC}{MHC}
+\newcommand{\plainMHCI}{MHC-I}
+\newcommand{\plainHLA}{HLA}
+\newcommand{\plainHtwo}{H-2}
+\newcommand{\plainIEDB}{IEDB}
+
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thesubsection}{S\arabic{section}.\arabic{subsection}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+\setcounter{secnumdepth}{2}
+
+\title[TissuePMHC Supplement]{Supplementary Material for: TissuePMHC: Unveiling Tissue-Specific Preferences in MHC-I Presentation}
+
+\author[1,2,3,\textdagger]{Yuheng Cai}
+\author[1,\textdagger]{Liuxintong Zhang}
+\author[2]{Lance Turtle}
+\author[1,*]{Jia Meng}
+
+\address[1]{Department of Biosciences and Bioinformatics, School of Science, Xi'an Jiaotong-Liverpool University, Suzhou, China}
+\address[2]{Institute of Infection, Veterinary and Ecological Sciences, Liverpool, UK}
+\address[3]{Themedium Therapeutics Co. Ltd., Suzhou, China}
+
+\corresp[\textdagger]{These authors contributed equally.\par}
+\corresp[*]{Corresponding author: Jia Meng, jia.meng@xjtlu.edu.cn.}
+
+\abstract{This document provides detailed data inclusion criteria, benchmark construction procedures, balance checks, train--test entity-overlap audits, model specifications, evaluation procedures, and interpretation protocols supporting the main manuscript.}
+\keywords{MHC-I; tissue-specific preference; supplementary material; benchmark construction; data audit}
+
+\journaltitle{Bioinformatics}
+\copyrightyear{2026}
+\pubyear{2026}
+
+\begin{document}
+
+\maketitle
+
+The analyses below provide the full technical details supporting the condensed data description in Section~\ref{M-sec:data-benchmark} of the main manuscript.
+
+\section{Detailed Data and Task Definition}
+\label{sec:supp-data-task}
+
+\subsection{Defining a Tissue--MHC Prediction Context}
+
+One prediction context corresponds to one tissue and one \plainMHCI{} restriction. For example, lung with HLA-A*02:01 and liver with the same allele are different contexts because the tissue differs. Let \(t\) denote a tissue and \(m\) an MHC-I restriction. We define the set of observed contexts as
+\[
+\mathcal{T}=\{\tau=(t,m)\}.
+\]
+Each benchmark row is represented by
+\[
+x_i=(p_i,\tau_i), \qquad y_i\in\{0,1\},
+\]
+where \(p_i\) is a nine-residue peptide and \(\tau_i\) identifies one tissue--MHC context. A positive label, \(y_i=1\), indicates positive ligand evidence in the target context. A comparison label, \(y_i=0\), indicates positive evidence under the same MHC restriction and parent protein in at least one other tissue, but no report in the target context. Thus, the pseudo-negative label represents absence of recorded evidence rather than experimentally verified non-presentation.
+
+Given \((p,\tau)\), a model parameterized by \(\theta\) produces
+\[
+s_{\theta}(p,\tau)\in\mathbb{R},
+\]
+with larger values indicating stronger predicted evidence within tissue--MHC combination \(\tau\). Operationally, the model learns to rank a peptide reported in the target tissue above a comparison peptide matched by MHC restriction and parent protein. It is trained on individual peptide rows, while the paired construction controls example generation and evaluation. Because each tissue--MHC combination has its own prediction function, the benchmark evaluates previously represented combinations; it does not assess unseen tissues or unseen MHC restrictions.
+
+\subsection{Pairing Peptides by Tissue, MHC Restriction, and Parent Protein}
+
+Each pair \(j\) contains one positive peptide \(p_j^{+}\) and one pseudo-negative peptide \(p_j^{-}\) with evidence elsewhere but not in the target tissue. Let \(c(p,m,u)\) be the number of tissues with positive source-record evidence for peptide \(p\) under MHC restriction \(m\) and parent protein \(u\). The two rows share the same target tissue, MHC restriction, parent UniProt protein, and positive tissue-occurrence count:
+\[
+t_j^{+}=t_j^{-}, \qquad
+m_j^{+}=m_j^{-}, \qquad
+u_j^{+}=u_j^{-}.
+\]
+and
+\[
+c(p_j^{+},m_j,u_j)=c(p_j^{-},m_j,u_j).
+\]
+This matching removes three easy explanations for a difference: the peptides cannot be separated merely because they use different \plainMHC{} molecules, come from different proteins, or have different total numbers of positive tissue reports. The remaining difference can include tissue-associated processing and presentation, but also the identities of the reporting tissues, study design, detection sensitivity, and annotation completeness. The benchmark therefore measures tissue-specific preference in presentation, not a purified molecular mechanism.
+
+We first calculate performance separately for every tissue--MHC combination and then give each combination equal weight, so common combinations do not dominate rare ones. We also report within-pair ordering accuracy:
+\[
+\begin{aligned}
+    \operatorname{Acc}_{\mathrm{pair}}
+&=
+\frac{1}{N}\sum_{j=1}^{N}
+\mathbf{1}\!\left[
+s_{\theta}(p_j^{+},\tau_j)
+>
+s_{\theta}(p_j^{-},\tau_j)
+\right].
+\end{aligned}
+\]
+where \(N\) is the number of held-out pairs. This quantity is the fraction of pairs for which the peptide reported in the target tissue receives the higher score. AUROC measures ordering across all rows within a tissue--MHC combination, whereas within-pair accuracy directly evaluates the original MHC- and parent-matched comparison.
+
+\subsection{Evidence Inclusion Criteria}
+\label{sec:evidence-inclusion}
+
+The human and mouse benchmarks are derived from the full ligand export of the \plainIEDB{} downloaded on July 4, 2026 \cite{vita2025iedb}. We apply the same biological inclusion rules to both species. We retain only clearly positive ligand records for \plainMHCI{} with an identifiable parent protein and a standard unmodified 9-amino-acid peptide:
+
+\begin{itemize}
+    \item a qualitative measurement whose normalized text begins with \emph{positive};
+    \item a \plainMHCI{} restriction, with both peptide source and host matching Homo sapiens for the human benchmark or Mus musculus for the mouse benchmark;
+    \item a human restriction matching the four-digit \plainHLA{} pattern \texttt{HLA-\ldots{}*dd:dd} (the extractor also accepts the equivalent colon-free four-digit form) or a restriction from the mouse major histocompatibility complex (\plainHtwo{}; written as \texttt{H2} in the processed identifiers) beginning with \texttt{H2-};
+    \item a parent UniProt accession extracted from the molecule-parent web identifier (internationalized resource identifier; IRI) in the \plainIEDB{};
+    \item a linear, unmodified peptide containing only the 20 standard amino acids;
+    \item a peptide length of exactly nine residues; and
+    \item deduplication before pairing by the exact peptide, restriction, tissue, and parent/source-protein annotation fields.
+\end{itemize}
+
+Source-tissue values are stripped of surrounding whitespace and retained as the exact names used in the \plainIEDB{}; distinct nonempty tissue strings are not merged after extraction. Empty or missing-value-like fields required to define a tissue--MHC combination are removed before benchmark filtering. Pair-consistency checks require both rows to have the same nonempty tissue and restriction. Retained \plainHLA{} and \plainHtwo{} strings are used directly as identifiers after the pattern checks above. Records without a parent UniProt accession are excluded because parent-protein matching is a defining control of the benchmark. Restricting the study to unmodified canonical 9-residue peptides for \plainMHCI{} provides a consistent sequence space, but excludes variable-length ligands, post-translationally modified peptides, and presentation by MHC-II.
+
+\subsection{Constructing MHC- and Parent-matched Peptide Pairs}
+\label{sec:pair-construction}
+
+For each target tissue--MHC combination, we compare a peptide reported in that tissue with another peptide from the same protein that is reported in a different tissue under the same MHC restriction. A fixed random state, 20260704, makes the following construction reproducible:
+
+\begin{enumerate}
+    \item Group all eligible ligand records by MHC restriction \(m\) and parent UniProt protein \(u\).
+    \item For each target combination \((t,m,u)\), collect peptides with positive evidence in tissue \(t\) and calculate their positive tissue-occurrence counts.
+    \item From other tissues represented in the same \((m,u)\) group, collect candidate comparison peptides with evidence elsewhere but not yet in the target tissue (pseudo-negative peptides), stratified by the same occurrence count.
+    \item Exclude every candidate with a positive report in the target tissue--MHC combination \((t,m)\).
+    \item Within each target combination, parent protein, occurrence-count stratum, and label, use each peptide at most once. Set the number of pairs to the smaller of the eligible positive and pseudo-negative counts and sample both sets without replacement.
+    \item Randomly permute the selected pseudo-negatives and join them one-to-one with the selected positives.
+    \item Assign a persistent pair identifier, preserve the reported-tissue and protein annotations, and verify that every identifier has exactly one row per label, identical tissue, restriction, and parent UniProt values in both rows, and no target-tissue report for the pseudo-negative.
+\end{enumerate}
+
+Every pair contributes one target-tissue peptide and one comparison peptide, so the dataset is deliberately balanced. This balance is useful for controlled ranking but does not resemble the natural frequency of presented peptides in a tissue sample. The reported scores therefore describe relative ranking within this constructed benchmark, not the probability that a peptide would be detected in a biological specimen.
+
+The seven construction steps above define the matched-pair unit used throughout the occurrence-matched benchmark. Figure~\ref{fig:occurrence-balance-by-tissue} then verifies the additional occurrence-count equality across every retained tissue.
+
+\subsection{Human Benchmark}
+\label{sec:human-benchmark}
+
+The occurrence-matched human benchmark contains 77 tissue--HLA combinations. For every matched pair, the positive and pseudo-negative peptides have the same number of positive tissue occurrences in the source records. This additional control prevents the model from separating the labels merely by learning that one member of a pair was reported in more tissues overall. Each retained combination contributes exactly 50 complete pairs to the fixed internal test set, and all other pairs form the training partition. Random state 20260704 makes this division reproducible.
+
+Table~\ref{tab:human-benchmark-stats} summarizes the Human task inventory and fixed split.
+
+\begin{table}[tbp]
+\centering
+\caption{Size and task inventory of the occurrence-matched Human benchmark. Counts describe the deterministic saved split, not repeated fits: all 77 tissue--HLA tasks contribute 50 complete pairs to the fixed internal test, and the remaining pairs form the training file. This table defines the Human data scale used by all subsequent Human performance comparisons.}
+\label{tab:human-benchmark-stats}
+\small
+\begin{tabularx}{\columnwidth}{@{}>{\raggedright\arraybackslash}Xr@{}}
+\toprule
+Property & Value \\
+\midrule
+Tissue--HLA combinations & 77 \\
+Tissues & 13 \\
+\plainHLA{} alleles & 29 \\
+Minimum retained pairs per combination & 100 \\
+Training pairs & 21,489 \\
+Test pairs & 3,850 \\
+Training rows & 42,978 \\
+Test rows & 7,700 \\
+Test pairs per combination & 50 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The 77 tissue--\plainHLA{} combinations form an incomplete and long-tailed tissue-by-HLA coverage matrix. Performance is therefore calculated separately for each combination before averaging with equal weight; pooling all rows would overemphasize combinations with more examples and could conceal weak performance in sparsely represented contexts. The fixed internal test set excludes complete pair identifiers, but a peptide or parent protein may still occur in a different combination on both sides of the split. It therefore evaluates familiar tissue--HLA contexts rather than biological entities that are entirely absent from training.
+
+\subsection{Mouse Benchmark}
+\label{sec:mouse-benchmark}
+
+The mouse benchmark uses the same tissue-specific preference task and occurrence-matching definitions: the two peptides share their H-2 restriction, parent protein, and total number of positive tissue occurrences. The supplied occurrence-matched files retain 11 tissue--H-2 combinations. Exactly 50 complete matched pairs per retained combination are assigned to the fixed internal test set using random state 20260704, and the remainder form the training partition.
+
+Table~\ref{tab:mouse-benchmark-stats} reports the corresponding Mouse task inventory and fixed split.
+
+\begin{table}[tbp]
+\centering
+\caption{Size and task inventory of the occurrence-matched Mouse benchmark. Counts describe the deterministic saved split, not repeated fits: all 11 tissue--H-2 tasks contribute 50 complete pairs to the fixed internal test, and the remaining pairs form the training file. This table defines the Mouse data scale used by subsequent mouse performance comparisons.}
+\label{tab:mouse-benchmark-stats}
+\small
+\begin{tabularx}{\columnwidth}{@{}>{\raggedright\arraybackslash}Xr@{}}
+\toprule
+Property & Value \\
+\midrule
+Tissue--H-2 combinations & 11 \\
+Tissues & 4 \\
+\plainHtwo{} restrictions & 4 \\
+Minimum retained pairs per combination & 134 \\
+Training pairs & 2,089 \\
+Test pairs & 550 \\
+Training rows & 4,178 \\
+Test rows & 1,100 \\
+Test pairs per combination & 50 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The benchmarks are intentionally parallel in construction but not equal in scale. After applying the same biological filters and occurrence-matching rule, the human files contain 77 retained tissue--HLA combinations, 13 tissue labels, 29 HLA alleles, and 25,339 pairs, whereas the mouse files contain 11 tissue--H-2 combinations, four tissues, four H-2 restrictions, and 2,639 pairs. The fixed test allocation is identical---50 pairs per retained combination---so the test-set difference of 3,850 versus 550 pairs follows exactly from the 77-versus-11 task inventories. The remaining difference reflects the number and coverage of eligible source records and retained tissue--MHC contexts, not different per-task sampling rules. Consequently, raw performance differences between species are descriptive and cannot be interpreted as species effects.
+
+\input{sections/04_data_balance_and_leakage_audit}
+\input{sections/supplementary_methods}
+\input{sections/supplementary_evaluation_protocol}
+\input{sections/supplementary_results}
+
+\FloatBarrier
+\balance
+\input{references/supplementary_references}
+
+\end{document}

@@ -1,0 +1,16 @@
+{
+  "purpose": "H2 pseudo-sequence inputs for the occurrence-equal Mouse v7 rerun",
+  "source_tool": "NetMHCpan 4.1b",
+  "source_file": "/home/hitomi/netMHCpan-4.1/data/MHC_pseudo.dat",
+  "source_sha256": "2995d4f1158f5f7818099ce66055accb6510e5fd81c0e1d9a6deabe98ff95b5b",
+  "verified_utc": "2026-08-03T05:27:03.9084549Z",
+  "representation": "NetMHCpan-style 34-residue MHC-I pseudo-sequence",
+  "human_protocol_positions": [7, 9, 24, 45, 59, 62, 63, 66, 67, 69, 70, 73, 74, 76, 77, 80, 81, 84, 95, 97, 99, 114, 116, 118, 143, 147, 150, 152, 156, 158, 159, 163, 167, 171],
+  "dataset_to_source_alias": {
+    "H2-Db": "H-2-Db",
+    "H2-Kb": "H-2-Kb",
+    "H2-Kd": "H-2-Kd",
+    "H2-Kk": "H-2-Kk"
+  },
+  "validation": "The source contains both H-2-* and H2-* aliases with identical sequences; all four selected sequences contain 34 standard amino acids."
+}

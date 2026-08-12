@@ -1,0 +1,44 @@
+# Local environments and editor state
+.venv/
+venv/
+env/
+.idea/
+.vscode/
+
+# Python caches and test/build artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+
+# Datasets and generated experiment outputs (never commit these by default)
+data/
+results/
+output/
+**/results/
+**/outputs/
+**/checkpoints/
+**/external/
+*.pt
+*.pth
+*.ckpt
+
+# Local backup made before the repository cleanup
+backup_before_cleanup_*/
+
+# Downloaded third-party runtimes and temporary files
+tools/MiKTeX/
+tools/MiKTeX-data/
+tools/MiKTeX-config/
+tmp/
+*.log
+*.aux
+*.out
+
+# OS noise
+.DS_Store
+Thumbs.db

@@ -1,0 +1,5 @@
+# Optional integrations used only by selected scripts.
+-r requirements.txt
+pytest>=8.0
+mhcflurry>=2.2
+deep-translator>=1.11

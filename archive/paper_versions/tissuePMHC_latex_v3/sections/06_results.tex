@@ -1,0 +1,389 @@
+\section{Results}
+
+\subsection{RQ1: Is Tissue-specific Preference Learnable?}
+
+We first ask whether the matched benchmark contains a learnable sequence signal. Under the standard pair-disjoint protocol, a one-hot logistic-regression model reaches a task-macro AUROC of 0.7558 on the original 44-task subset, substantially above random ranking. Table~\ref{tab:rq1-baselines} expands the comparison to the completed historical baselines from the same 44-task benchmark. Shared task heads, structured multi-task optimization, auxiliary supervision, and fixed rank ensembling all improve on the one-hot reference, with the best historical auxiliary ensemble reaching AUROC/AUPRC values of 0.8116/0.7978. When benchmark coverage is expanded to 157 tissue--HLA tasks, the shared encoder retains a mean task AUROC of 0.7972. These results show that the prediction target is not explained solely by chance after MHC and parent-protein matching.
+
+\begin{table}[tbp]
+\centering
+\caption{Completed baselines on the original 44-task standard pair-disjoint benchmark. Values are task-macro summaries; ``Worst-10'' is the mean AUROC of the ten lowest-performing tasks. A dash denotes a statistic not archived for that historical run.}
+\label{tab:rq1-baselines}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrr}
+\toprule
+Method & AUROC & AUPRC & Worst-10 & Seeds \\ 
+\midrule
+One-hot logistic regression & 0.7558 & 0.7384 & -- & 1 \\ 
+HLA pseudo-sequence conditioning & 0.7728 & 0.7606 & 0.6705 & 3 \\ 
+FAMO multi-task optimization & 0.7758 & 0.7571 & 0.6979 & 3 \\ 
+Pair-ranking objective & 0.7807 & 0.7618 & 0.7007 & 3 \\ 
+CAGrad & 0.7810 & 0.7649 & 0.6979 & 3 \\ 
+DB-MTL & 0.7817 & 0.7643 & 0.6956 & 3 \\ 
+Shared encoder with task heads & 0.7927 & 0.7777 & 0.7178 & 3 \\ 
+MMoE & 0.7948 & 0.7804 & 0.7195 & 3 \\ 
+Auxiliary supervision & 0.8023 & 0.7856 & 0.7306 & 3 \\ 
+Soft dual-branch ensemble & 0.8050 & 0.7925 & 0.7295 & 3 \\ 
+Auxiliary dual-branch ensemble & \textbf{0.8116} & \textbf{0.7978} & \textbf{0.7349} & 3 \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+Sensitivity and specificity are not added to Table~\ref{tab:rq1-baselines} because the saved historical summaries contain ranking metrics but not the thresholded confusion matrices needed to reconstruct those quantities reliably. Completed MHC-only models and frozen general binding/presentation controls are reported separately in RQ6 because they do not use tissue identity and answer a different question from the historical tissue-conditioned architecture screen.
+
+Strict globally unseen-peptide performance is reported once, together with its matched standard control and uncertainty, in RQ4 (Table~\ref{tab:standard-strict-summary}); this avoids repeating the same strict result across RQ1--RQ3.
+
+\subsection{RQ2: Main Human Benchmark Performance}
+
+On the 157-task human standard benchmark, the TissuePMHC human model reaches mean task AUROC/AUPRC values of 0.8448/0.8348, accuracy 0.7772, MCC 0.5545, and worst-10 AUROC 0.6834. Table~\ref{tab:human-standard} compares the principal completed models on the same task inventory; the broader historical baseline screen is reported separately in Table~\ref{tab:rq1-baselines} because it used the earlier 44-task subset.
+
+\begin{table}[tbp]
+\centering
+\caption{Human standard pair-disjoint benchmark across 157 tissue--HLA tasks. ``Mean'' rows are arithmetic summaries of three member-level metric tables; ``ensemble'' rows are metrics computed after averaging row-level predictions. Only the two ensemble rows are a direct matched aggregation comparison.}
+\label{tab:human-standard}
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+Model & \shortstack{Mean\\AUROC} & \shortstack{Median\\AUROC} & AUPRC & Acc. & MCC & Worst-10 \\ 
+\midrule
+Shared heads (mean) & 0.7972 & 0.8068 & 0.7829 & 0.7277 & 0.4598 & 0.6299 \\ 
+Auxiliary dual branch (mean) & 0.8239 & 0.8351 & 0.8117 & 0.7552 & 0.5132 & 0.6501 \\ 
+MLP dual branch (ensemble) & 0.8345 & 0.8441 & 0.8233 & 0.7655 & 0.5313 & 0.6666 \\ 
+TissuePMHC (ensemble) & \textbf{0.8448} & \textbf{0.8585} & \textbf{0.8348} & \textbf{0.7772} & \textbf{0.5545} & \textbf{0.6834} \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.97\linewidth,
+    height=6.4cm,
+    boxplot/draw direction=y,
+    ymin=0.58, ymax=1.0,
+    xmin=0.4, xmax=4.6,
+    xtick={1,2,3,4},
+    xticklabels={Shared heads,Auxiliary dual branch,MLP ensemble,TissuePMHC},
+    x tick label style={rotate=18,anchor=east,font=\small},
+    ylabel={Task-level AUROC},
+    grid=major, grid style={gray!20}
+]
+\addplot+[boxplot prepared={draw position=1,lower whisker=0.6066,lower quartile=0.7305,median=0.8009,upper quartile=0.8681,upper whisker=0.9722},fill=blue!12,draw=blue!65!black] coordinates {};
+\addplot+[boxplot prepared={draw position=2,lower whisker=0.6314,lower quartile=0.7438,median=0.8305,upper quartile=0.9033,upper whisker=0.9835},fill=blue!18,draw=blue!65!black] coordinates {};
+\addplot+[boxplot prepared={draw position=3,lower whisker=0.6424,lower quartile=0.7582,median=0.8441,upper quartile=0.9107,upper whisker=0.9859},fill=blue!24,draw=blue!65!black] coordinates {};
+\addplot+[boxplot prepared={draw position=4,lower whisker=0.6510,lower quartile=0.7632,median=0.8585,upper quartile=0.9287,upper whisker=0.9878},fill=blue!30,draw=blue!65!black] coordinates {};
+\addplot+[only marks,mark=*,mark size=2.5pt,red!75!black] coordinates {(1,0.7972) (2,0.8239) (3,0.8345) (4,0.8448)};
+\end{axis}
+\end{tikzpicture}
+\caption{Human standard task-level AUROC distributions. Boxes show the first quartile, median, and third quartile; whiskers show the observed minimum and maximum; red dots show task means. The first two distributions summarize the three archived member-level task tables, whereas the last two use row-level prediction ensembles, matching Table~\ref{tab:human-standard}.}
+\label{fig:human-standard}
+\end{figure}
+
+Relative to the directly comparable three-seed MLP ensemble, the TissuePMHC human model improves mean AUROC by 0.0103 and worst-10 AUROC by 0.0168. The larger descriptive differences from shared heads are 0.0476 and 0.0535, but part of that contrast may reflect member-summary versus prediction-ensemble aggregation. The simultaneous rise in the mean, median, and lower tail shows that the direct ensemble gain is not produced solely by a small number of easy tasks.
+
+A matched pair-grouped OOF comparison provides an additional check that the result is not unique to the final fixed test. The auxiliary dual branch is the direct matched baseline because it uses the same two-branch supervision and fusion setting but retains the MLP encoder; the comparison therefore isolates the encoder/system update more closely than shared heads.
+
+\begin{table}[tbp]
+\centering
+\caption{Matched pair-grouped OOF comparison on the 157-task human benchmark.}
+\label{tab:human-matched-oof}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Model & AUROC & AUPRC & Worst-10 \\ 
+\midrule
+Matched auxiliary dual branch & 0.8131 & 0.7980 & 0.6419 \\ 
+TissuePMHC & \textbf{0.8279} & \textbf{0.8144} & \textbf{0.6562} \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+The globally unseen-peptide result is not repeated here; RQ4 reports it with the matched standard control, task-wise scatter, uncertainty interval, and complete four-metric comparison.
+
+\subsection{RQ3: Component Contributions}
+
+Table~\ref{tab:component-evidence} consolidates the completed ablations instead of leaving their numerical evidence scattered across the text. First, replacing the MLP dual-branch encoder with the position-preserving multi-kernel CNN raises standard mean task AUROC from 0.8345 to 0.8448 and worst-10 AUROC from 0.6666 to 0.6834 (Table~\ref{tab:human-standard}). This comparison supports the position-aware multi-scale encoder as a complete design, but does not isolate an individual kernel size.
+
+Second, across three seeds of the auxiliary dual-branch experiment, the global auxiliary branch alone obtains mean task AUROCs from 0.8072 to 0.8091, whereas the HLA-specific plain branch obtains 0.7950 to 0.7995. Their rank-fused model reaches 0.8225--0.8249 per seed. The grouped branch therefore contributes non-redundant ordering information despite its lower standalone mean.
+
+Third, on the 44-task fusion-ablation subset, task-wise rank fusion reaches mean AUROC 0.8130, compared with 0.8118 for logit averaging and 0.8116 for probability averaging. The approximately 0.0014 gain over probability averaging is modest and should be interpreted as support for scale normalization, not as a large independent effect.
+
+Finally, the three single-seed TissuePMHC models obtain mean task AUROCs of 0.8345, 0.8314, and 0.8330 (mean 0.8329; sample SD 0.0016), whereas the three-seed ensemble reaches 0.8448. Seed averaging therefore provides a measurable variance-reduction benefit.
+
+\begin{table}[tbp]
+\centering
+\caption{Consolidated component evidence. Comparisons use the stated standard pair-disjoint task inventory and should not be interpreted as strict peptide-disjoint ablations.}
+\label{tab:component-evidence}
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{4.0cm}>{\centering\arraybackslash}p{3.0cm}>{\centering\arraybackslash}p{1.4cm}@{}}
+\toprule
+Component question & Comparison & AUROC & $\Delta$ \\ 
+\midrule
+Multi-kernel encoder & 3-seed MLP ensemble $\rightarrow$ TissuePMHC (157 tasks) & 0.8345 $\rightarrow$ 0.8448 & +0.0103 \\ 
+Branch complementarity & Best single branch $\rightarrow$ rank fusion (157 tasks; per-seed ranges) & 0.8072--0.8091 $\rightarrow$ 0.8225--0.8249 & +0.0134--0.0177 \\ 
+Fusion rule & Probability mean $\rightarrow$ task-rank mean (44 tasks) & 0.8116 $\rightarrow$ 0.8130 & +0.0014 \\ 
+Seed averaging & Mean single seed $\rightarrow$ 3-seed ensemble (157 tasks) & 0.8329 $\rightarrow$ 0.8448 & +0.0118 \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+The completed standard-benchmark evidence supports encoder replacement, complementary branch structure, fixed rank fusion, and seed averaging as system-level contributions. The matched strict controls in RQ7 refine this interpretation: auxiliary supervision retains a clear benefit after peptide separation, whereas the plain dual-branch/rank-fusion structure alone and the multi-kernel encoder relative to the strongest auxiliary MLP control do not show a stable strict AUROC advantage.
+
+\subsection{RQ4: Generalization Boundaries}
+
+The standard pair-disjoint protocol prevents a pair identifier from appearing in both fitting and held-out data, but it permits either peptide and the parent protein to reappear through another pair or task. By contrast, connected-component peptide-disjoint OOF prevents a held-out peptide sequence from appearing in the fitting partition of any task. Both protocols retain previously represented tissue--MHC tasks. Thus, the strict setting is globally unseen-peptide/seen-task evaluation; it is neither merely unseen within one specific task nor protein-disjoint evaluation.
+
+Using matched out-of-fold predictions from the frozen models, peptide separation produces a marked decrease in both species (Table~\ref{tab:standard-strict-summary}). The standard and strict columns use the same pair pools and closely matched held-out sizes, so their difference isolates the peptide-separation constraint more directly than a fixed-test-versus-OOF subtraction.
+
+\begin{table}[tbp]
+\centering
+\caption{Matched standard and globally peptide-disjoint OOF AUROC. Difference is peptide-disjoint minus matched standard; negative values denote a generalization decrease.}
+\label{tab:standard-strict-summary}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Species & Matched standard OOF & Peptide-disjoint OOF & Difference \\ 
+\midrule
+Human & 0.8280 & 0.7652 & -0.0628 \\ 
+Mouse & 0.8392 & 0.7529 & -0.0863 \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+The task-wise relationship and the identity reference are shown in Figure~\ref{fig:standard-strict-scatter}.
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[
+    group style={group size=2 by 1,horizontal sep=1.3cm},
+    width=0.46\linewidth,
+    height=0.46\linewidth,
+    xmin=0.5,xmax=1.0,
+    ymin=0.5,ymax=1.0,
+    xlabel={Standard OOF AUROC},
+    ylabel={Peptide-disjoint OOF AUROC},
+    grid=major,
+    grid style={gray!20}
+]
+\nextgroupplot[title={Human}]
+\addplot+[only marks,mark=*,mark size=1.2pt,blue!70] coordinates {(0.96672,0.89632) (0.97035,0.81086) (0.70311,0.67863) (0.80304,0.78235) (0.73140,0.70095) (0.68931,0.62863) (0.77000,0.71465) (0.62590,0.62946) (0.74105,0.70654) (0.75984,0.69934) (0.77139,0.71416) (0.72978,0.72981) (0.75635,0.73227) (0.77172,0.75377) (0.65427,0.63011) (0.71653,0.68030) (0.80139,0.74274) (0.78455,0.76390) (0.77786,0.75187) (0.81349,0.78630) (0.74166,0.76571) (0.82981,0.78587) (0.73312,0.72855) (0.83455,0.83125) (0.85514,0.83040) (0.95176,0.86541) (0.90220,0.70352) (0.92871,0.75592) (0.87940,0.78940) (0.91259,0.87720) (0.88752,0.84003) (0.70758,0.65148) (0.74956,0.74037) (0.77205,0.76026) (0.74550,0.72139) (0.91297,0.87429) (0.91673,0.84768) (0.86843,0.80669) (0.91822,0.86259) (0.92345,0.75413) (0.87903,0.78704) (0.92050,0.80466) (0.86798,0.78964) (0.94395,0.72269) (0.91009,0.75161) (0.85547,0.74550) (0.82809,0.64234) (0.96895,0.89676) (0.91098,0.71989) (0.87057,0.80826) (0.93357,0.81315) (0.94807,0.77722) (0.82663,0.72979) (0.91800,0.83660) (0.95452,0.87204) (0.84433,0.80015) (0.92370,0.83370) (0.96999,0.80102) (0.78527,0.66459) (0.87280,0.84343) (0.88053,0.80683) (0.66490,0.65294) (0.77697,0.66023) (0.86138,0.78989) (0.90441,0.79441) (0.77384,0.75616) (0.90932,0.74419) (0.76607,0.74991) (0.84100,0.82669) (0.72223,0.69249) (0.85461,0.78063) (0.81206,0.65929) (0.72648,0.73876) (0.63959,0.61426) (0.80413,0.80050) (0.69950,0.74672) (0.78296,0.73935) (0.70276,0.70267) (0.87707,0.86354) (0.91622,0.79570) (0.96027,0.79787) (0.80585,0.78590) (0.77018,0.76059) (0.81372,0.79084) (0.88963,0.86683) (0.87950,0.83954) (0.87368,0.83389) (0.75885,0.75382) (0.65223,0.61726) (0.83946,0.77236) (0.65179,0.67576) (0.84010,0.82535) (0.78485,0.75757) (0.74455,0.71806) (0.74341,0.70407) (0.76307,0.71106) (0.80130,0.79016) (0.86440,0.84891) (0.67262,0.75955) (0.77538,0.77245) (0.82222,0.87481) (0.76653,0.73348) (0.72877,0.71012) (0.76004,0.74685) (0.75181,0.70336) (0.83289,0.77030) (0.78132,0.76907) (0.74148,0.74364) (0.64481,0.67523) (0.85471,0.85110) (0.84419,0.82932) (0.76748,0.75360) (0.66622,0.72145) (0.76186,0.73488) (0.75690,0.74757) (0.89072,0.88061) (0.82900,0.81400) (0.72541,0.67367) (0.83158,0.83090) (0.91507,0.86390) (0.84504,0.71075) (0.98888,0.78529) (0.81338,0.76173) (0.94582,0.71469) (0.92700,0.81194) (0.93426,0.74075) (0.95187,0.87273) (0.87999,0.73061) (0.91318,0.83304) (0.75517,0.72200) (0.80923,0.65597) (0.86547,0.72009) (0.91214,0.86378) (0.94262,0.87700) (0.87746,0.81565) (0.75234,0.70200) (0.89621,0.81584) (0.83017,0.76067) (0.84406,0.71097) (0.75516,0.68902) (0.94164,0.71440) (0.90257,0.77277) (0.93696,0.76132) (0.83397,0.71052) (0.93787,0.77398) (0.95530,0.78414) (0.94340,0.86661) (0.82934,0.79463) (0.84995,0.82641) (0.72547,0.72614) (0.82860,0.81765) (0.75124,0.72947) (0.80609,0.75079) (0.74374,0.69960) (0.97196,0.89320) (0.92317,0.73906) (0.95193,0.79084)};
+\addplot+[black!65,densely dashed,very thick,no marks,domain=0.5:1.0] {x};
+\nextgroupplot[title={Mouse},ylabel={}]
+\addplot+[only marks,mark=*,mark size=1.8pt,orange!85!black] coordinates {(0.97154,0.79471) (0.72771,0.61324) (0.69557,0.70072) (0.98073,0.83055) (0.82853,0.67053) (0.70739,0.66897) (0.82058,0.77812) (0.88098,0.82681) (0.96388,0.82430) (0.92562,0.82334) (0.66658,0.65301) (0.71439,0.58586) (0.88090,0.72499) (0.77186,0.76575) (0.86048,0.82001) (0.74906,0.69690) (0.95939,0.83240) (0.86177,0.75903) (0.75906,0.72217) (0.83286,0.78785) (0.85760,0.79344) (0.95193,0.80630) (0.80460,0.80518) (0.96826,0.78619)};
+\addplot+[black!65,densely dashed,very thick,no marks,domain=0.5:1.0] {x};
+\end{groupplot}
+\end{tikzpicture}
+\caption{Task-wise matched standard versus globally peptide-disjoint OOF AUROC. The gray dashed identity line is the reference $y=x$, not an experimental series: points below it have lower AUROC after global peptide separation. Each point is one previously represented tissue--MHC task.}
+\label{fig:standard-strict-scatter}
+\end{figure}
+
+The AUROC decreases of 0.06275 in human and 0.08629 in mouse show that peptide overlap affects the easier estimate, while both strict scores remain above random. The larger mouse decrease is descriptive because dataset scale, task coverage, MHC system, architecture, and component structure all differ.
+
+The matched task-wise comparison shows lower strict AUROC for 145 of 157 human tasks and 22 of 24 mouse tasks. In human, the mean, median, and Hodges--Lehmann strict-minus-standard AUROC differences are -0.0628, -0.0484, and -0.0552, respectively, with a win/tie/loss count of 12/0/145 (95\% task-bootstrap interval for the mean difference: -0.0728 to -0.0534; Benjamini--Hochberg-adjusted Wilcoxon \(p=1.29\times10^{-22}\)). In mouse, the corresponding values are -0.0863, -0.0832, and -0.0859, with a 2/0/22 win/tie/loss count (-0.1106 to -0.0632; adjusted \(p=6.81\times10^{-7}\)). Under the strict tie policy, PairAcc decreases by 0.0529 in human and 0.0615 in mouse; the half-credit sensitivity changes either human value by at most 0.0004. Table~\ref{tab:paired-stats} reports the complete prespecified four-metric family. The primary fixed-test results are not subtracted from strict OOF results because their sample pools and evaluation procedures differ.
+
+The strict protocol isolates peptide identity while retaining the benchmark's represented tasks and other shared context; the complete scope restrictions are stated in the Evaluation Protocol and Limitations.
+
+\subsection{RQ5: Mouse Tissue--H2 Replication}
+
+The mouse benchmark provides an independent species-level test of the task definition, using a model selected specifically for its smaller task inventory. Table~\ref{tab:mouse-baselines} expands the train-only standard OOF comparison rather than presenting only the final model.
+
+\begin{table}[tbp]
+\centering
+\caption{Mouse train-only standard OOF development trajectory across 24 tissue--H2 tasks. The three middle rows are arithmetic means of three member-level summaries; the final row is a five-seed row-level prediction ensemble. This table is not a matched architecture test; that comparison appears in Table~\ref{tab:mouse-strict-architectures}.}
+\label{tab:mouse-baselines}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrl}
+\toprule
+Model & AUROC & AUPRC & Worst-6 & Evidence \\ 
+\midrule
+BLOSUM62 random forest & 0.7530 & 0.7292 & -- & reference \\ 
+Shared encoder (3-seed mean) & 0.8073 & 0.7929 & 0.6617 & member summary \\ 
+Factorized MMoE (3-seed mean) & 0.8148 & 0.8043 & 0.6771 & member summary \\ 
+H2-Kk adapter (3-seed mean) & 0.8180 & 0.8065 & 0.6816 & member summary \\ 
+Factorized MMoE (5-seed ensemble) & \textbf{0.8392} & \textbf{0.8316} & \textbf{0.7101} & row-level ensemble \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+The architecture, hyperparameters, seeds, and probability-averaging rule were frozen first. Factorized MMoE was then retrained on the complete mouse training set and evaluated once on the internal fixed test. Table~\ref{tab:mouse-protocol-summary} places the standard, fixed-test, and globally peptide-disjoint results in one location.
+
+\begin{table}[tbp]
+\centering
+\caption{Complete mouse evaluation summary. The fixed test is an internal pair-disjoint confirmation with entity overlap; peptide-disjoint OOF is the globally unseen-peptide/seen-task evaluation.}
+\label{tab:mouse-protocol-summary}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrr}
+\toprule
+Evaluation & AUROC & AUPRC & Worst-6 & PairAcc \\ 
+\midrule
+Matched standard 5-seed OOF & 0.8392 & 0.8316 & 0.7101 & 0.8211 \\ 
+Frozen 5-seed fixed test & \textbf{0.8562} & \textbf{0.8506} & \textbf{0.7245} & \textbf{0.8425} \\ 
+Peptide-disjoint 5-seed OOF & 0.7529 & 0.7322 & 0.6481 & 0.7596 \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+Relative to matched standard OOF, the fixed-test values are descriptively higher by 0.0170 AUROC, 0.0190 AUPRC, and 0.0144 worst-6 AUROC. Eighteen of 24 tasks improve in AUROC and six decline. This is an internal confirmation rather than independent validation because the fixed test contains substantial train/test entity overlap.
+
+\begin{table}[tbp]
+\centering
+\caption{Mouse fixed-test AUROC stratified by H2 restriction. These are descriptive subgroup means, not controlled H2 effects.}
+\label{tab:mouse-h2-groups}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+H2 restriction & H2-Db & H2-Kb & H2-Kd & H2-Kk \\ 
+\midrule
+Mean task AUROC & 0.9152 & 0.7404 & 0.8397 & 0.8024 \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+Tissue aggregation also reveals marked heterogeneity. Table~\ref{tab:mouse-tissue-extremes} lists the four lowest and four highest tissue-macro fixed-test AUROCs; tissues represented by one task should be interpreted especially cautiously.
+
+\begin{table}[tbp]
+\centering
+\caption{Descriptive mouse tissue-level extremes on the fixed test. Means are taken across the available H2 tasks within each tissue.}
+\label{tab:mouse-tissue-extremes}
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{lrrrlrrr}
+\toprule
+Lower tissue & Tasks & AUROC & AUPRC & Higher tissue & Tasks & AUROC & AUPRC \\ 
+\midrule
+Colon & 2 & 0.7059 & 0.7186 & Lung & 1 & 0.9641 & 0.9579 \\ 
+Pancreas & 1 & 0.7091 & 0.6737 & Bone marrow & 1 & 0.9734 & 0.9558 \\ 
+Prostate & 1 & 0.7974 & 0.7719 & Small intestine & 1 & 0.9793 & 0.9748 \\ 
+Skin & 4 & 0.8180 & 0.8075 & Kidney & 1 & 0.9837 & 0.9844 \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+Under connected-component peptide-disjoint OOF, the frozen five-seed model reaches AUROC 0.7529 (task-bootstrap 95\% CI 0.7230--0.7799), AUPRC 0.7322, worst-6 AUROC 0.6481, and PairAcc 0.7596. Here, \emph{frozen} means that architecture, hyperparameters, seeds, and averaging were set before inspection; each outer-fold model is nevertheless retrained exclusively on its fitting components. Together with the human result, this supports benchmark-level replication of task learnability and the peptide-separation gap. The main-model values alone do not establish architecture superiority; RQ7 provides the matched strict controls.
+
+\FloatBarrier
+\subsection{RQ6: How Much Signal Remains without Tissue Identity?}
+
+The completed capacity-matched MHC-only controls directly test whether peptide and MHC are sufficient (Table~\ref{tab:mhc-only-control}). Removing tissue identity lowers AUROC under every protocol. The strict human control reaches 0.6630 versus 0.7652 for the full model, a mean task difference of 0.1022 (156/0/1 wins/ties/losses; 95\% task-bootstrap interval 0.0910--0.1140; \(q=2.13\times10^{-27}\)). The strict mouse control reaches 0.6412 versus 0.7529, a difference of 0.1118 (24/0/0; 0.0676--0.1639; \(q=1.19\times10^{-7}\)). The corresponding fixed-test and matched-standard differences are also positive in both species. These controls do not prove that the model has learned a causal tissue mechanism, but they show that its performance cannot be reproduced by the same model family after tissue information is removed.
+
+\begin{table}[tbp]
+\centering
+\caption{Capacity-matched MHC-only controls from completed runs. Difference is the full tissue-conditioned model minus the no-tissue control; PairAcc is reported as control/full under the strict tie policy.}
+\label{tab:mhc-only-control}
+\scriptsize
+\setlength{\tabcolsep}{1.5pt}
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+Species & Protocol & MHC-only & Full & Diff. & 95\% CI & PairAcc \\
+\midrule
+Human & Fixed test & 0.7449 & 0.8448 & +0.0999 & [0.0795, 0.1216] & 0.7243/0.8375 \\
+Human & Matched standard OOF & 0.7353 & 0.8279 & +0.0927 & [0.0740, 0.1125] & 0.7144/0.8229 \\
+Human & Peptide-disjoint OOF & 0.6630 & 0.7652 & +0.1022 & [0.0910, 0.1140] & 0.6691/0.7700 \\
+Mouse & Fixed test & 0.6672 & 0.8562 & +0.1890 & [0.0984, 0.2920] & 0.6354/0.8425 \\
+Mouse & Matched standard OOF & 0.6819 & 0.8392 & +0.1573 & [0.0806, 0.2426] & 0.6540/0.8211 \\
+Mouse & Peptide-disjoint OOF & 0.6412 & 0.7529 & +0.1118 & [0.0676, 0.1639] & 0.6418/0.7596 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Both frozen external predictors show moderate discrimination on the matched tissue--MHC tasks (Table~\ref{tab:general-pmhc-main}). On the fixed tests, their task-macro AUROCs range from 0.6564 to 0.6893. In human, MHCflurry presentation and NetMHCpan EL are nearly tied: MHCflurry is higher by 0.0018 AUROC, whereas NetMHCpan is higher by 0.0011 PairAcc. In mouse, NetMHCpan EL is the stronger general control, exceeding MHCflurry by 0.0329 AUROC, 0.0491 AUPRC, and 0.0183 PairAcc. These results rule out the claim that generic binding or presentation propensity is uninformative, but their magnitude leaves substantial room for tissue-conditioned signal.
+
+\begin{table}[tbp]
+\centering
+\caption{Frozen general-pMHC controls. OOF denotes scoring of the complete train pool used by both matched-standard and peptide-disjoint comparisons. All rows, pairs, and tasks have valid external scores.}
+\label{tab:general-pmhc-main}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lllrrr}
+\toprule
+Species & Evaluation & Control & AUROC & AUPRC & PairAcc \\
+\midrule
+Human & Fixed test & MHCflurry presentation & \textbf{0.6851} & \textbf{0.6783} & 0.6886 \\
+Human & Fixed test & NetMHCpan EL & 0.6833 & 0.6686 & \textbf{0.6897} \\
+Human & Train-pool OOF & MHCflurry presentation & \textbf{0.6871} & \textbf{0.6751} & \textbf{0.6898} \\
+Human & Train-pool OOF & NetMHCpan EL & 0.6823 & 0.6632 & 0.6875 \\
+Mouse & Fixed test & MHCflurry presentation & 0.6564 & 0.6436 & 0.6733 \\
+Mouse & Fixed test & NetMHCpan EL & \textbf{0.6893} & \textbf{0.6926} & \textbf{0.6917} \\
+Mouse & Train-pool OOF & MHCflurry presentation & 0.6474 & 0.6263 & 0.6565 \\
+Mouse & Train-pool OOF & NetMHCpan EL & \textbf{0.6802} & \textbf{0.6785} & \textbf{0.6888} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+NetMHCpan EL is consistently at least as strong as its binding-only BA score. The EL-minus-BA AUROC difference is 0.0256 on the human fixed test and 0.0264 on the human train pool, compared with 0.0046 and 0.0024 in mouse. We therefore use EL as the primary NetMHCpan control and report the complete BA sensitivity analysis in Table~\ref{tab:appendix-netmhcpan-el-ba}.
+
+The tissue-conditioned models remain higher than the strongest general control under every protocol (Table~\ref{tab:general-pmhc-gap}). The fixed-test and matched-standard OOF advantages are 0.1409--0.1669 AUROC. Under peptide-disjoint OOF, the advantages narrow to 0.0781 in human and 0.0727 in mouse, showing that peptide separation weakens but does not erase the macro-average gap. In the paired task analysis, the human advantages under all three protocols and the mouse fixed-test and standard-OOF advantages pass BH-FDR correction. The mouse strict comparison with NetMHCpan EL is heterogeneous: its mean difference is 0.0727 with a task-bootstrap 95\% interval of 0.0028--0.1579, but the adjusted Wilcoxon value is \(q=0.6840\), with the tissue-conditioned model higher in 11 tasks and lower in 13. Thus, the mouse strict result supports a positive macro-average difference, not a claim of consistent superiority across most tasks.
+
+\begin{table}[tbp]
+\centering
+\caption{Tissue-conditioned models versus the strongest frozen general-pMHC control for each species. The human model is TissuePMHC; the mouse model is the frozen five-seed Factorized MMoE.}
+\label{tab:general-pmhc-gap}
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{lllrrr}
+\toprule
+Species & Protocol & External control & External & Tissue-cond. & Difference \\
+\midrule
+Human & Fixed test & MHCflurry presentation & 0.6851 & 0.8448 & +0.1597 \\
+Human & Matched standard OOF & MHCflurry presentation & 0.6871 & 0.8280 & +0.1409 \\
+Human & Peptide-disjoint OOF & MHCflurry presentation & 0.6871 & 0.7652 & +0.0781 \\
+Mouse & Fixed test & NetMHCpan EL & 0.6893 & 0.8562 & +0.1669 \\
+Mouse & Matched standard OOF & NetMHCpan EL & 0.6802 & 0.8392 & +0.1590 \\
+Mouse & Peptide-disjoint OOF & NetMHCpan EL & 0.6802 & 0.7529 & +0.0727 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Cross-fitted stacking yields only marginal improvement over the tissue-conditioned score alone. The largest change is obtained for human peptide-disjoint OOF with MHCflurry, from 0.7652 to 0.7693 AUROC (+0.0041). For the strongest species-specific external controls, the fixed-test changes are 0.8448 to 0.8453 in human and 0.8562 to 0.8564 in mouse, while the mouse strict change is 0.7529 to 0.7534. The complete stacker results appear in Table~\ref{tab:appendix-general-stacking}. General binding or presentation propensity therefore explains part of the benchmark signal, but neither the standalone controls nor their residual incremental contribution accounts for the full performance of the tissue-conditioned models.
+
+\subsection{RQ7: Do Architecture Advantages Persist under the Strict Protocol?}
+
+The strict architecture study trains all controls on the exact component folds used for the frozen main models. All evaluated human model families retain substantial ranking signal (Table~\ref{tab:human-strict-architectures}). TissuePMHC exceeds shared heads by 0.0091 mean task AUROC (118/0/39 wins/ties/losses; 95\% task-bootstrap interval 0.0067--0.0116; \(q=2.27\times10^{-11}\)) and the plain MLP dual branch by 0.0097 (122/0/35; 0.0076--0.0119; \(q=1.36\times10^{-14}\)). Its advantages over the BLOSUM62 random forest and one-hot logistic regression are 0.0440 and 0.0525, respectively, and also pass BH-FDR correction.
+
+\begin{table}[tbp]
+\centering
+\caption{Human connected-component peptide-disjoint architecture comparison across 157 tasks on identical strict folds. Multi-seed methods use row-level prediction ensembles; deterministic logistic regression gives identical predictions across the recorded seeds.}
+\label{tab:human-strict-architectures}
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+Model & Mean AUROC & Median & AUPRC & PairAcc & Worst-10 & Worst task \\
+\midrule
+One-hot logistic regression & 0.7127 & 0.7069 & 0.6906 & 0.7157 & 0.5873 & 0.5533 \\
+BLOSUM62 random forest & 0.7212 & 0.7208 & 0.7007 & 0.7263 & 0.5895 & 0.5634 \\
+Shared heads & 0.7561 & 0.7565 & 0.7340 & 0.7631 & 0.6248 & 0.6003 \\
+Plain MLP dual branch & 0.7555 & 0.7577 & 0.7339 & 0.7575 & 0.6163 & 0.5905 \\
+Auxiliary dual branch & 0.7642 & \textbf{0.7660} & 0.7433 & 0.7686 & 0.6283 & 0.6034 \\
+TissuePMHC & \textbf{0.7652} & 0.7606 & \textbf{0.7452} & \textbf{0.7700} & \textbf{0.6382} & \textbf{0.6142} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The comparison with the strongest auxiliary dual-branch control is different. TissuePMHC is higher by only 0.0010 mean AUROC, with a median task difference of -0.0008, a Hodges--Lehmann difference of +0.0007, a 76/1/80 direction count, a bootstrap interval of -0.0008--0.0029, and \(q=0.442\). AUPRC and PairAcc differences are likewise not significant after correction. By contrast, the auxiliary dual branch exceeds the plain MLP dual branch by 0.0087 AUROC (144/0/13; 0.0074--0.0100; \(q=3.02\times10^{-23}\)) and shared heads by 0.0081 (123/0/34; 0.0058--0.0103; \(q=3.30\times10^{-11}\)). The plain MLP dual branch does not exceed shared heads (-0.0006; \(q=0.906\)). Thus, auxiliary supervision is the clearest retained human architecture benefit; the strict results do not isolate a stable gain from the plain dual/rank-fusion structure or from replacing the auxiliary MLP encoder with the multi-kernel CNN.
+
+The three mouse ensembles are also close (Table~\ref{tab:mouse-strict-architectures}). Factorized MMoE differs from shared heads by -0.0008 AUROC (10/0/14; 95\% interval -0.0062--0.0049; \(q=0.509\)) and from the BLOSUM62 random forest by +0.0023 (14/0/10; -0.0052--0.0091; \(q=0.509\)). Corresponding AUPRC and PairAcc comparisons are also nonsignificant. The strict mouse experiment therefore supports task learnability but not superiority of the Factorized MMoE architecture.
+
+\begin{table}[tbp]
+\centering
+\caption{Mouse connected-component peptide-disjoint architecture comparison across 24 tasks. All entries are five-seed ensemble results on the identical strict folds.}
+\label{tab:mouse-strict-architectures}
+\scriptsize
+\setlength{\tabcolsep}{1pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+Model & Mean AUROC & Median & AUPRC & PairAcc & Worst-6 & Worst task \\
+\midrule
+BLOSUM62 random forest & 0.7507 & 0.7768 & 0.7295 & 0.7573 & 0.6418 & 0.5819 \\
+Shared heads & \textbf{0.7538} & 0.7786 & 0.7321 & 0.7567 & 0.6430 & 0.5477 \\
+Factorized MMoE & 0.7529 & \textbf{0.7822} & \textbf{0.7322} & \textbf{0.7596} & \textbf{0.6481} & \textbf{0.5859} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Seed averaging contributes materially to the final neural ensembles. In human, ensemble-minus-mean-single-seed AUROC gains are +0.0248 for shared heads, +0.0161 for the plain dual branch, +0.0139 for the auxiliary dual branch, and +0.0147 for TissuePMHC. In mouse, the corresponding gains are +0.0211 for shared heads and +0.0318 for Factorized MMoE, compared with +0.0016 for the random forest. The single-seed mean of Factorized MMoE is only 0.7211, below shared heads (0.7327) and the random forest (0.7491). Its competitive final strict score is therefore driven primarily by five-seed averaging rather than a consistent single-model architecture advantage. Full paired summaries and seed statistics are reported in Tables~\ref{tab:appendix-strict-paired} and~\ref{tab:appendix-strict-seeds}.

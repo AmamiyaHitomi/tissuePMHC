@@ -1,0 +1,67 @@
+\section{Analysis}
+
+This section asks where the prediction problem is easy or difficult and whether the model's two views behave differently across tasks. These patterns can suggest biological or data-quality hypotheses, but they cannot identify a molecular mechanism on their own.
+
+\subsection{Variation among Tissue--HLA Combinations (Task-level Heterogeneity)}
+
+Performance varies substantially across the 157 human tissue--\plainHLA{} combinations (tasks). On the ordinary benchmark, the mean AUROC of the ten lowest-performing combinations (tasks) is 0.6834 (worst-10 mean), despite an overall mean of 0.8448. The ten lowest AUROCs calculated for individual combinations (task AUROCs) are concentrated in lung, blood, and lymphoid labels, ranging from 0.6510 for lung with one human leukocyte antigen allele (HLA-B*49:01) to 0.7056 for lymphoid tissue with another human leukocyte antigen allele (HLA-B*13:02). This pattern may reflect biological similarity, heterogeneous composition, annotation, sampling, or study effects; the present data cannot distinguish these explanations.
+
+Table~\ref{tab:human-tissue-extremes} reports the five lowest and five highest equal-weight means across tasks within a tissue (tissue-macro summaries), rather than selecting isolated tasks. Single-task tissues remain unstable subgroup estimates and are shown descriptively only.
+
+\begin{table}[tbp]
+\centering
+\caption{Descriptive human tissue-level extremes on the 157-task ordinary benchmark. Means are taken across available \plainHLA{} tasks within each tissue.}
+\label{tab:human-tissue-extremes}
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{lrrrlrrr}
+\toprule
+Lower tissue & Tasks & AUROC & AUPRC & Higher tissue & Tasks & AUROC & AUPRC \\ 
+\midrule
+Blood & 22 & 0.7618 & 0.7587 & Testis & 1 & 0.9573 & 0.9597 \\ 
+Lymphoid & 34 & 0.7914 & 0.7744 & Tongue & 2 & 0.9574 & 0.9535 \\ 
+Uterine cervix & 7 & 0.8021 & 0.7797 & Uterus & 3 & 0.9617 & 0.9598 \\ 
+Brain & 6 & 0.8085 & 0.8012 & Adrenal gland & 2 & 0.9778 & 0.9768 \\ 
+Lung & 19 & 0.8135 & 0.8081 & Umbilical cord blood & 1 & 0.9791 & 0.9805 \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+Task difficulty is not explained simply by the number of training examples. The association between training size and AUROC is weak under both evaluations and is not statistically reliable. A large task can still be difficult if its tissues are heterogeneous, its peptide evidence overlaps other tissues, or its records come from diverse studies.
+
+For a separate descriptive view by \plainHLA{} gene group (HLA locus), Table~\ref{tab:human-hla-locus} groups AUROCs from the \plainFixedTest{} and \plainPeptideOOF{}. The human leukocyte antigen A group (HLA-A) has the highest \plainFixedTest{} mean and the human leukocyte antigen C group (HLA-C) the lowest; the human leukocyte antigen C group (HLA-C) also shows the smallest descriptive decrease.
+
+\begin{table}[tbp]
+\centering
+\caption{Descriptive human AUROC by \plainHLA{} gene group (HLA locus). Difference is \plainPeptideOOF{} minus the \plainFixedTest{}; because the held-out pools differ, it is not an estimate of the peptide-overlap effect.}
+\label{tab:human-hla-locus}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrr}
+\toprule
+\plainHLA{} gene group (locus) & Tasks & \plainFixedTest{} & \plainPeptideOOF{} & Difference \\ 
+\midrule
+Human leukocyte antigen A group (HLA-A) & 55 & 0.8688 & 0.7824 & -0.0864 \\ 
+Human leukocyte antigen B group (HLA-B) & 79 & 0.8380 & 0.7507 & -0.0873 \\ 
+Human leukocyte antigen C group (HLA-C) & 23 & 0.8106 & 0.7738 & -0.0369 \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+These gene-group summaries contain different alleles, tissues, training sizes, and groups of pairs linked by shared peptides (peptide-component structures), and therefore are not controlled gene-group effects. Differences are calculated from unrounded task means, so subtracting the displayed values can differ by 0.0001. The \plainMatchedOOF{} comparison used to quantify the peptide-separation robustness gap appears under research question 4 (RQ4) and in Figure~\ref{fig:appendix-gap}.
+
+AUROCs from the \plainFixedTest{} and \plainPeptideOOF{} correlate moderately across tissue--\plainHLA{} combinations (tasks; Spearman \(\rho=0.569\), \(p<10^{-14}\)). The simple median obtained by subtracting results from two evaluations that contain different rows (unmatched median difference) is -0.0652, with 16 increases and 141 decreases. Six of the ten largest descriptive decreases involve one human leukocyte antigen allele (HLA-A*11:01) and two involve another (HLA-B*49:01), motivating follow-up that accounts for allele and peptide-linked-group structure, without establishing intrinsic allele effects.
+
+\subsection{Complementarity of the Across-task and Human-leukocyte-antigen-restricted Pathways (HLA-restricted Pathways)}
+
+We compare the pathway trained across all human tasks (global branch) with the pathway trained only within one \plainHLA{} allele group (HLA-specific branch). Their peptide scores are moderately correlated on average, but agreement varies widely across tasks. Thus, the two pathways (branches) capture related but non-identical sequence information.
+
+The across-task pathway (global branch) has the higher overall mean, but it outperforms the \plainHLA{}-restricted pathway (HLA-specific branch) on only 81 of 157 tasks; the \plainHLA{}-restricted pathway performs better on the remaining 76. This near-even split indicates that sharing across all tasks is stronger on average, while allele-restricted learning retains useful task-specific ordering information.
+
+The model that combines the two within-task orderings (rank-fused model) outperforms its better single pathway in 260 of 471 comparisons between one \plainSeed{} and one task. Its median improvement over the stronger pathway is 0.0017, while the mean improvement is 0.0003. Combining the pathways (fusion) is therefore beneficial for a majority of comparisons but not universally so. Moreover, a simple measure of disagreement between pathway scores, \(1-\operatorname{corr}(s_g,s_h)\), is not significantly associated with the benefit of combining them (fusion gain; Spearman \(\rho=-0.062\), \(p=0.181\)). Large disagreement alone is insufficient to predict complementarity: disagreement may represent either useful independent signal or error specific to one pathway (branch-specific error).
+
+These results support a prespecified equal-weight combination of within-task orderings (fixed fusion) as a robust aggregate rule, but they do not imply that every task benefits from both pathways.
+
+\subsection{Error Analysis}
+
+Results calculated separately for each tissue--\plainHLA{} combination (task-level results) point to several recurring sources of difficulty. First, low-performing combinations (tasks) are concentrated in tissue categories such as blood and lymphoid, where closely related cell populations and broad sampling may produce overlapping peptide evidence. Second, combinations with few examples (sparse tasks) can have unstable estimates even though training size alone does not explain performance. Third, peptides reported across several tissues can become difficult constructed negatives (pseudo-negatives) when an unobserved target-tissue record reflects incomplete measurement rather than true absence. Finally, study and experimental-batch structure may induce both easy shortcuts and systematic errors when coverage is uneven.

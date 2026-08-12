@@ -1,0 +1,12 @@
+\subsection{Tissue and Allele Heterogeneity}
+
+Performance varies across the 77 Human and 11 Mouse benchmark tasks. For tuned human TissuePMHC, the ten lowest task means have AUROC 0.6608, compared with 0.8136 over all tasks; individual tasks span 0.6077--0.9640. Mouse task means span 0.5016--0.9180. Figure~\ref{fig:tissue-colored-heterogeneity} shows every task and its corresponding tissue mean. The within-tissue spread is often comparable with the differences between tissue means, showing that tissue identity does not determine performance independently of MHC restriction and data inventory.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/figure6_tissue_colored_heterogeneity.pdf}
+\caption{Tissue-resolved fixed-test heterogeneity of tuned TissuePMHC on the occurrence-matched data. \textbf{A}, Three-seed mean AUROC for all 77 Human tissue--HLA tasks. \textbf{B}, Three-seed mean AUROC for all 11 Mouse tissue--H-2 tasks. Rain points represent individual tasks, horizontal segments span the observed within-tissue range, and navy diamonds mark the unweighted tissue means. For tissues with at least three tasks, the upper half-density provides a smoothed descriptive view of the task distribution; no density is estimated for smaller groups. Tissues are ordered by their mean within each species. The dashed line at AUROC 0.5000 is a random-ranking reference, not an experimental observation. Differences among tissues are descriptive because tissue, MHC inventory, source study, peptide inventory, and training size are not controlled independently.}
+\label{fig:tissue-colored-heterogeneity}
+\end{figure}
+
+Detailed human tissue summaries, all mouse tissue--H-2 tasks and H-2-group means, and human HLA-level extremes are reported in Supplementary Tables~\ref{S-tab:human-tissue-extremes}--\ref{S-tab:human-hla-locus}. These values are descriptive rather than controlled tissue or allele rankings. The task-wise effect of training-only tuning is shown in Supplementary Figure~\ref{S-fig:tuning-delta-by-species}.

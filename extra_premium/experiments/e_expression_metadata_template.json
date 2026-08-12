@@ -1,0 +1,9 @@
+{
+  "dataset_name": "REPLACE_WITH_DATASET_NAME",
+  "version": "REPLACE_WITH_VERSION",
+  "download_date": "REPLACE_WITH_YYYY-MM-DD",
+  "license": "REPLACE_WITH_LICENSE",
+  "measurement_level": "gene",
+  "normalization": "REPLACE_WITH_EXPRESSION_UNIT_AND_NORMALIZATION",
+  "source_url": "REPLACE_WITH_DOWNLOAD_URL"
+}

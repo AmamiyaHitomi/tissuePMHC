@@ -1,0 +1,89 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{xurl}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{flafter}
+\usepackage[section]{placeins}
+\captionsetup[table]{skip=10pt}
+\renewcommand{\arraystretch}{1.20}
+\setlength{\emergencystretch}{2em}
+\usepgfplotslibrary{groupplots,statistics}
+\pgfplotsset{compat=1.18}
+
+% Reader-facing terminology: every use presents the plain-language meaning
+% first and preserves the original project term or abbreviation in parentheses.
+\newcommand{\plainMHC}{antigen-presenting molecule (MHC)}
+\newcommand{\plainMHCI}{class I antigen-presenting molecule (MHC-I)}
+\newcommand{\plainHLA}{human leukocyte antigen (HLA)}
+\newcommand{\plainHtwo}{mouse antigen-presenting system (H2)}
+\newcommand{\plainOOF}{held-out-fold cross-validation (out-of-fold evaluation; OOF)}
+\newcommand{\plainFixedTest}{saved internal test set (standard fixed test)}
+\newcommand{\plainPairOOF}{cross-validation that keeps both rows of every pair together (pair-grouped OOF)}
+\newcommand{\plainMatchedOOF}{same-pool ordinary cross-validation reference (matched standard OOF)}
+\newcommand{\plainPeptideOOF}{cross-validation excluding each held-out peptide from all training tissue--antigen-presenting-molecule combinations (global peptide-disjoint OOF)}
+\newcommand{\plainConnectedSplit}{transitive grouping of pairs linked by shared peptides (connected-component peptide-disjoint split)}
+\newcommand{\plainPairDisjoint}{no complete pair sharing target tissue, presenting restriction, and parent protein crossing the split (pair-disjoint)}
+\newcommand{\plainProteinDisjoint}{no parent protein crossing the split (protein-disjoint)}
+\newcommand{\plainPairAcc}{within-pair ordering accuracy (PairAcc)}
+\newcommand{\plainMatchedPair}{peptide pair sharing target tissue, presenting restriction, and parent protein (matched pair)}
+\newcommand{\plainMatchedPairs}{peptide pairs sharing target tissue, presenting restriction, and parent protein (matched pairs)}
+\newcommand{\plainMHCOnly}{control using peptide and antigen-presenting-molecule information but not tissue (MHC-only control)}
+\newcommand{\plainGeneralPMHC}{tissue-blind peptide--antigen-presenting-molecule compatibility control (general-pMHC control)}
+\newcommand{\plainTaskMacro}{equal-weight average across tissue--antigen-presenting-molecule combinations (task-macro average)}
+\newcommand{\plainMLP}{feed-forward multilayer perceptron (MLP)}
+\newcommand{\plainMMoE}{mixture of shared peptide-processing modules with a separate weighting rule for each biological combination (task-gated Factorized MMoE)}
+\newcommand{\plainBLOSUM}{amino-acid-similarity substitution matrix (BLOSUM62)}
+\newcommand{\plainEL}{eluted-ligand score (EL score)}
+\newcommand{\plainBA}{binding-affinity score (BA score)}
+\newcommand{\plainSharedHeads}{shared peptide representation with a separate output for each tissue--antigen-presenting-molecule combination (shared-head model)}
+\newcommand{\plainPlainDual}{two-view model without additional training objectives (plain dual-branch model)}
+\newcommand{\plainAuxDual}{two-view model with tissue and allele training guidance (auxiliary dual-branch model)}
+\newcommand{\plainMultiKernel}{position-aware filters of several widths (multi-kernel encoder)}
+\newcommand{\plainFrozen}{fixed before evaluation (frozen)}
+\newcommand{\plainSeed}{independent random model initialization (training seed)}
+\newcommand{\plainSeeds}{independent random model initializations (training seeds)}
+\newcommand{\plainSplitSeed}{fixed random-number setting used to reproduce data construction or splitting (data-construction/split seed)}
+\newcommand{\plainRQ}[1]{research question #1 (RQ#1)}
+\newcommand{\plainWtl}{numbers of tasks with positive, tied, and negative differences (W/T/L)}
+\newcommand{\plainHL}{Hodges--Lehmann median-shift estimate (HL)}
+\newcommand{\plainSeedSD}{standard deviation across random initializations (seed SD)}
+\newcommand{\plainIEDB}{Immune Epitope Database (IEDB)}
+
+\title{TissuePMHC: A Benchmark of Peptide Pairs Sharing Presenting Restriction and Parent Protein (Matched-pair Benchmark) and a Shared-learning Framework (Multi-task Framework) for Tissue-specific Presentation Preference by Class I Antigen-presenting Molecules (MHC-I)}
+\author{Anonymous Authors}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\input{frontmatter/abstract}
+
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_problem_formulation_and_benchmark}
+\input{sections/04_method_tissuepmhc}
+\input{sections/05_experimental_setup}
+\input{sections/06_results}
+\input{sections/07_analysis}
+\input{sections/08_discussion}
+\input{sections/09_conclusion}
+
+\clearpage
+\appendix
+\renewcommand{\thefigure}{A\arabic{figure}}
+\setcounter{figure}{0}
+\renewcommand{\thetable}{A\arabic{table}}
+\setcounter{table}{0}
+\input{appendices/additional_generalization_diagnostics}
+
+\clearpage
+\input{references/references}
+
+\end{document}

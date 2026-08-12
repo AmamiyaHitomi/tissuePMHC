@@ -1,0 +1,309 @@
+{
+  "audit": "occurrence balancing for matched positive--pseudo-negative pairs",
+  "definition": "Each pair has one row per label, identical tissue/MHC/parent protein, and identical presentation_tissue_count for its two peptides.",
+  "species": {
+    "human": {
+      "files": {
+        "train": {
+          "path": "D:\\my_python\\tissuePMHC\\data\\humanPMHC_occurence_equal_dataset\\humanPMHC_train.csv.gz",
+          "sha256": "e381b3a71fd1023c20995431a288b7107b917be87899c62e1ccccdf53dbba1ac"
+        },
+        "test": {
+          "path": "D:\\my_python\\tissuePMHC\\data\\humanPMHC_occurence_equal_dataset\\humanPMHC_test.csv.gz",
+          "sha256": "5dfff41ae57d3f01951c0bb8ab664103d98c2e58f1e2f13425fb5e013fc85543"
+        }
+      },
+      "n_tasks": 77,
+      "n_tissues": 13,
+      "n_mhc_restrictions": 29,
+      "test_pairs_per_task_min": 50,
+      "test_pairs_per_task_max": 50,
+      "train": {
+        "rows": 42978,
+        "pairs": 21489,
+        "label_0_rows": 21489,
+        "label_1_rows": 21489,
+        "label_0_positive_occurrence_sum": 27706,
+        "label_1_positive_occurrence_sum": 27706,
+        "label_0_positive_occurrence_distribution": {
+          "1": 17530,
+          "2": 2645,
+          "3": 791,
+          "4": 302,
+          "5": 122,
+          "6": 47,
+          "7": 24,
+          "8": 18,
+          "9": 8,
+          "14": 1,
+          "15": 1
+        },
+        "label_1_positive_occurrence_distribution": {
+          "1": 17530,
+          "2": 2645,
+          "3": 791,
+          "4": 302,
+          "5": 122,
+          "6": 47,
+          "7": 24,
+          "8": 18,
+          "9": 8,
+          "14": 1,
+          "15": 1
+        },
+        "occurrence_count_only_task_auroc_min": 0.5,
+        "occurrence_count_only_task_auroc_mean": 0.5,
+        "occurrence_count_only_task_auroc_max": 0.5,
+        "mismatches": {
+          "pairs_not_two_rows": 0,
+          "pairs_without_one_row_per_label": 0,
+          "pairs_with_task_or_parent_mismatch": 0,
+          "pairs_with_unequal_positive_occurrence_count": 0,
+          "unequal_label_row_counts": 0,
+          "unequal_occurrence_distributions": 0,
+          "unequal_occurrence_sums": 0,
+          "tasks_with_unequal_occurrence_distributions": 0
+        },
+        "passed": true
+      },
+      "test": {
+        "rows": 7700,
+        "pairs": 3850,
+        "label_0_rows": 3850,
+        "label_1_rows": 3850,
+        "label_0_positive_occurrence_sum": 4919,
+        "label_1_positive_occurrence_sum": 4919,
+        "label_0_positive_occurrence_distribution": {
+          "1": 3186,
+          "2": 459,
+          "3": 103,
+          "4": 51,
+          "5": 27,
+          "6": 16,
+          "7": 4,
+          "9": 1,
+          "10": 2,
+          "14": 1
+        },
+        "label_1_positive_occurrence_distribution": {
+          "1": 3186,
+          "2": 459,
+          "3": 103,
+          "4": 51,
+          "5": 27,
+          "6": 16,
+          "7": 4,
+          "9": 1,
+          "10": 2,
+          "14": 1
+        },
+        "occurrence_count_only_task_auroc_min": 0.5,
+        "occurrence_count_only_task_auroc_mean": 0.5,
+        "occurrence_count_only_task_auroc_max": 0.5,
+        "mismatches": {
+          "pairs_not_two_rows": 0,
+          "pairs_without_one_row_per_label": 0,
+          "pairs_with_task_or_parent_mismatch": 0,
+          "pairs_with_unequal_positive_occurrence_count": 0,
+          "unequal_label_row_counts": 0,
+          "unequal_occurrence_distributions": 0,
+          "unequal_occurrence_sums": 0,
+          "tasks_with_unequal_occurrence_distributions": 0
+        },
+        "passed": true
+      },
+      "complete": {
+        "rows": 50678,
+        "pairs": 25339,
+        "label_0_rows": 25339,
+        "label_1_rows": 25339,
+        "label_0_positive_occurrence_sum": 32625,
+        "label_1_positive_occurrence_sum": 32625,
+        "label_0_positive_occurrence_distribution": {
+          "1": 20716,
+          "2": 3104,
+          "3": 894,
+          "4": 353,
+          "5": 149,
+          "6": 63,
+          "7": 28,
+          "8": 18,
+          "9": 9,
+          "10": 2,
+          "14": 2,
+          "15": 1
+        },
+        "label_1_positive_occurrence_distribution": {
+          "1": 20716,
+          "2": 3104,
+          "3": 894,
+          "4": 353,
+          "5": 149,
+          "6": 63,
+          "7": 28,
+          "8": 18,
+          "9": 9,
+          "10": 2,
+          "14": 2,
+          "15": 1
+        },
+        "occurrence_count_only_task_auroc_min": 0.5,
+        "occurrence_count_only_task_auroc_mean": 0.5,
+        "occurrence_count_only_task_auroc_max": 0.5,
+        "mismatches": {
+          "pairs_not_two_rows": 0,
+          "pairs_without_one_row_per_label": 0,
+          "pairs_with_task_or_parent_mismatch": 0,
+          "pairs_with_unequal_positive_occurrence_count": 0,
+          "unequal_label_row_counts": 0,
+          "unequal_occurrence_distributions": 0,
+          "unequal_occurrence_sums": 0,
+          "tasks_with_unequal_occurrence_distributions": 0
+        },
+        "passed": true
+      },
+      "passed": true
+    },
+    "mouse": {
+      "files": {
+        "train": {
+          "path": "D:\\my_python\\tissuePMHC\\data\\mousePMHC_occurence_equal_dataset\\mousePMHC_train.csv.gz",
+          "sha256": "0c8e1c93086f4af1952cec0ea6cb15bcfb9c427891d4c588cfc1e5f1f2055c00"
+        },
+        "test": {
+          "path": "D:\\my_python\\tissuePMHC\\data\\mousePMHC_occurence_equal_dataset\\mousePMHC_test.csv.gz",
+          "sha256": "f5395491dd63f06799f452d5abb3bd8d1393c958a8cd2115caa7a10c0335266a"
+        }
+      },
+      "n_tasks": 11,
+      "n_tissues": 4,
+      "n_mhc_restrictions": 4,
+      "test_pairs_per_task_min": 50,
+      "test_pairs_per_task_max": 50,
+      "train": {
+        "rows": 4178,
+        "pairs": 2089,
+        "label_0_rows": 2089,
+        "label_1_rows": 2089,
+        "label_0_positive_occurrence_sum": 2204,
+        "label_1_positive_occurrence_sum": 2204,
+        "label_0_positive_occurrence_distribution": {
+          "1": 2005,
+          "2": 68,
+          "3": 11,
+          "4": 1,
+          "5": 1,
+          "6": 2,
+          "9": 1
+        },
+        "label_1_positive_occurrence_distribution": {
+          "1": 2005,
+          "2": 68,
+          "3": 11,
+          "4": 1,
+          "5": 1,
+          "6": 2,
+          "9": 1
+        },
+        "occurrence_count_only_task_auroc_min": 0.5,
+        "occurrence_count_only_task_auroc_mean": 0.5,
+        "occurrence_count_only_task_auroc_max": 0.5,
+        "mismatches": {
+          "pairs_not_two_rows": 0,
+          "pairs_without_one_row_per_label": 0,
+          "pairs_with_task_or_parent_mismatch": 0,
+          "pairs_with_unequal_positive_occurrence_count": 0,
+          "unequal_label_row_counts": 0,
+          "unequal_occurrence_distributions": 0,
+          "unequal_occurrence_sums": 0,
+          "tasks_with_unequal_occurrence_distributions": 0
+        },
+        "passed": true
+      },
+      "test": {
+        "rows": 1100,
+        "pairs": 550,
+        "label_0_rows": 550,
+        "label_1_rows": 550,
+        "label_0_positive_occurrence_sum": 603,
+        "label_1_positive_occurrence_sum": 603,
+        "label_0_positive_occurrence_distribution": {
+          "1": 520,
+          "2": 17,
+          "3": 9,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 1
+        },
+        "label_1_positive_occurrence_distribution": {
+          "1": 520,
+          "2": 17,
+          "3": 9,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 1
+        },
+        "occurrence_count_only_task_auroc_min": 0.5,
+        "occurrence_count_only_task_auroc_mean": 0.5,
+        "occurrence_count_only_task_auroc_max": 0.5,
+        "mismatches": {
+          "pairs_not_two_rows": 0,
+          "pairs_without_one_row_per_label": 0,
+          "pairs_with_task_or_parent_mismatch": 0,
+          "pairs_with_unequal_positive_occurrence_count": 0,
+          "unequal_label_row_counts": 0,
+          "unequal_occurrence_distributions": 0,
+          "unequal_occurrence_sums": 0,
+          "tasks_with_unequal_occurrence_distributions": 0
+        },
+        "passed": true
+      },
+      "complete": {
+        "rows": 5278,
+        "pairs": 2639,
+        "label_0_rows": 2639,
+        "label_1_rows": 2639,
+        "label_0_positive_occurrence_sum": 2807,
+        "label_1_positive_occurrence_sum": 2807,
+        "label_0_positive_occurrence_distribution": {
+          "1": 2525,
+          "2": 85,
+          "3": 20,
+          "4": 2,
+          "5": 2,
+          "6": 3,
+          "7": 1,
+          "9": 1
+        },
+        "label_1_positive_occurrence_distribution": {
+          "1": 2525,
+          "2": 85,
+          "3": 20,
+          "4": 2,
+          "5": 2,
+          "6": 3,
+          "7": 1,
+          "9": 1
+        },
+        "occurrence_count_only_task_auroc_min": 0.5,
+        "occurrence_count_only_task_auroc_mean": 0.5,
+        "occurrence_count_only_task_auroc_max": 0.5,
+        "mismatches": {
+          "pairs_not_two_rows": 0,
+          "pairs_without_one_row_per_label": 0,
+          "pairs_with_task_or_parent_mismatch": 0,
+          "pairs_with_unequal_positive_occurrence_count": 0,
+          "unequal_label_row_counts": 0,
+          "unequal_occurrence_distributions": 0,
+          "unequal_occurrence_sums": 0,
+          "tasks_with_unequal_occurrence_distributions": 0
+        },
+        "passed": true
+      },
+      "passed": true
+    }
+  },
+  "passed": true
+}

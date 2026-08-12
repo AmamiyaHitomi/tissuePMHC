@@ -1,0 +1,26 @@
+\section{Ablation and Mechanistic Analysis}
+
+\subsection{Completed Component Comparisons}
+
+Table~\ref{tab:component-evidence} reports completed fixed-test comparisons from the occurrence-matched rerun. They are not a factorial ablation: each row compares complete trained systems and therefore provides descriptive, not causal, evidence about a design change.
+
+\begin{table*}[t]
+\centering
+\caption{Completed component-related comparisons on the 77-task Human occurrence-matched fixed test. The table asks whether selected changes in information sharing or peptide encoding are associated with different mean AUROC; it is descriptive and is not a factorial or causal ablation. All comparisons use the same fixed split and task inventory. The MLP value is a row-level prediction aggregate, whereas the other values are means of the same three seed-level metrics. “First” and “Second” follow the arrow in the Systems compared column, and $\Delta$ is Second minus First.}
+\label{tab:component-evidence}
+\footnotesize
+\renewcommand{\arraystretch}{1.18}
+\begin{tabularx}{0.94\textwidth}{>{\raggedright\arraybackslash}p{3.2cm}Xrrr}
+\toprule
+Design comparison & Systems compared & First AUROC & Second AUROC & $\Delta$ \\
+\midrule
+Structured sharing & Shared encoder $\rightarrow$ auxiliary global/plain-HLA dual branch & 0.7758 & 0.7911 & +0.0153 \\
+Position-aware encoder plus tuned training configuration & MLP dual-branch aggregate $\rightarrow$ tuned TissuePMHC & 0.8033 & 0.8136 & +0.0103 \\
+Auxiliary HLA branch & Plain-HLA $\rightarrow$ auxiliary-HLA dual branch & 0.7911 & 0.7832 & -0.0079 \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\subsection{Complementarity of Global and Allele-restricted Sharing}
+
+On the same 77 tasks, HLA-grouped hard sharing reaches AUROC 0.7525, selective global/HLA grouping reaches 0.7643, and the fixed global/HLA dual-branch average reaches 0.7824. The auxiliary-global plus plain-HLA dual branch reaches 0.7911. These comparisons show that the occurrence-matched rerun retains useful information from combining global and allele-restricted sharing, but they do not isolate a causal contribution of either pathway.

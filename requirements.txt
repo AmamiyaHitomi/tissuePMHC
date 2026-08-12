@@ -1,0 +1,14 @@
+# Core scientific and training stack. Tested with Python 3.13.
+numpy>=2.0
+pandas>=2.2
+scipy>=1.13
+scikit-learn>=1.5
+matplotlib>=3.9
+torch>=2.5
+
+# Used by interpretation, reporting, and selected baselines.
+shap>=0.46
+xgboost>=2.1
+python-docx>=1.1
+requests>=2.32
+

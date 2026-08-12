@@ -1,0 +1,82 @@
+\section{External Controls and Supplementary Results}
+
+\subsection{Design of Tissue-independent Controls}
+
+The most direct biological control removes tissue identity while retaining peptide and MHC information. We therefore refit a trainable MHC-only convolutional control on the occurrence-matched Human and Mouse files. The control uses a shared multi-kernel peptide encoder and one MHC-specific output head, but receives no tissue or tissue--MHC task identity. We also retain external predictors whose scores were recomputed for every occurrence-matched test row.
+
+Rows are not pooled, deduplicated, or assigned a consensus label after tissue identity is removed. Each original tissue-specific row and label is retained. Consequently, the same peptide--MHC query can carry both labels across tissues: it is positive where ligand evidence was reported and may be a pseudo-negative elsewhere. Table~\ref{tab:tissue-blind-conflict-audit} quantifies this deliberate label ambiguity. A query has one retained label observation when it occurs in one row and multiple retained label observations when it occurs in more than one row; a ``conflicting query'' is a multiple-observation query whose rows contain both binary label values. The conflict percentage therefore uses multiple-observation queries, rather than all unique queries, as its denominator. These are not contradictions within one tissue--MHC task. They arise across tissues because the control is intentionally denied the variable that distinguishes those contexts.
+
+The occurrence-matched control set contains 29,662 unique Human peptide--MHC queries across 29 HLA alleles and 3,338 Mouse queries across four H2 restrictions. We score every test query with MHCflurry and NetMHCpan, two established predictors that do not use target-tissue identity \cite{odonnell2020mhcflurry,reynisson2020netmhcpan}. These fixed external scorers are not retrained on TissuePMHC labels and have no seed-to-seed training variation.
+
+\begin{table*}[t]
+\centering
+\caption{Deterministic label-conflict audit for controls without tissue information. The table asks how often identical peptide--MHC inputs acquire different tissue-specific labels after tissue identity is removed; it is not a model-performance result and has no training seeds. Queries are defined by peptide sequence and MHC restriction. ``One label'' denotes one retained labeled row; ``multiple labels'' denotes more than one retained labeled row, whether or not their binary values agree. A conflicting query is a multiple-label query containing both 0 and 1. Conflict percentages use multiple-label queries as the denominator. Human and Mouse use the same definitions and partition order.}
+\label{tab:tissue-blind-conflict-audit}
+\fontsize{7.2}{8.2}\selectfont
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}Xrrrrrr@{}}
+\toprule
+Species & Partition & Rows & \shortstack{Unique\\queries} & \shortstack{One retained\\label} & \shortstack{Multiple retained\\labels} & \shortstack{Conflicting\\queries} & \shortstack{Conflict among\\multiple (\%)} \\
+\midrule
+Human & Training pool & 42,978 & 27,063 & 12,572 & 14,491 & 14,168 & 97.77\% \\
+Human & Fixed internal test & 7,700 & 7,012 & 6,327 & 685 & 652 & 95.18\% \\
+Human & Complete benchmark & 50,678 & 29,662 & 10,441 & 19,221 & 18,882 & 98.24\% \\
+\midrule
+Mouse & Training pool & 4,178 & 2,934 & 1,735 & 1,199 & 1,175 & 98.00\% \\
+Mouse & Fixed internal test & 1,100 & 996 & 892 & 104 & 103 & 99.04\% \\
+Mouse & Complete benchmark & 5,278 & 3,338 & 1,487 & 1,851 & 1,833 & 99.03\% \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+Among queries represented by multiple tissue-specific rows, 95.18--99.04\% contain both labels across the six species--partition summaries. The high conflict fractions show why a trainable tissue-blind control is intrinsically ambiguous: identical observed inputs can correspond to different tissue-specific targets. This table is a data audit; the separately fitted control is evaluated in Table~\ref{tab:trainable-tissue-blind-control}.
+
+\subsection{Trainable MHC-only Neural Control}
+
+\begin{table*}[t]
+\centering
+\caption{Trainable MHC-only control on the occurrence-matched fixed tests. AUROC and AUPRC are task-macro mean $\pm$ sample standard deviation across seeds 20260704--20260706. $\Delta$ AUROC is candidate minus full TissuePMHC after averaging each task across seeds; brackets give a 10,000-resample task-bootstrap 95\% confidence interval. W/T/L counts task-wise positive/zero/negative deltas. The exact two-sided paired Wilcoxon test is the prespecified MHC-only contrast. Identical peptide--MHC queries are constrained only by model inputs, not by post-hoc score averaging.}
+\label{tab:trainable-tissue-blind-control}
+\fontsize{7.5}{8.5}\selectfont
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabularx}{\textwidth}{@{}llrr>{\raggedleft\arraybackslash}p{3.2cm}rr@{}}
+\toprule
+Species & Model & AUROC & AUPRC & $\Delta$ AUROC [95\% CI] & W/T/L & $p$ \\
+\midrule
+Human & Full TissuePMHC & $0.8136\pm0.0021$ & $0.8126\pm0.0021$ & --- & --- & --- \\
+Human & Trainable MHC-only CNN & $0.2925\pm0.0062$ & $0.3932\pm0.0040$ & $-0.5211$ [$-0.5489,-0.4927$] & 0/0/77 & $2.46\times10^{-14}$ \\
+\midrule
+Mouse & Full TissuePMHC & $0.8194\pm0.0157$ & $0.8279\pm0.0121$ & --- & --- & --- \\
+Mouse & Trainable MHC-only CNN & $0.2168\pm0.0052$ & $0.3686\pm0.0064$ & $-0.6026$ [$-0.7183,-0.4617$] & 0/0/11 & 0.0010 \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+The MHC-only model loses 0.5211 mean task AUROC in Human and 0.6026 in Mouse, and it is worse than full TissuePMHC in every evaluated task. This result shows that peptide--MHC information alone cannot satisfy the tissue-conditioned labels in the present benchmark. Its below-random AUROC is not interpreted as ordinary reverse generalization: because occurrence-matched pseudo-negatives are peptides reported in other tissues, a tissue-blind model can assign high scores to broadly observed queries that are negatives for the current target tissue. The input-invariance audit supports the intended control semantics. In every seed, the fixed Human test contains 685 repeated peptide--MHC queries spanning multiple tissues and the Mouse test contains 104; at tolerance $10^{-6}$, neither species has an invariance violation. The largest observed within-query score ranges are $5.96\times10^{-8}$ and $1.19\times10^{-7}$, respectively.
+
+\subsection{External Tissue-agnostic Predictors and Score Combination}
+
+The occurrence-matched fixed test makes tissue-independent external scores approximately random in both species (Table~\ref{tab:rq6-method-comparison}). To integrate the former external-only and combined-score analyses in one comparable table, we also evaluate a fixed, untrained combination rule. Within each tissue--MHC task and each TissuePMHC seed, the TissuePMHC and external scores are separately converted to percentile ranks and then averaged with equal weight. No weight, threshold, or predictor is selected on the fixed test. The combined metrics and their sample standard deviations are calculated across the same three TissuePMHC seeds; the external-only metrics are deterministic. This is a sensitivity analysis of score fusion, not a separately tuned model.
+
+\begin{table*}[t]
+\centering
+\caption{Unified external-control analysis on the occurrence-matched fixed tests. The table asks whether deterministic tissue-agnostic peptide--MHC scores explain or improve tissue-conditioned ranking. All metrics are task-macro and rows are directly comparable only within species. ``Tissue'' is tuned TissuePMHC alone; ``combined'' is the unweighted mean of within-task percentile ranks from TissuePMHC and the stated external score. External-only values are deterministic, whereas TissuePMHC and combined values use seeds 20260704--20260706; combined entries are means $\pm$ sample standard deviations. $\Delta$ AUROC is combined minus TissuePMHC for the corresponding seed, averaged over seeds. Pair accuracy is the fraction of complete matched pairs with a higher score for the recorded positive. Human and Mouse use the same controls, columns, and display order.}
+\label{tab:rq6-method-comparison}
+\fontsize{7.0}{8.0}\selectfont
+\setlength{\tabcolsep}{1.6pt}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}Xrrrrrrr@{}}
+\toprule
+Species & External control & \shortstack{External\\AUROC} & \shortstack{External\\AUPRC} & \shortstack{Tissue\\AUROC} & \shortstack{Combined\\AUROC} & \shortstack{$\Delta$\\AUROC} & \shortstack{Combined\\AUPRC} & \shortstack{Combined\\pair acc.} \\
+\midrule
+Human & MHCflurry presentation score & 0.5044 & 0.5299 & 0.8136 & 0.7188 $\pm$ 0.0022 & -0.0948 & 0.7032 $\pm$ 0.0008 & 0.7241 $\pm$ 0.0044 \\
+Human & NetMHCpan binding-affinity rank & 0.4874 & 0.5144 & 0.8136 & 0.7034 $\pm$ 0.0016 & -0.1102 & 0.6818 $\pm$ 0.0013 & 0.7057 $\pm$ 0.0022 \\
+Human & NetMHCpan eluted-ligand rank & 0.4948 & 0.5193 & 0.8136 & 0.7101 $\pm$ 0.0017 & -0.1035 & 0.6901 $\pm$ 0.0017 & 0.7145 $\pm$ 0.0031 \\
+\midrule
+Mouse & MHCflurry presentation score & 0.5009 & 0.5266 & 0.8194 & 0.7183 $\pm$ 0.0115 & -0.1011 & 0.7188 $\pm$ 0.0067 & 0.7303 $\pm$ 0.0141 \\
+Mouse & NetMHCpan binding-affinity rank & 0.4917 & 0.5249 & 0.8194 & 0.7153 $\pm$ 0.0106 & -0.1042 & 0.7055 $\pm$ 0.0055 & 0.7297 $\pm$ 0.0076 \\
+Mouse & NetMHCpan eluted-ligand rank & 0.4924 & 0.5245 & 0.8194 & 0.7169 $\pm$ 0.0104 & -0.1026 & 0.7079 $\pm$ 0.0039 & 0.7339 $\pm$ 0.0115 \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+All three external scores remain near random, and equal-weight fusion reduces AUROC by 0.0948--0.1102 in Human and 0.1011--0.1042 in Mouse relative to TissuePMHC alone. Thus, the general peptide--MHC scores neither explain the tissue-conditioned ranking nor improve it under this prespecified fusion rule. The complete architecture comparisons are reported once, in Tables~\ref{tab:human-standard} and \ref{tab:mouse-baselines}, rather than repeated in a supplementary table.

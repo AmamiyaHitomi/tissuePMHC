@@ -1,0 +1,68 @@
+\documentclass[webpdf,modern,large,nocrop,noinfo]{oup-authoring-template}
+
+\usepackage[T1]{fontenc}
+\usepackage{xurl}
+\usepackage{pgfplots}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{flafter}
+\usepackage{placeins}
+\usepackage{balance}
+\usepackage{xr-hyper}
+\externaldocument[S-]{supplementary_main}
+
+\usepgfplotslibrary{groupplots,statistics}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds}
+\pgfplotsset{compat=1.18}
+
+\setlength{\emergencystretch}{2em}
+\hbadness=4000
+\vbadness=10000
+
+% Established biological names and abbreviations are used directly.
+\newcommand{\plainMHC}{MHC}
+\newcommand{\plainMHCI}{MHC-I}
+\newcommand{\plainHLA}{HLA}
+\newcommand{\plainHtwo}{H-2}
+\newcommand{\plainIEDB}{IEDB}
+
+\title[TissuePMHC]{TissuePMHC: Unveiling Tissue-Specific Preferences in MHC-I Presentation}
+
+\author[1,2,3,\textdagger]{Yuheng Cai}
+\author[1,\textdagger]{Liuxintong Zhang}
+\author[2]{Lance Turtle}
+\author[1,*]{Jia Meng}
+
+\address[1]{Department of Biosciences and Bioinformatics, School of Science, Xi'an Jiaotong-Liverpool University, Suzhou, China}
+\address[2]{Institute of Infection, Veterinary and Ecological Sciences, Liverpool, UK}
+\address[3]{Themedium Therapeutics Co. Ltd., Suzhou, China}
+
+\corresp[\textdagger]{These authors contributed equally.\par}
+\corresp[*]{Corresponding author: Jia Meng, jia.meng@xjtlu.edu.cn.}
+
+\abstract{\input{frontmatter/abstract}}
+\keywords{tissue-specific preference; antigen presentation; MHC-I; matched-pair benchmark; multi-task learning; peptide presentation; model attribution}
+
+\journaltitle{Bioinformatics}
+\copyrightyear{2026}
+\pubyear{2026}
+
+\begin{document}
+
+\maketitle
+
+\input{sections/01_introduction}
+\input{sections/02_data_and_benchmark}
+\input{sections/04_method_tissuepmhc}
+\input{sections/05_experimental_setup}
+\input{sections/06_results}
+\input{sections/07_analysis}
+\input{sections/08_ablation_and_mechanistic_analysis}
+\input{sections/07_strict_generalization}
+\input{sections/08_discussion}
+\input{sections/10_acknowledgements}
+
+\balance
+\input{references/main_references}
+
+\end{document}

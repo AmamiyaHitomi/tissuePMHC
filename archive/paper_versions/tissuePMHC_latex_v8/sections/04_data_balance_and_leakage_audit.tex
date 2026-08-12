@@ -1,0 +1,66 @@
+\section{Data Balance and Leakage Audit}
+
+\subsection{Occurrence-balancing Audit}
+
+We audited the supplied training and test files pair by pair before model evaluation. A valid pair must contain exactly one row of each label; both rows must have the same tissue, MHC restriction, and parent UniProt identifier; and the two peptides must have the same \mbox{\textit{presentation\_tissue\_count}}. All 27,978 pairs across the two species satisfy these conditions, with zero mismatched pairs in either partition. The complete Human benchmark contains 32,625 positive tissue occurrences in each label class, and the complete Mouse benchmark contains 2,807 in each label class. Equality also holds separately within every task in the training and test partitions (Table~\ref{tab:occurrence-balance-audit}), including the complete frequency distribution rather than only its total. A score using only \mbox{\textit{presentation\_tissue\_count}} has AUROC 0.5000 in every task (minimum, mean, and maximum all 0.5000). Thus, label identity cannot be inferred from total positive tissue-occurrence count in this benchmark.
+
+Figure~\ref{fig:occurrence-balance-by-tissue} resolves the complete-data occurrence totals by tissue. In all 13 Human tissues and all four Mouse tissues, the label-0 and label-1 totals coincide exactly; the maximum absolute tissue-level difference is zero.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.88\textwidth]{figures/figure2_occurrence_balance_by_tissue.pdf}
+\caption{Tissue-resolved occurrence-balancing audit on the complete occurrence-matched benchmark. \textbf{A}, Human totals across all 13 retained tissue labels. \textbf{B}, Mouse totals across all four retained tissues. For each tissue and label, the plotted quantity is the deterministic sum of \mbox{\textit{presentation\_tissue\_count}} over all training and fixed-test rows; no model fitting or seed aggregation is involved. Blue bars extend left for pseudo-negatives (label 0), and vermilion bars extend right for recorded positives (label 1). Exact bilateral symmetry and the endpoint labels show that the two totals are identical within every tissue. Both panels use linear axes scaled to their species-specific ranges; cross-panel bar lengths should therefore not be compared directly.}
+\label{fig:occurrence-balance-by-tissue}
+\end{figure*}
+
+\begin{table}[tbp]
+\centering
+\caption{Deterministic occurrence-balancing audit of the saved Human and Mouse training and fixed-test files. Occurrence totals sum \mbox{\textit{presentation\_tissue\_count}} separately over the two label classes; a mismatch denotes a pair whose two rows have different occurrence counts. The table tests whether pair construction removed the occurrence-count shortcut and involves no model fitting, seeds, or performance aggregation.}
+\label{tab:occurrence-balance-audit}
+\small
+\begin{tabularx}{\columnwidth}{@{}llrrr@{}}
+\toprule
+Species & Partition & Pairs & Label 0/1 totals & Mismatches \\
+\midrule
+Human & Training & 21,489 & 27,706/27,706 & 0 \\
+Human & Test & 3,850 & 4,919/4,919 & 0 \\
+Mouse & Training & 2,089 & 2,204/2,204 & 0 \\
+Mouse & Test & 550 & 603/603 & 0 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Controlled shortcut versus residual sources of bias.}
+We use occurrence matching to remove one prespecified shortcut: a model cannot favor the label-1 peptide simply because it was reported positively in more tissues overall. This result should not be described as removal of all dataset bias. The construction does not balance the identities of the other reporting tissues, study or laboratory provenance, donor composition, tissue coverage, allele coverage, sample preparation, mass-spectrometry platform, detection depth, or annotation completeness. It also does not prevent an exact peptide or parent protein from recurring in another tissue--MHC combination. Statements about bias in the remainder of the paper therefore distinguish the eliminated occurrence-count shortcut from these residual observational and provenance effects.
+
+\subsection{Entity Overlap across the Fixed Split}
+
+In both species, a held-out peptide is absent from the training rows of the tissue--MHC combination being evaluated, but it may occur in training rows for another combination. Table~\ref{tab:fixed-overlap} makes this distinction explicit. For each test row, the audit first asks whether the same entity occurs in training for the current combination and, only if it does not, whether it occurs in another combination. The three columns are therefore mutually exclusive.
+
+\begin{table*}[b]
+\centering
+\caption{Deterministic Human and Mouse entity-overlap audit for the occurrence-matched fixed internal test sets. The table asks whether held-out pair identifiers, peptide identities, or parent proteins reappear in current- or other-combination training rows; it is not a model-performance comparison. Counts are test-row occurrences, except for pair identifiers, which are counted once per pair. ``Current combination'' means the tissue--MHC combination of the test row, and the three outcome columns are mutually exclusive.}
+\label{tab:fixed-overlap}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.8cm}
+                    >{\centering\arraybackslash}p{2.4cm}
+                    >{\centering\arraybackslash}p{2.4cm}
+                    >{\centering\arraybackslash}p{2.4cm}@{}}
+\toprule
+Species and held-out entity & Current-combination training & Other-combination training only & Absent from all training \\
+\midrule
+Human pair identifier (3,850 pairs) & 0 (0.00\%) & 0 (0.00\%) & 3,850 (100.00\%) \\
+Human peptide identity (7,700 rows) & 0 (0.00\%) & 5,032 (65.35\%) & 2,668 (34.65\%) \\
+Human parent UniProt (7,700 rows) & 1,112 (14.44\%) & 6,152 (79.90\%) & 436 (5.66\%) \\
+\midrule
+Mouse pair identifier (550 pairs) & 0 (0.00\%) & 0 (0.00\%) & 550 (100.00\%) \\
+Mouse peptide identity (1,100 rows) & 0 (0.00\%) & 708 (64.36\%) & 392 (35.64\%) \\
+Mouse parent UniProt (1,100 rows) & 180 (16.36\%) & 726 (66.00\%) & 194 (17.64\%) \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Table~\ref{tab:fixed-overlap} answers an entity-reuse question about the saved train/test split; Table~\ref{tab:evaluation-protocols} instead defines the stages used for training-only model selection, final fitting, and fixed-test estimation. No separate cross-validation overlap table is reported because the tuning folds are not a generalization result and would duplicate the pair-grouping rule already stated in the evaluation protocol.
+
+Thus, each test peptide is new to the specific tissue--MHC task being evaluated, although 65.35\% of Human and 64.36\% of Mouse test-row peptides occur in training for another task. Parent proteins recur more often, including within the current task. The fixed test is therefore an internal evaluation in familiar contexts, not an entity-disjoint or independent external validation.

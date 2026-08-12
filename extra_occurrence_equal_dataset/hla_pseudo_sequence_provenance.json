@@ -1,0 +1,17 @@
+{
+  "database": "IPD-IMGT/HLA",
+  "release": "3.65.0",
+  "release_date": "2026-07-14",
+  "repository": "https://github.com/ANHIG/IMGTHLA",
+  "fasta_url": "https://raw.githubusercontent.com/ANHIG/IMGTHLA/Latest/hla_prot.fasta",
+  "release_version_url": "https://raw.githubusercontent.com/ANHIG/IMGTHLA/Latest/release_version.txt",
+  "local_fasta": "data/processed/ipd_imgt_hla_latest/hla_prot.fasta",
+  "local_fasta_sha256": "a6ff785f245b6cfc194c4b96176ed19e2bed21457ef98f86d7947b6606356db3",
+  "output": "data/processed/hla_pseudo_sequences_occurrence_equal.csv",
+  "output_sha256": "11ef08409979323cfab10f33092efbecb3af84bf3c8d353e6c39710356bbc1c4",
+  "n_hla_alleles": 29,
+  "pseudo_sequence_length": 34,
+  "builder": "scripts/build_hla_pseudo_sequences.py",
+  "positions_one_based_mature_chain": [7, 9, 24, 45, 59, 62, 63, 66, 67, 69, 70, 73, 74, 76, 77, 80, 81, 84, 95, 97, 99, 114, 116, 118, 143, 147, 150, 152, 156, 158, 159, 163, 167, 171],
+  "signal_peptide_trim": 24
+}

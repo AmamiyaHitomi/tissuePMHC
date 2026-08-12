@@ -1,0 +1,15 @@
+target_tissue,expression_tissue,weight,review_status,mapping_quality,notes
+blood,,1,needs_review,,Use an audited whole-blood or immune-cell source
+bone,,1,needs_review,,Do not silently equate bone with bone marrow
+brain,,1,needs_review,,Choose and document aggregation across brain regions
+breast,,1,needs_review,,
+colon,,1,needs_review,,
+kidney,,1,needs_review,,
+lung,,1,needs_review,,
+lymph node,,1,needs_review,,
+lymphoid,,1,needs_review,,Broad label; document any multi-tissue aggregation
+ovary,,1,needs_review,,
+spleen,,1,needs_review,,
+thymus,,1,needs_review,,
+umbilical cord blood,,1,needs_review,,Adult whole blood is not an exact substitute
+uterine cervix,,1,needs_review,,

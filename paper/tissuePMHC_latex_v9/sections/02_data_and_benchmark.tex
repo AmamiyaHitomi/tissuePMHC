@@ -1,0 +1,27 @@
+\section{Data and Benchmark Construction}
+\label{sec:data-benchmark}
+
+\begin{table}[!t]
+\centering
+\caption{Summary of the matched Human and Mouse benchmarks. Each test set contains 50 complete pairs per retained tissue--MHC combination.}
+\label{tab:benchmark-summary}
+\small
+\begin{tabularx}{\columnwidth}{@{}>{\raggedright\arraybackslash}Xrrrrr@{}}
+\toprule
+Species & Tissues & MHCs & Tasks & Train pairs & Test pairs \\
+\midrule
+Human & 13 & 29 & 77 & 21,489 & 3,850 \\
+Mouse & 4 & 4 & 11 & 2,089 & 550 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The Human and Mouse benchmarks were derived from the full \plainIEDB{} ligand export downloaded on July 4, 2026 \cite{vita2025iedb}. We retained positive \plainMHCI{} ligand records with matching source and host species, an identifiable parent UniProt protein, and an unmodified 9-mer composed of standard amino acids. Complete inclusion and normalization criteria are provided in Supplementary Section~\ref{S-sec:evidence-inclusion}.
+
+Each prediction context is a tissue--MHC combination. A positive peptide has reported ligand evidence in that context. A comparison peptide has evidence in another tissue under the same MHC restriction and from the same parent protein, but no report in the target tissue. These comparison peptides are pseudo-negatives because missing evidence does not establish biological non-presentation. The task therefore concerns relative ranking within observed contexts rather than absolute presentation probability.
+
+Within each target context, a positive peptide was paired with a pseudo-negative sharing the MHC restriction, parent protein, and total number of tissues with positive evidence. Pair members therefore cannot be distinguished by MHC identity, source protein, or overall tissue-occurrence frequency. Each pair contributes one target-tissue peptide and one comparison peptide reported elsewhere, producing a balanced benchmark that does not estimate natural presentation prevalence. The pairing algorithm is detailed in Supplementary Section~\ref{S-sec:pair-construction}.
+
+After filtering and pairing, the Human benchmark contains 77 tissue--HLA tasks spanning 13 tissues and 29 HLA alleles; the Mouse benchmark contains 11 tissue--H-2 tasks spanning four tissues and four H-2 restrictions (Table~\ref{tab:benchmark-summary}). Each task contributes 50 complete pairs to the fixed test set, with the remainder used for training. Metrics are calculated per task and macro-averaged. Species-specific inventories are provided in Supplementary Tables~\ref{S-tab:human-benchmark-stats} and~\ref{S-tab:mouse-benchmark-stats}.
+
+Before model evaluation, all 27,978 saved pairs passed label and matching audits. Test peptides are excluded from the training rows of the same task but may recur in other tissue--MHC tasks; the benchmark therefore evaluates new pairs in represented contexts rather than entity-disjoint generalization. Full consistency and overlap audits are provided in Supplementary Figure~\ref{S-fig:occurrence-balance-by-tissue}, Supplementary Tables~\ref{S-tab:occurrence-balance-audit} and~\ref{S-tab:fixed-overlap}, and Supplementary Sections~\ref{S-sec:occurrence-audit} and~\ref{S-sec:entity-overlap}.

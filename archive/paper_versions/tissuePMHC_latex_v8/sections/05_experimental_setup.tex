@@ -1,0 +1,204 @@
+\section{Evaluation Protocol}
+
+\subsection{Evaluation Questions}
+
+The occurrence-matched experiments ask whether peptide sequence retains tissue-associated signal after matching the MHC, source protein, and total positive tissue-occurrence count; how alternative model structures compare on the fixed Human benchmark; whether the same prediction problem is learnable in Mouse; how much signal is recoverable without tissue identity; and which residue--position patterns support the fitted Human model's decisions. The Human--Mouse analysis concerns replication of the benchmark definition, not transfer of one model between species.
+
+\paragraph{Terminology layers.}
+We reserve \emph{data partition} for the saved training and fixed-test files; \emph{model selection} for pair-grouped folds formed only inside the training file; \emph{fitting run} for one optimization run with one seed; \emph{fixed-test evaluation} for scoring the locked model on the saved test rows; \emph{prediction aggregation} for explicitly labeled row-level score combinations; and \emph{statistical analysis} for task summaries, bootstrap intervals, and paired tests. Model architectures, optimization algorithms, split construction, and statistical procedures are therefore not described as interchangeable “evaluation modes.”
+
+\subsection{Fixed-Test Design and Biological Scope}
+
+The occurrence-matched experiments use one final evaluation protocol: a fixed internal train/test split with complete matched pairs kept intact. Hyperparameters are selected by three-fold, task-stratified, pair-grouped cross-validation confined to the training file; these folds are used only for model selection and are not reported as a generalization result. After each species-specific configuration is locked, three independent models are fitted on the complete training file and evaluated on the fixed test file. Table~\ref{tab:evaluation-protocols} separates model selection, final fitting, and fixed-test evaluation.
+
+\begin{table*}[t]
+\centering
+\caption{Evaluation protocol used for all occurrence-matched performance results. The rows separate the fixed data partition, training-only model selection, and three-seed final fitting; they are different layers rather than alternative evaluation modes. The table defines when test rows are accessible and what uncertainty the repeated fits quantify, but reports no model performance itself.}
+\label{tab:evaluation-protocols}
+\fontsize{7.5}{8.5}\selectfont
+\setlength{\tabcolsep}{1.5pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.25cm}
+                    >{\raggedright\arraybackslash}p{1.6cm}
+                    >{\raggedright\arraybackslash}p{3.75cm}
+                    >{\raggedright\arraybackslash}p{3.75cm}@{}}
+\toprule
+Reader-facing setting & Layer & What is done & Purpose and relationship to the other setting \\
+\midrule
+Fixed internal test set
+& Data setting
+& For each retained tissue--MHC combination, 50 complete positive--pseudo-negative pairs are kept outside the training file. Every trained model is evaluated on this same fixed set.
+& Internal benchmark for familiar tissue--MHC contexts. It is not cross-validation and is not an external cohort. \\
+\midrule
+Training-only hyperparameter selection
+& Model-selection setting
+& Three task-stratified, pair-grouped folds are formed only within the training file. Human configurations are ranked by task-macro out-of-fold AUROC with Worst-10 AUROC as the tie-breaker; Mouse configurations are ranked by the mean of task-macro AUROC and AUPRC.
+& Locks one species-specific TissuePMHC configuration before the fixed test is opened. These out-of-fold scores are not used as evidence of strict peptide, tissue, allele, study, or cohort generalization. \\
+\midrule
+Three independent training runs
+& Model-estimation procedure
+& Each trainable method is fitted three times on the same training file with seeds 20260704, 20260705, and 20260706, then evaluated on the same fixed test file. Reported stability summaries use the arithmetic mean and sample standard deviation of seed-level metrics.
+& Quantifies sensitivity to initialization. The three runs are technical repetitions, not independent biological samples and not three test splits. \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Figure~\ref{fig:evaluation-setting-relationships} summarizes the single evaluation pathway used for all reported results.
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.98\linewidth}{!}{%
+\begin{tikzpicture}[
+    stage/.style={draw,rounded corners=2.5pt,align=center,inner sep=7pt,font=\small,text width=2.45cm,minimum height=1.45cm,line width=0.8pt},
+    arr/.style={-{Latex[length=2.4mm]},line width=1.0pt,draw=gray!75},
+    lane/.style={draw,dashed,rounded corners=4pt,inner sep=8pt,line width=0.8pt}
+]
+\node[stage,fill=blue!9] (data) at (-0.60,0) {\textbf{1. Matched pairs}\\{\scriptsize Same tissue, MHC, parent protein, and occurrence count}};
+\node[stage,fill=blue!4] (split) at (2.65,0) {\textbf{2. Fixed split}\\{\scriptsize 50 complete test pairs per retained task}};
+\node[stage,fill=orange!12] (cv) at (6.5,1.35) {\textbf{3. Training-only CV}\\{\scriptsize Three pair-grouped folds; select hyperparameters}};
+\node[stage,fill=orange!7] (lock) at (9.75,1.35) {\textbf{4. Lock contract}\\{\scriptsize One species-specific configuration; no test scores}};
+\node[stage,fill=green!9] (fits) at (13.0,1.35) {\textbf{5. Final fitting}\\{\scriptsize Complete training file; three independent seeds}};
+\node[stage,fill=gray!8] (test) at (6.5,-1.35) {\textbf{Held-out test}\\{\scriptsize Sealed during model selection and fitting}};
+\node[stage,fill=green!13] (eval) at (13.0,-1.35) {\textbf{6. Fixed-test evaluation}\\{\scriptsize Same rows for every method; task-macro metrics}};
+\node[stage,fill=blue!10] (report) at (17.00,0) {\textbf{7. Report}\\{\scriptsize Mean $\pm$ sample SD across seed-level metrics}};
+\begin{scope}[on background layer]
+  \node[lane,fit=(cv)(lock)(fits),fill=orange!3,label={[font=\scriptsize\bfseries,text=orange!70!black]above:TRAINING FILE ONLY}] {};
+  \node[lane,fit=(test)(eval),fill=gray!3,label={[font=\scriptsize\bfseries,text=gray!70!black]below:UNTOUCHED FIXED TEST}] {};
+\end{scope}
+\draw[arr] (data) -- (split);
+\draw[arr] (split.east) -- ++(0.45,0) |- (cv.west);
+\draw[arr] (cv) -- (lock);
+\draw[arr] (lock) -- (fits);
+\draw[arr] (split.east) -- ++(0.45,0) |- (test.west);
+\draw[arr] (fits) -- (eval);
+\draw[arr] (test) -- (eval);
+\draw[arr] (fits.east) -- ++(0.42,0) |- (report.west);
+\draw[arr] (eval.east) -- ++(0.42,0) |- (report.west);
+\end{tikzpicture}
+}
+\caption{Evaluation workflow for the occurrence-matched experiments. The fixed split creates two visually separated information lanes. The upper lane uses only the training file for three-fold, pair-grouped hyperparameter selection, contract locking, and three independent final fits. The lower lane keeps the fixed test sealed until the selected model is fitted. Human and Mouse use the same 50-pair-per-task test allocation and final-training seeds. Cross-validation is therefore a model-selection operation, not a reported ordinary-cross-validation result; every performance result in the main tables and figures comes from the untouched fixed test.}
+\label{fig:evaluation-setting-relationships}
+\end{figure*}
+
+\paragraph{What is actually predicted.}
+The benchmark is constructed from matched peptide pairs, but the main neural models do not receive two peptides simultaneously. They score one peptide row at a time using its sequence and tissue--MHC identity. Pair identifiers are used to create balanced recorded-positive and pseudo-negative examples and to keep the two rows of a pair in the same data partition. Training applies a separate present/absent loss to each row, and AUROC and AUPRC compare all positive and pseudo-negative rows within a tissue--MHC combination. Within-pair ordering accuracy asks the complementary question of whether the recorded-positive peptide receives the higher score. Keeping both members of a pair together protects data integrity; it does not turn the main training objective into a direct two-peptide ranking loss.
+
+\paragraph{Saved internal test set.}
+For each retained tissue--MHC combination, the supplied split assigns exactly 50 complete pairs to the test file and all remaining pairs to the training file. Because a peptide is used at most once within a combination during pair construction, a test peptide is absent from training rows for that same combination. The sequence may nevertheless occur in another fitting combination and can then influence shared model parameters. This test set therefore measures internal discrimination in already represented biological contexts while allowing information sharing across combinations. Human and mouse use this same rule.
+
+
+\paragraph{Independent training runs and reported uncertainty.}
+Every trainable human and mouse method is fitted three times with seeds 20260704, 20260705, and 20260706. All three fits use the same species-specific training file and are evaluated on the same fixed test file. Unless a table explicitly identifies a prediction ensemble, the reported central value is the arithmetic mean of the three seed-level metrics and the accompanying variation is their sample standard deviation. The seeds quantify optimization sensitivity only; they are not biological replicates and do not increase the number of evaluated tissue--MHC combinations.
+
+\paragraph{Scope of the biological conclusion.}
+The fixed internal evaluation asks whether peptide sequence helps distinguish recorded positives from occurrence-matched pseudo-negatives in familiar tissue--MHC contexts. It does not evaluate a new tissue, MHC allele, tissue--MHC combination, study, or external cohort. Exact peptides and parent proteins may recur across different combinations on opposite sides of the fixed split. Training-only cross-validation selects hyperparameters but does not supply evidence for ordinary same-pool or peptide-separated generalization.
+
+\subsection{Training and Baseline Models}
+
+All neural encoders and combination-specific output layers are optimized with AdamW \cite{loshchilov2019adamw}. The selected Human TissuePMHC configuration is trained for 20 epochs with batch size 512, learning rate \(2\times10^{-3}\), weight decay \(10^{-4}\), dropout 0.35, auxiliary tissue and HLA weights of 0.30, and gradient-norm clipping at 1.0. The selected Mouse configuration is trained for 25 epochs with task-balanced batches, learning rate \(3\times10^{-3}\), weight decay \(10^{-4}\), dropout 0.35, and auxiliary tissue and H2 weights of 0.05 and 0.10. The global and allele-specific pathways are trained independently for each random initialization. Test rows are used solely for final prediction and evaluation.
+
+The Human and Mouse final models use random initializations 20260704, 20260705, and 20260706. Human tuning compares the default configuration, a learning-rate change, and a combined learning-rate/dropout/auxiliary-weight configuration by three-seed out-of-fold summaries. Mouse tuning evaluates staged architecture, sampling, loss-weight, fusion, optimization, and regularization choices. In both species the winning configuration is locked from training folds before the fixed test is evaluated once. Final training follows a fixed epoch schedule without test-based early stopping. Preprocessing and combination mappings are reconstructed from each fitting partition so that held-out fold labels do not influence training.
+
+The comparison models range from simple sequence rules to architectures that share information across tissue--MHC combinations. One-hot logistic regression provides a linear sequence baseline. A BLOSUM62 random forest incorporates established similarities among amino-acid substitutions. The shared-encoder model learns one peptide representation with a separate output for each tissue--MHC combination. Dual-branch models compare global sharing with sharing restricted to one HLA allele. All methods within a species-specific ranking table use the same tissue--MHC combinations, fixed split, and three seeds, except rows explicitly marked as row-level prediction aggregates.
+
+The conditioned baselines add tissue and MHC identifiers, an MHC pseudo-sequence representation, or both to a shared peptide encoder. Hard-sharing baselines restrict encoder sharing by tissue or by MHC group. Selective-grouping and dual-branch systems combine a global pathway with a grouped pathway; fixed-average variants weight the two pathways equally, whereas the validation-delta and validation-softmax variants derive their branch weights from the fitting-stage validation summaries. The two-view MLP is the dual-branch model with flattened residue embeddings, and the multi-kernel TissuePMHC model replaces that peptide encoder with the position-aware convolutional encoder defined above.
+
+The formal component study starts from the locked full TissuePMHC model and removes one element at a time. The no-MHC-branch condition retains only the fitted global pathway. The no-rank-fusion condition retains both fitted pathways but averages their raw probabilities instead of their within-task percentile ranks. The no-auxiliary condition removes the tissue and MHC auxiliary losses while retaining both pathways and rank fusion. The no-multikernel condition replaces the convolutional encoder with a position-preserving flattened multilayer perceptron while retaining the remaining training and fusion contract. All four conditions use the same fixed split, task inventory, final-training seeds, optimizer, and species-specific epoch budget as the full model.
+
+The trainable tissue-blind control retains the multi-kernel peptide encoder and one output head per MHC restriction but receives no tissue identifier and no tissue--MHC task identifier. It uses the same species-specific training rows, optimizer, epoch count, and final-training seeds. Mouse uses row-wise minibatches for this control so that a tissue-task-balanced sampler does not reintroduce tissue identity through the sampling process. Identical peptide--MHC queries are required to receive equal scores across tissues up to a prespecified numerical tolerance of $10^{-6}$.
+
+The broader architecture survey also includes multi-gate mixture-of-experts (MMoE) \cite{ma2018mmoe}, FAMO \cite{liu2023famo}, DB-MTL \cite{lin2023dbmtl}, CAGrad, and task-balanced shared-head training. These methods retain the same benchmark rows, task heads, seeds, and fixed test while changing the sharing or multi-task optimization rule. The pair-ranking control replaces independent row classification with a within-pair ranking objective. These model definitions precede the result tables so that every reported system is identified before its performance is presented.
+
+The BLOSUM62 random forest \cite{henikoff1992blosum} concatenates the 20 substitution scores at each of nine positions into 180 input features. Each tissue--MHC combination receives a separate forest of 200 trees, with square-root feature subsampling and a minimum leaf size of two. The dual-branch neural controls use 16-dimensional residue vectors, flatten the nine positions, and apply two 128-unit multilayer-perceptron layers with rectified linear activation and dropout of 0.2 after the first layer. The model with auxiliary supervision adds tissue and HLA losses weighted 0.1 to the global pathway; the model without auxiliary supervision retains the same two pathways but omits those losses. Human and Mouse use the same three random initializations, 20260704, 20260705, and 20260706. The primary stability summaries report the arithmetic mean and sample standard deviation of the three seed-level fixed-test metrics; they do not treat seeds as independent biological observations.
+
+\subsection{Performance Metrics and Statistical Analysis}
+
+Unless stated otherwise, performance estimates (including means, differences, interval endpoints, and sample standard deviations) are reported to four decimal places. Empirical percentages are reported to two decimal places, whereas conventional nominal levels such as 95\% retain their standard whole-percentage form. Counts are integers with thousands separators. Exact design constants, identifiers, and hyperparameters retain the precision needed to specify them, and figure-axis tick labels may use shorter values for readability.
+
+\paragraph{Comparability contract.}
+Data-audit tables contain deterministic counts and do not have training repeats. Within each architecture table, model rows are comparable because they use one species, one fixed test, one task inventory, and the same three seeds; a dagger identifies the only row-level prediction aggregate. Task, tissue, and allele summaries first average a task over the three seeds and only then aggregate tasks with equal weight. Human and Mouse results are kept in separate ranking tables and are not pooled. Their shared AUROC, AUPRC, accuracy, and MCC columns have the same definitions, whereas Worst-10 in Human and Worst-5 in Mouse summarize different prespecified lower tails and must not be compared numerically as the same statistic.
+
+The main question is whether peptides reported in the target tissue rank above comparison peptides with the same MHC restriction and parent protein. AUROC is calculated separately for every tissue--MHC combination and then averaged with equal weight, preventing data-rich tissues or alleles from dominating:
+\[
+\operatorname{MacroAUROC}
+=
+\frac{1}{|\mathcal{T}_{\mathrm{valid}}|}
+\sum_{\tau\in\mathcal{T}_{\mathrm{valid}}}
+\operatorname{AUROC}_{\tau},
+\]
+where \(\mathcal{T}_{\mathrm{valid}}\) contains the prespecified combinations with both labels available. AUPRC is averaged in the same manner:
+\[
+\operatorname{MacroAUPRC}
+=
+\frac{1}{|\mathcal{T}_{\mathrm{valid}}|}
+\sum_{\tau\in\mathcal{T}_{\mathrm{valid}}}
+\operatorname{AUPRC}_{\tau}.
+\]
+Because the paired dataset has a constructed 1:1 label ratio, AUPRC is interpreted relative to the benchmark prevalence within each combination and is not compared directly with AUPRC from naturally imbalanced clinical cohorts.
+
+An average can hide weak performance in difficult tissues, so we also report the ten lowest-performing Human tasks and five lowest-performing Mouse tasks. Within-pair ordering accuracy is the fraction of matched pairs for which the recorded-positive peptide receives the higher score. Accuracy, F1, and MCC are secondary because they require a single decision threshold and the final score is not a calibrated biological probability.
+
+For each random initialization, metrics are calculated separately for every tissue--MHC combination on the fixed test file and then averaged with equal task weight. The three seed-level macro metrics are summarized by their arithmetic mean and sample standard deviation. A row-level prediction ensemble is reported only when explicitly named; otherwise “three-run mean” refers to a mean of metrics rather than averaged predictions.
+
+For the task-wise tuned-versus-untuned comparison in Figure~\ref{fig:tuning-delta-by-species}, uncertainty in the mean AUROC change is obtained by resampling complete tasks 10,000 times. Two-sided paired Wilcoxon signed-rank tests are calculated separately for Human and Mouse and adjusted together by Holm's method. Repeated training seeds quantify optimization sensitivity and are not treated as independent biological samples. Because tasks may share a tissue, allele, proteins, or related peptides, these summaries are descriptive rather than patient-cohort inference.
+
+For the formal component ablations, each task metric is first averaged across the three seeds and then differenced against the full model on the same task. Mean-difference intervals use 10,000 bootstrap resamples of complete tasks. Two-sided paired Wilcoxon tests are Holm-adjusted over the four component contrasts separately within Human and Mouse. The trainable MHC-only control is a separate prespecified contrast and is reported with its exact paired Wilcoxon test and task-bootstrap interval.
+
+\subsection{Post-hoc SHAP Attribution Protocol}
+
+Sequence attribution is performed only for the locked Human TissuePMHC configuration, after model selection and fixed-test performance evaluation. The analysis loads the fitted weights for the two differentiable E29 pathways---the globally shared pathway with auxiliary supervision and the HLA-restricted pathway---under each of the same three final-training seeds. For a peptide row \(x\) in task \(\tau\), the target is the corresponding pre-sigmoid branch logit \(f_{\tau}(x)\). Residue identities are represented as differentiable one-hot inputs and passed through the fitted embedding projection. Expected integrated gradients averages integrated gradients over an empirical, task-conditional background \(B_{\tau}\):
+\[
+\phi_i(x)=
+\mathbb{E}_{x'\sim B_{\tau}}
+\left[(x_i-x'_i)
+\int_0^1
+\frac{\partial f_{\tau}\!\left(x'+\alpha(x-x')\right)}{\partial x_i}
+\,d\alpha\right].
+\]
+This is an empirical-baseline SHAP approximation for differentiable networks rather than an exact enumeration of Shapley coalitions \cite{lundberg2017shap,sundararajan2017integrated,erion2021expected}.
+
+For each of the 77 Human tissue--HLA tasks, the background contains 10 complete training pairs and the explained subset contains 20 complete fixed-test pairs, both selected reproducibly with analysis seed 20260805. Positive and pseudo-negative members remain paired. The integral is evaluated deterministically by the trapezoidal rule with 128 steps. The design therefore explains 1,540 unique test pairs, or 3,080 rows per fitted branch and seed; across two branches and three seeds it yields 18,480 row-level branch explanations. Per-residue attributions sum over the one-hot channel and remain on the logit scale.
+
+Quality control has three parts. First, predictions reconstructed from the loaded checkpoints must reproduce the saved per-seed fixed-test predictions. Second, attribution completeness is audited by comparing each branch logit with its empirical-background expected logit plus the summed attributions. Third, residue--position maps are compared across training seeds by Spearman correlation. Pair-matched positional effects are computed from the attribution assigned to the observed residue in each recorded-positive peptide minus that of its matched pseudo-negative, first within branch, seed, and task and then by equal-weight descriptive averaging. HLA-stratified maps analogously show the recorded-positive minus pseudo-negative mean attribution for each residue--position cell.
+
+The final TissuePMHC score averages within-task percentile ranks from the two branches. Because percentile ranking is non-differentiable and cohort-dependent, no exact SHAP decomposition of that fused score is claimed. The branch consensus is a descriptive arithmetic mean of the two audited branch summaries. The explained fixed-test subset is used only for post-hoc interpretation and does not alter fitting, hyperparameter selection, or reported predictive performance. These attributions describe model dependence conditional on the chosen task-specific background; they do not identify causal tissue biology.
+
+\subsection{Single-residue In Silico Mutagenesis Validation}
+
+The SHAP hypotheses are checked by exhaustive single-residue ISM on exactly the same 3,080 Human fixed-test rows, 1,540 complete pairs, 77 tasks, and three fitted seeds. For every 9-mer \(x\), each position \(i\) is replaced in turn by each of the other 19 canonical amino acids. For branch \(b\in\{g,h\}\), representing the global auxiliary and HLA-specific pathways, the logit perturbation is
+\[
+\Delta^{(b)}_{i,a}(x)=f^{(b)}_{\tau}(x_{i\rightarrow a})-f^{(b)}_{\tau}(x).
+\]
+This gives 171 mutants per peptide and 526,680 distinct peptide--position--substitution rows; scoring both branches under all three seeds requires 3,160,080 mutant branch evaluations. No model is refitted for this analysis.
+
+To evaluate the non-differentiable final output, each mutant replaces its original row in the complete fixed-test reference distribution for task \(\tau\). Its global and HLA-specific probabilities are independently converted to within-task percentile ranks by the same average-tie rule used by TissuePMHC, and the two ranks are averaged. The final perturbation \(\Delta^{(F)}_{i,a}\) is this replacement rank-fusion score minus the saved original score. Position sensitivity is the mean \(\lvert\Delta\rvert\) over the 19 alternatives and represented peptides. Classification-support loss is defined as \(-(2y-1)\Delta\), so a positive value means that mutation moves a recorded-positive or pseudo-negative row against its assigned label.
+
+The prespecified canonical-anchor comparison averages P2 and P9 sensitivity within each peptide and subtracts the mean over the other seven positions. A one-sided paired Wilcoxon test evaluates whether this difference is positive; 2,000 peptide bootstrap resamples provide a 95\% interval, and Benjamini--Hochberg correction covers the three output scales and three label strata. SHAP--ISM agreement is measured for each branch by Spearman correlation between the observed-residue Expected-IG attribution and the mean ISM mutation loss, \(-19^{-1}\sum_a\Delta^{(b)}_{i,a}\), over sample--position observations. Seed stability is separately computed over the 3,420 position--original-residue--mutant-residue mean effects. ISM still describes the response of the fitted model, and a computational substitution is not evidence of an in vivo causal effect.
+
+To test tissue-task dependence while holding both sequence and HLA fixed, we perform a counterfactual same-HLA comparison. For each of the 28 Human HLA alleles represented in at least two tissues (76 tissue--HLA tasks), the explained test rows are deduplicated by peptide sequence within HLA, giving 2,939 HLA-counted unique peptides. Every peptide and each of its 171 single-residue substitutions are then scored under every represented tissue task for that HLA. Original and mutant probabilities are inserted separately into the corresponding fixed-test task distribution, and the global- and HLA-branch percentile-rank shifts are averaged. This produces 1,786,779 context--mutation rows per three-seed ensemble and 5,360,337 seed-specific rows. For mutation unit \(j\), tissue dispersion and seed dispersion are
+\[
+\begin{aligned}
+D_{\mathrm{tissue},j}
+&=\operatorname*{mean}_{\tau<\tau'}
+\left|\bar{\Delta}_{\tau j}-\bar{\Delta}_{\tau' j}\right|,\\
+D_{\mathrm{seed},j}
+&=\operatorname*{mean}_{\tau}\operatorname*{mean}_{s<s'}
+\left|\Delta_{\tau js}-\Delta_{\tau js'}\right|,
+\end{aligned}
+\]
+where \(\bar{\Delta}\) averages the three seeds and the comparisons are restricted to tissues sharing one HLA. Values are first averaged over substitutions and positions within peptide. A one-sided paired Wilcoxon test asks whether tissue dispersion exceeds seed dispersion across peptides for each HLA; 2,000 peptide bootstrap resamples give an interval for the mean difference, and Benjamini--Hochberg correction covers the 28 HLA tests. Tissue-pair Spearman correlations summarize shared mutation ordering, while correlations of tissue-contrast vectors across seeds assess reproducibility.
+
+\subsection{Cross-species Interpretation and Reproducibility}
+
+Human and Mouse use the same occurrence-matched pair definition, the same 50-pair-per-task fixed-test allocation, and the same three training seeds. They differ in the number of retained tissue--MHC combinations, MHC system, and source-data composition. Human contains 77 tasks and 25,339 pairs, whereas Mouse contains 11 tasks and 2,639 pairs. The sevenfold test-size difference is therefore determined by the sevenfold difference in retained tasks, not by different test quotas. The larger difference in training size reflects the eligible pair inventory remaining after the shared biological and occurrence-matching rules. Concordant findings support replication of benchmark learnability but do not establish a species-independent molecular mechanism or a controlled species comparison.
+
+The architecture inventories are also species-specific: the Human table contains 23 completed systems and the Mouse table contains 20. Shared model families retain matched names and metric definitions, but some adaptive or optimization variants were completed for only one species and no missing cross-species result is imputed. Consequently, ranks and performance differences are interpreted within each species-specific table; they are not compared row by row as a controlled Human--Mouse architecture experiment.
+
+Both species use random initializations 20260704--20260706. Cross-species comparisons emphasize above-random signal and the value of structured information sharing. Numerical differences are not interpreted as species effects because data scale, tissue and allele coverage, and model selection differ.
+
+For reproducibility, each experiment records the fixed training and test files, training initialization, model configuration, and command-line arguments. Reports include epoch count, batch size, optimizer, learning rate, weight decay, dropout, training time, hardware, and software versions. Predictions are saved at row level with tissue--MHC combination, label, pair identifier, seed, and score.
+
+Seed-specific settings and elapsed times are retained with the result files, and the three-seed aggregation records the seeds and the sample-standard-deviation convention. Training-only fold assignments, out-of-fold predictions, configuration rankings, and the locked contracts are also retained. These tuning folds are not presented as a strict-generalization benchmark.
+
+\subsection{Data and Code Availability}
+
+The accompanying repository contains processed benchmark tables, fixed-split row-level predictions, seed-specific configuration files, timing records, and analysis scripts. The Human interpretation release additionally records the explained pair identities, empirical-background design, per-seed and per-branch residue attributions, exhaustive ISM substitution effects, replacement rank-fusion scores, SHAP--ISM concordance, anchor-position tests, prediction-reproduction checks, seed-stability summaries, and plotting inputs. Raw material derived from the IEDB and third-party predictor assets remains subject to original access and licensing terms; NetMHCpan executables are not redistributed.
