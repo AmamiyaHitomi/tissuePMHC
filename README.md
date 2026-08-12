@@ -27,6 +27,88 @@ MCC, accuracy, and within-pair ordering accuracy (PairAcc).
 The benchmark labels are observational and should not be interpreted as
 confirmed biological presentation or non-presentation in every context.
 
+## Occurrence-equal (`occurrence_equal`) benchmark (primary manuscript analysis)
+
+The accompanying manuscript uses the **occurrence-equal** (also described as
+**occurrence-matched**) Human and Mouse benchmarks for its primary analyses.
+This is an important additional control beyond matching the target tissue, MHC
+restriction, and parent protein.
+
+For a peptide `p`, MHC restriction `m`, and parent protein `u`, let
+`c(p, m, u)` denote the number of tissues in which the source records contain
+positive presentation evidence for that peptide under the same MHC and parent
+protein. Every `pair_id` in the occurrence-equal benchmark contains:
+
+- one recorded-positive peptide (`label = 1`) in the target tissue;
+- one pseudo-negative peptide (`label = 0`) that has positive evidence in one
+  or more other tissues but not in the target tissue;
+- the same target tissue, MHC restriction, and parent UniProt protein for both
+  peptides; and
+- exactly the same positive tissue-occurrence count,
+  `presentation_tissue_count`, for both peptides.
+
+In compact form, each pair satisfies
+
+```text
+target_tissue+ = target_tissue-
+MHC+           = MHC-
+parent_protein+ = parent_protein-
+c(peptide+, MHC, parent_protein) = c(peptide-, MHC, parent_protein)
+```
+
+### Why occurrence matching matters
+
+Without the final equality, a model could exploit a simple reporting-frequency
+shortcut: peptides observed in more tissues overall could be easier to classify
+as positives, even without learning tissue-conditioned sequence preferences.
+Occurrence matching removes this specific shortcut. It does **not** remove all
+observational bias; study, laboratory, donor, batch, detection-depth, tissue,
+and MHC-coverage effects may remain. A pseudo-negative is therefore an
+unreported peptide in the target context, not a confirmed biological negative.
+
+### Frozen datasets used in the manuscript
+
+| Species | Dataset files | Tasks | Tissues | MHC restrictions | Train pairs | Fixed-test pairs |
+|---|---|---:|---:|---:|---:|---:|
+| Human | `data/humanPMHC_occurence_equal_dataset/` | 77 | 13 | 29 | 21,489 | 3,850 |
+| Mouse | `data/mousePMHC_occurence_equal_dataset/` | 11 | 4 | 4 | 2,089 | 550 |
+
+Each retained tissue-MHC task contributes exactly 50 complete pairs to the
+fixed test set; all remaining pairs form the training set. The fixed split uses
+random state `20260704`, and final neural-model runs use seeds `20260704`,
+`20260705`, and `20260706`. Human and Mouse differ in task inventory and data
+coverage, so their raw results should not be interpreted as a controlled
+species comparison.
+
+### Verify the occurrence-equal invariant
+
+Run the repository audit from the project root:
+
+```powershell
+python scripts/audit_occurrence_balancing.py
+```
+
+The audit checks pair size, one row per label, task/MHC/parent agreement,
+pairwise occurrence-count equality, label-wise occurrence distributions, and
+the 50-pair fixed-test allocation. Its machine-readable report is
+[`extra3/occurrence_balancing_audit.json`](extra3/occurrence_balancing_audit.json).
+The committed audit passes for both species: every mismatch count is zero, and
+an occurrence-count-only score has task AUROC `0.5000` for every train, test,
+and combined partition.
+
+### Reproduce the occurrence-equal experiments
+
+The species-specific experiment code and detailed commands are documented in:
+
+- [`extra_occurrence_equal_dataset/README_zh.md`](extra_occurrence_equal_dataset/README_zh.md)
+  for Human;
+- [`extra_mouse_occurrence_equal_dataset/README_zh.md`](extra_mouse_occurrence_equal_dataset/README_zh.md)
+  for Mouse.
+
+These runners are deliberately isolated from legacy benchmark results. Do not
+mix standard, min200, premium, or occurrence-equal data, predictions, or model
+summaries in the same analysis.
+
 ## Repository structure
 
 ```text
