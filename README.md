@@ -346,13 +346,14 @@ checkpoints, third-party runtimes, or the omitted IEDB source archive.
 - Material under `archive/` documents project development and is not guaranteed
   to run as a current experiment entry point.
 
-## Citation and license
+## Citation
 
 The manuscript is currently under submission. Citation metadata and a paper
 DOI will be added when available.
 
-This repository does not yet include a project-wide software license. Until a
-license is added, copyright law reserves reuse and redistribution rights to the
-authors. Third-party datasets and tools remain subject to their original
-licenses, including the IEDB attribution requirements documented in
-[`data/README.md`](data/README.md).
+## License
+
+TissuePMHC source code and software are available for academic and
+non-commercial use under the PolyForm Noncommercial License 1.0.0. For
+commercial licensing, please contact Jia Meng at jia.meng@xjtlu.edu.cn.
+Third-party data and software remain subject to their original licenses.
